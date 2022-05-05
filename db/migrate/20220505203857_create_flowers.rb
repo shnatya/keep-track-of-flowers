@@ -1,7 +1,7 @@
 class CreateFlowers < ActiveRecord::Migration[7.0]
   def change
     create_table :flowers do |t|
-      t.string :type
+      t.string :type_species
       t.string :name
       t.string :season
       t.string :subseason

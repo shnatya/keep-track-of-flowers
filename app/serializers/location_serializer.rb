@@ -1,3 +1,3 @@
 class LocationSerializer < ActiveModel::Serializer
-  attributes :id, :type, :description, :image_url
+  attributes :id, :name, :description, :image_url
 end
