@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  name: MyString
+  season: MyString
+  subseason: MyString
+  color: MyString
+  height: MyString
+  description: MyText
+  user: one
+  image_url: MyString
+
+two:
+  type: 
+  name: MyString
+  season: MyString
+  subseason: MyString
+  color: MyString
+  height: MyString
+  description: MyText
+  user: two
+  image_url: MyString
