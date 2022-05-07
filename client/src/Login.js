@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import {useState} from 'react';
+import ErrorList from "./ErrorList";
 
-function Login({}) {
+function Login({onLogin}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [errors, setErrors] = useState([])
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -17,8 +18,14 @@ function Login({}) {
                 password
             })
         })
-        .then(res => res.json())
-        .then(user => console.log(user))
+        .then(res => {
+            if(res.ok){
+                res.json().then(user => onLogin(user))
+            }else{
+                res.json().then(errors => setErrors(errors.errors))
+            }
+        })
+        
     }
     
     return (
@@ -26,10 +33,11 @@ function Login({}) {
             <form onSubmit={handleSubmit}>
                 <input onChange={(e) => setUsername(e.target.value)}
                  type="text" id="username" value={username} placeholder="Username"></input>
-                <input onchange={(e) => setPassword(e.target.value)}
+                <input onChange={(e) => setPassword(e.target.value)}
                 type="text" id="password" value={password} placeholder="Password"></input>
                 <button type="submit">Login</button>
             </form>
+            <ErrorList errors={errors} />
         </div>
     )
 }

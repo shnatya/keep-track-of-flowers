@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :flowers
   resources :users
 
-  post '/login', to: "session#create"
+  post '/login', to: "sessions#create"
 
   get '/hello', to: 'application#hello_world'
   get '*path', to: 'fallback#index',

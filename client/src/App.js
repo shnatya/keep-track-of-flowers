@@ -3,10 +3,11 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Catalog from './Catalog';
+import Login from './Login';
 
 function App() {
   const [flowers, setFlowers] = useState([])
-  //const [user, setUser] = useState()
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     fetch("/flowers")
@@ -14,6 +15,9 @@ function App() {
     .then(data => setFlowers(data))
   }, [])
 
+  function onLogin(user) {
+    setUser(user)
+  }
   return (
     <BrowserRouter>
       <div className="App">
