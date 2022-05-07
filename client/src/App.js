@@ -1,39 +1,51 @@
 import './App.css';
 import React from 'react';
 import { useState, useEffect } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import SignUp from './SignUp';
 import Catalog from './Catalog';
 import Login from './Login';
+import Welcome from './Welcome';
 
 function App() {
-  const [flowers, setFlowers] = useState([])
   const [user, setUser] = useState(null)
+  const [flowers, setFlowers] = useState([])
+
+    useEffect(() => {
+        fetch("/flowers")
+        .then(res => res.json())
+        .then(data => setFlowers(data))
+      }, [])
 
   useEffect(() => {
-    fetch("/flowers")
-    .then(res => res.json())
-    .then(data => setFlowers(data))
+    fetch("/me").then(res => {
+      if(res.ok) {
+        res.json().then(user => setUser(user))
+      } 
+    })
   }, [])
 
-  function onLogin(user) {
-    setUser(user)
-  }
+  if(!user) return <Login onLogin={setUser}/>
+
   return (
-    <BrowserRouter>
+  
       <div className="App">
         <Switch>
-          <Route path="/login">
-            <Login onLogin={onLogin}/>
+          <Route exact path="/login">
+            <Login onLogin={setUser}/>
           </Route>
-          <Route path="/flowers">
-            <Catalog flowers={flowers} />
+          <Route exact path="/signup">
+            <SignUp onLogin={setUser}/>
           </Route>
-          <Route path="/">
-            <h1>Hello!</h1>
+          <Route exact path="/catalog">
+            <Catalog flowers={flowers}/>
+          </Route>
+          <Route exact path="/">
+            <Welcome flowers={flowers}/>
           </Route>
         </Switch>
       </div>
-    </BrowserRouter>
+    
   );
 }
 

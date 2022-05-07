@@ -5,7 +5,6 @@ function Catalog({flowers}) {
 
     return (
         <div>
-            <h1>Catalog</h1>
             {flowers.map((flower, index) => <FlowerCard key={index} flower={flower} />)}
         </div>
     )
