@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from "react";
 import Catalog from "./Catalog";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 
-function Welcome({flowers}) {
-    
+function Welcome({flowers, user, setUser}) {
+    const [orders, setAllOrders] = useState([])
 
-   
+    function handleLogout() {
+        fetch(("/logout"), { method: "DELETE"})
+        .then(res => {
+          if(res.ok) {
+            setUser(null)
+          } })
+      }
+//I dont have to fetch. Use flowers db to filter
+      function handleMyOrders() {
+          fetch("/myorders")
+          .then(res => {
+              if(res.ok) {
+                  res.json().then(orders => setAllOrders(orders))
+              }
+          })
+      }
     return (
         <div>
-            <h3>Please log in or sign up</h3>
-            <Link className="links"
-            to="/login">Log in</Link>
-            
-            <Link 
-            to="/signup">Sign up</Link>
-
+            <button onClick={handleLogout}>Log Out</button>
+            <button onClick={handleMyOrders}>My orders</button>
             <h1>Keep the track of your flowers!</h1>
             <Catalog flowers={flowers} />
         </div>

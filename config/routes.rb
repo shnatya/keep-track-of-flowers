@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   resources :flowers
   resources :users
 
+  get '/myorders', to: 'flower_orders#index'
+
   post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
   get '/me', to: 'users#show'
   post '/signup', to: 'users#create'

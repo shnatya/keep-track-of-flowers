@@ -55,6 +55,18 @@
   width: auto;
 }
 
+.form {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 15rem;
+  height: 13rem;
+  display: inline-grid;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px #bae99b;
+  border-radius: 10px;
+}
+
 .errors {
     justify-self: center;
     padding:20px;
@@ -69,4 +81,13 @@
 
 .links {
   padding: 2rem;
+  justify-self: center;
+}
+
+.input {
+  margin:5px;
+}
+
+.button {
+  width: 5.5rem
 }

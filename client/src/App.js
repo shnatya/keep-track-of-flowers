@@ -27,13 +27,16 @@ function App() {
 
   if(!user) return <Login onLogin={setUser}/>
 
+  
   return (
   
       <div className="App">
+       
         <Switch>
           <Route exact path="/login">
             <Login onLogin={setUser}/>
           </Route>
+          
           <Route exact path="/signup">
             <SignUp onLogin={setUser}/>
           </Route>
@@ -41,7 +44,7 @@ function App() {
             <Catalog flowers={flowers}/>
           </Route>
           <Route exact path="/">
-            <Welcome flowers={flowers}/>
+            <Welcome user={user} setUser={setUser} flowers={flowers}/>
           </Route>
         </Switch>
       </div>
