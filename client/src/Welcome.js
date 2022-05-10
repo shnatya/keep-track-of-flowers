@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 
 
-function Welcome({flowers, user, setUser, setLoggedIn}) {
+function Welcome({flowers, currentTypeFlower, user, setUser, setLoggedIn}) {
 
     return (
         <div>
-            
             <h1>Catalog</h1>
+            <h2>{currentTypeFlower}</h2>
             <Catalog flowers={flowers} />
         </div>
     )

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import { useNavigate} from "react-router-dom"
 
-function Hearder({currentTypeFlower, arrayOfTypes, changeTypeFlower, setUser, setLoggedIn}) {
+function Hearder({currentTypeFlower, arrayOfTypes, changeTypeFlower, user, setUser, setLoggedIn}) {
     const navigate = useNavigate()
-    
+
     function handleChangeType(event) {
         changeTypeFlower(event.target.value)
     }
@@ -30,6 +30,7 @@ function Hearder({currentTypeFlower, arrayOfTypes, changeTypeFlower, setUser, se
                 {typeOptions}
             </select>
             <button onClick={handleLogout}>Log Out</button>
+            <h2>Hello {user}!</h2>
         </div>
     )
 }

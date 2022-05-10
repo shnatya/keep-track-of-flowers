@@ -56,6 +56,7 @@ function App() {
     return <Header currentTypeFlower={currentTypeFlower} 
                    changeTypeFlower={changeTypeFlower}
                    arrayOfTypes={arrayOfTypes}
+                   user={user.username}
                     setUser={setUser} setLoggedIn={setLoggedIn} />
   }
   
@@ -77,7 +78,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login onLogin={onLogin}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
-          <Route path="/welcome" element={<Welcome user={user} setLoggedIn={setLoggedIn} setUser={setUser} flowers={flowersToDisplay}/>} />
+          <Route path="/welcome" element={<Welcome user={user} setLoggedIn={setLoggedIn}
+                setUser={setUser} flowers={flowersToDisplay} currentTypeFlower={currentTypeFlower} />} />
           <Route path="/" element={<Login onLogin={setUser}/>} />
         </Routes>
       </div>
