@@ -25,6 +25,16 @@ function App() {
         collectTypeSpecies(data)})
     }, [])
 
+  useEffect(() => {
+    fetch("/me").then(res => {
+      if(res.ok) {
+        res.json().then(user => {
+          onLogin(user)})
+      } 
+    })
+  }, [])
+
+
   function collectTypeSpecies(data) {
     let typeSpeciesArray = []
 
@@ -37,15 +47,6 @@ function App() {
     console.log(typeSpeciesArray)
     setArrayOfTypes(typeSpeciesArray)
   }
-
-  useEffect(() => {
-    fetch("/me").then(res => {
-      if(res.ok) {
-        res.json().then(user => {
-          onLogin(user)})
-      } 
-    })
-  }, [])
 
   function onLogin(user) {
     setUser(user)
