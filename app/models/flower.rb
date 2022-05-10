@@ -1,4 +1,5 @@
 class Flower < ApplicationRecord
   belongs_to :user
-  has_many :flower_orders
+  has_many :planting_operations
+  has_many :locations, through: :planting_operations
 end

@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   resources :planting_operations
   resources :locations
-  resources :flower_orders
   resources :flowers
   resources :users
 
-  get '/myorders', to: 'flower_orders#index'
+  get '/flowers', to: 'flowers#index'
+
+  get '/database', to: 'flowers#index'
 
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

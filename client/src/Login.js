@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { useHistory, Link  } from "react-router-dom";
+import { Link  } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import ErrorList from "./ErrorList";
 
 function Login({onLogin}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState([])
+    const history = useNavigate()
 
-    const history = useHistory()
     function handleSubmit(e) {
         e.preventDefault()
         fetch("/login", {
@@ -24,18 +25,26 @@ function Login({onLogin}) {
             if(res.ok){
                 res.json().then(user => {
                     onLogin(user)
-                    history.push('/')})
+                    history('/welcome')})
             }else{
-                res.json().then(errors => setErrors(errors.errors))
+                res.json().then(errors => {
+                    setErrors(errors.errors)
+                    setUsername("")
+                    setPassword("")})
             }
         })
     }
-    
+
+    function handleChange(event) {
+        setUsername(event.target.value)
+        setErrors([])
+    }
     return (
         <div className="form">
+            
             <form onSubmit={handleSubmit}>
                 <h2>Log In</h2>
-                <input onChange={(e) => setUsername(e.target.value)}
+                <input onChange={handleChange}
                  type="text" id="username" value={username} autoComplete="off" placeholder="Username" className="input"></input>
                 <input onChange={(e) => setPassword(e.target.value)}
                 type="password" id="password" value={password}  autoComplete="current-password" placeholder="Password" className="input"></input>

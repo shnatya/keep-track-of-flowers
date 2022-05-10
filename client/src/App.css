@@ -69,14 +69,12 @@
 
 .errors {
     justify-self: center;
-    padding:20px;
+    padding:40px;
     left: 180%;
     text-align: center;
-    font-size: 17px;
+    font-size: 15px;
     color: palevioletred;
     display: table-cell;
-    font-size: 27px;
-  
 }
 
 .links {

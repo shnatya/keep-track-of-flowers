@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ErrorList from "./ErrorList";
 
 function SignUp({onLogin}) {
@@ -6,9 +7,10 @@ function SignUp({onLogin}) {
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [errors, setErrors] = useState([])
+    const navigate = useNavigate()
 
-    function handleSubmit(e) {
-        e.preventDefault()
+    function handleSubmit(event) {
+        event.preventDefault()
         fetch("/signup", {
             method: "POST",
             headers: {
@@ -22,24 +24,36 @@ function SignUp({onLogin}) {
         })
         .then(res => {
             if(res.ok){
-                res.json().then(user => onLogin(user))
+                res.json().then(user => {
+                    onLogin(user)
+                    navigate('/welcome')
+                })
             }else{
-                res.json().then(err => setErrors(err.errors))
+                res.json().then(err => handleErrors(err))
             }
         })
-        
     }
     
+    function handleErrors(err) {
+        setErrors(err.errors)
+        setUsername("")
+        setPassword("")
+        setPasswordConfirmation("")
+    }
+
+    function handleChange(event) {
+        setUsername(event.target.value)
+        setErrors([])
+    }
     return (
         <div className="form">
             <form onSubmit={handleSubmit}>
                 <h2>Sign Up</h2>
-                <input onChange={(e) => setUsername(e.target.value)}
-                 type="text" id="username" value={username} placeholder="Username" className="input"></input>
+                <input onChange={handleChange} type="text" id="username" value={username} placeholder="Username" autoComplete="off" className="input"></input>
                 <input onChange={(e) => setPassword(e.target.value)}
-                type="text" id="password" value={password} placeholder="Password" className="input"></input>
+                type="password" id="password" value={password} placeholder="Password" className="input"></input>
                 <input onChange={(e) => setPasswordConfirmation(e.target.value)}
-                type="text" id="password_confirmation" value={passwordConfirmation} placeholder="Password confirmation" className="input"></input>
+                type="password" id="password_confirmation" value={passwordConfirmation} placeholder="Password confirmation" className="input"></input>
                 <button type="submit" className="button">Sign up</button>
             </form>
             <ErrorList errors={errors} />

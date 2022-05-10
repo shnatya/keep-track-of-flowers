@@ -1,9 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
+import { useNavigate} from "react-router-dom"
 
-function Test() {
+function Hearder({user, setUser, setLoggedIn}) {
+    const navigate = useNavigate()
+
+    function handleLogout() {
+        fetch(("/logout"), { method: "DELETE"})
+        .then(res => {
+          if(res.ok) {
+            setUser(null)
+            setLoggedIn(false)
+            navigate("/login")
+          } })
+      }
     return (
-        <h1>Test</h1>
+        <div>
+            <button onClick={handleLogout}>Log Out</button>
+        </div>
     )
 }
 
-export default Test
+export default Hearder
