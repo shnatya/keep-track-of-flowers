@@ -4,10 +4,6 @@ import { useNavigate} from "react-router-dom"
 function Hearder({currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes, changeTypeFlower, user, setUser, setLoggedIn}) {
     const navigate = useNavigate()
 
-    function handleChangeType(event) {
-        changeTypeFlower(event.target.value)
-    }
-
     let typeOptions = arrayOfTypes.map(type => {
         return (
             <option key={type} value={type}>{type}</option>
@@ -26,7 +22,7 @@ function Hearder({currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes, chan
       }
     return (
         <div>
-            <select onChange={handleChangeType} value={currentTypeFlower}>
+            <select onChange={(event) => changeCurrentTypeFlower(event.target.value)} value={currentTypeFlower}>
                 <option value="All">All</option>
                 {typeOptions}
             </select>

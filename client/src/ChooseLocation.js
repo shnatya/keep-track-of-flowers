@@ -5,7 +5,7 @@ function ChooseLocation({finalCheckedFlowers}) {
     let arrayOfCheckedFlowers = finalCheckedFlowers.map(flower => <MiniCard key={flower.name} flower={flower}/>)
     return(
         <div>
-            <h1>Plant these flowers here: </h1>
+            <h1>Plant these flower(-s) here: </h1>
             {arrayOfCheckedFlowers}
         </div>
     )

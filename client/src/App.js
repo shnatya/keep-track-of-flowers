@@ -54,21 +54,21 @@ function App() {
   }
   function changeCurrentTypeFlower(type) {
     setCurrentTypeFlower(type)
+    updateFlowersToDisplay(type) 
   }
   function loadHeader() {
     return (
     <div>
         <Header currentTypeFlower={currentTypeFlower} 
-                   changeTypeFlower={changeTypeFlower}
                    arrayOfTypes={arrayOfTypes}
                    user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                    setUser={setUser} setLoggedIn={setLoggedIn} />
+                   setUser={setUser} setLoggedIn={setLoggedIn} />
         
     </div>
     )
   }
   
-  function changeTypeFlower(type) {
+  function updateFlowersToDisplay(type) {
     setCurrentTypeFlower(type)
     if(type === "All") {
       setFlowersToDisplay(flowers)
