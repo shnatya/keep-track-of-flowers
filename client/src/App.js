@@ -56,17 +56,6 @@ function App() {
     setCurrentTypeFlower(type)
     updateFlowersToDisplay(type) 
   }
-  function loadHeader() {
-    return (
-    <div>
-        <Header currentTypeFlower={currentTypeFlower} 
-                   arrayOfTypes={arrayOfTypes}
-                   user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                   setUser={setUser} setLoggedIn={setLoggedIn} />
-        
-    </div>
-    )
-  }
   
   function updateFlowersToDisplay(type) {
     setCurrentTypeFlower(type)
@@ -82,6 +71,19 @@ function App() {
   function sendCheckedFlowers(checkedFlowers) {
     setFinalCheckedFlowers(checkedFlowers)
   }
+
+  function loadHeader() {
+    return (
+    <div>
+        <Header currentTypeFlower={currentTypeFlower} 
+                   arrayOfTypes={arrayOfTypes}
+                   user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
+                   setUser={setUser} setLoggedIn={setLoggedIn} />
+        
+    </div>
+    )
+  }
+
   return (
     <>
       {loggedIn ? loadHeader() : null}
@@ -93,8 +95,8 @@ function App() {
                 setUser={setUser} flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} />} />
           <Route path="/choose-location" element={<ChooseLocation finalCheckedFlowers={finalCheckedFlowers}/>} />
+          <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
-          
         </Routes>
       </div>
     </>

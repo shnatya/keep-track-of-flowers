@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :flowers
   resources :users
 
-  get '/flowers', to: 'flowers#index'
+  #get '/flowers', to: 'flowers#index'
 
   get '/database', to: 'flowers#index'
 

@@ -18,11 +18,11 @@ puts "Seeding locations ..."
 Location.create(name: "Planter", description: "Maple rectangular planter")
 Location.create(name: "Pot", description: "Round grey conoid pot")
 Location.create(name: "Basket", description: "Basket with rose")
-Location.create(name: "Ground", description: "Under bluberry, against the garage")
-Location.create(name: "Flowerbed", description: "In the side yard")
+Location.create(name: "Ground", description: "In the ground under bluberry, against the garage")
+Location.create(name: "Flowerbed", description: "Flowerbed in the side yard")
 Location.create(name: "Pot", description: "Yellow small pot")
 Location.create(name: "Pot", description: "Clay strawberry pot with side openings")
-Location.create(name: "Ground", description: "Between the bench and peach tree, by the fence")
+Location.create(name: "Ground", description: "In the ground between the bench and peach tree, by the fence")
 puts "✅ Done seeding locations!"
 
 
@@ -38,3 +38,5 @@ PlantingOperation.create(flower_id: 4, location_id: 2)
 PlantingOperation.create(flower_id: 4, location_id: 3)
 PlantingOperation.create(flower_id: 5, location_id: 7)
 puts "✅ Done seeding planting operations!"
+
+
