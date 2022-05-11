@@ -1,12 +1,12 @@
 import './App.css';
-import React from 'react';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom";
 import SignUp from './SignUp';
-import Catalog from './Catalog';
+import Intro from './Intro';
 import Login from './Login';
 import Welcome from './Welcome';
 import Header from './Header';
+import ChooseLocation from './ChooseLocation'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -15,6 +15,7 @@ function App() {
   const [arrayOfTypes, setArrayOfTypes] = useState([])
   const [currentTypeFlower, setCurrentTypeFlower] = useState("All")
   const [flowersToDisplay, setFlowersToDisplay] = useState([])
+  const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
 
   useEffect(() => {
       fetch("/database")
@@ -33,8 +34,7 @@ function App() {
       } 
     })
   }, [])
-
-
+  
   function collectTypeSpecies(data) {
     let typeSpeciesArray = []
 
@@ -52,13 +52,20 @@ function App() {
     setUser(user)
     setLoggedIn(true)
   }
-  
+  function changeCurrentTypeFlower(type) {
+    setCurrentTypeFlower(type)
+  }
   function loadHeader() {
-    return <Header currentTypeFlower={currentTypeFlower} 
+    return (
+    <div>
+        <Header currentTypeFlower={currentTypeFlower} 
                    changeTypeFlower={changeTypeFlower}
                    arrayOfTypes={arrayOfTypes}
-                   user={user.username}
+                   user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
                     setUser={setUser} setLoggedIn={setLoggedIn} />
+        
+    </div>
+    )
   }
   
   function changeTypeFlower(type) {
@@ -72,6 +79,9 @@ function App() {
     }
   }
 
+  function sendCheckedFlowers(checkedFlowers) {
+    setFinalCheckedFlowers(checkedFlowers)
+  }
   return (
     <>
       {loggedIn ? loadHeader() : null}
@@ -80,8 +90,11 @@ function App() {
           <Route path="/login" element={<Login onLogin={onLogin}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
           <Route path="/welcome" element={<Welcome user={user} setLoggedIn={setLoggedIn}
-                setUser={setUser} flowers={flowersToDisplay} currentTypeFlower={currentTypeFlower} />} />
-          <Route path="/" element={<Login onLogin={setUser}/>} />
+                setUser={setUser} flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
+                currentTypeFlower={currentTypeFlower} />} />
+          <Route path="/choose-location" element={<ChooseLocation finalCheckedFlowers={finalCheckedFlowers}/>} />
+          <Route path="/" element={<Intro />} />
+          
         </Routes>
       </div>
     </>

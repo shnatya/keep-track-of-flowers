@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate} from "react-router-dom"
 
-function Hearder({currentTypeFlower, arrayOfTypes, changeTypeFlower, user, setUser, setLoggedIn}) {
+function Hearder({currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes, changeTypeFlower, user, setUser, setLoggedIn}) {
     const navigate = useNavigate()
 
     function handleChangeType(event) {
@@ -20,6 +20,7 @@ function Hearder({currentTypeFlower, arrayOfTypes, changeTypeFlower, user, setUs
           if(res.ok) {
             setUser(null)
             setLoggedIn(false)
+            changeCurrentTypeFlower("All")
             navigate("/login")
           } })
       }

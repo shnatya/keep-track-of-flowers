@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { Link  } from "react-router-dom";
-import { useNavigate  } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import ErrorList from "./ErrorList";
 
 function Login({onLogin}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState([])
-    const history = useNavigate()
-
-    function handleSubmit(e) {
-        e.preventDefault()
+    const navigate = useNavigate()
+    
+    function handleSubmit(event) {
+        event.preventDefault()
         fetch("/login", {
             method: "POST",
             headers: {
@@ -25,7 +24,8 @@ function Login({onLogin}) {
             if(res.ok){
                 res.json().then(user => {
                     onLogin(user)
-                    history('/welcome')})
+                    navigate('/welcome')
+                })
             }else{
                 res.json().then(errors => {
                     setErrors(errors.errors)
