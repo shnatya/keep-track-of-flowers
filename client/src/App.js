@@ -13,17 +13,30 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [flowers, setFlowers] = useState([])
   const [arrayOfTypes, setArrayOfTypes] = useState([])
+  const [arrayOfUniqueLocations, setArrayOfUniqueLocations] = useState([])
   const [currentTypeFlower, setCurrentTypeFlower] = useState("All")
   const [flowersToDisplay, setFlowersToDisplay] = useState([])
   const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
+  const [finalCheckedLocations, setFinalCheckedLocations] = useState([])
 
   useEffect(() => {
       fetch("/database")
       .then(res => res.json())
       .then(data => {
+        console.log("Data:")
+        console.log(data)
         setFlowers(data)
         setFlowersToDisplay(data)
-        collectTypeSpecies(data)})
+        collectTypeSpecies(data)
+      })
+    }, [])
+
+    useEffect(() => {
+      fetch("/locations")
+      .then(res => res.json())
+      .then(locations => {
+        setArrayOfUniqueLocations(locations)
+      })
     }, [])
 
   useEffect(() => {
@@ -42,9 +55,7 @@ function App() {
       let result = typeSpeciesArray.find(el => el === flower.type_species)
       if (result === undefined) {
         typeSpeciesArray = [...typeSpeciesArray, flower.type_species]
-      }
-    })
-    console.log(typeSpeciesArray)
+      }})
     setArrayOfTypes(typeSpeciesArray)
   }
 
@@ -72,6 +83,9 @@ function App() {
     setFinalCheckedFlowers(checkedFlowers)
   }
 
+  function sendCheckedLocations(checkedLocations) {
+    setFinalCheckedLocations(checkedLocations)
+  }
   function loadHeader() {
     return (
     <div>
@@ -84,6 +98,7 @@ function App() {
     )
   }
 
+
   return (
     <>
       {loggedIn ? loadHeader() : null}
@@ -94,7 +109,9 @@ function App() {
           <Route path="/welcome" element={<Welcome user={user} setLoggedIn={setLoggedIn}
                 setUser={setUser} flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} />} />
-          <Route path="/choose-location" element={<ChooseLocation finalCheckedFlowers={finalCheckedFlowers}/>} />
+          <Route path="/choose-location" element={<ChooseLocation database={flowers}
+                arrayOfUniqueLocations={arrayOfUniqueLocations} finalCheckedFlowers={finalCheckedFlowers}
+                sendCheckedLocations={sendCheckedLocations}/>} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
         </Routes>

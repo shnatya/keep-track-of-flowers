@@ -49,7 +49,25 @@
   border-radius: 10px;
 }
 
+.mini-card {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 15rem;
+  height: 15rem;
+  display: inline-grid;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px #bae99b;
+  border-radius: 10px;
+}
+
 .flower-pic {
+  justify-self: center;
+  height: 12rem;
+  width: auto;
+}
+
+.location-pic {
   justify-self: center;
   height: 12rem;
   width: auto;

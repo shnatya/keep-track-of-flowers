@@ -15,9 +15,9 @@ Flower.create(name: "Joan of Arc", type_species: "Crocuses", season: "Spring", s
 puts "✅ Done seeding flowers!"
 
 puts "Seeding locations ..."
-Location.create(name: "Planter", description: "Maple rectangular planter")
-Location.create(name: "Pot", description: "Round grey conoid pot")
-Location.create(name: "Basket", description: "Basket with rose")
+Location.create(name: "Planter", description: "Maple rectangular planter", image_url: "https://drive.google.com/uc?export=view&id=1FMxGHKxBCIhAbw_s6rmV-oEH2fdDt7KT")
+Location.create(name: "Pot", description: "Round grey conoid pot", image_url: "https://drive.google.com/uc?export=view&id=1FMxGHKxBCIhAbw_s6rmV-oEH2fdDt7KT")
+Location.create(name: "Basket", description: "Basket with rose", image_url: "https://drive.google.com/uc?export=view&id=1FMxGHKxBCIhAbw_s6rmV-oEH2fdDt7KT")
 Location.create(name: "Ground", description: "In the ground under bluberry, against the garage")
 Location.create(name: "Flowerbed", description: "Flowerbed in the side yard")
 Location.create(name: "Pot", description: "Yellow small pot")
