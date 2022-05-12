@@ -2,7 +2,7 @@ import React, { useState, useEffect,  } from "react";
 import Catalog from "./Catalog";
 
 
-function Welcome({flowersToDisplay, currentTypeFlower, sendCheckedFlowers, user, setLoggedIn}) {
+function Welcome({flowersToDisplay, currentTypeFlower, sendCheckedFlowers, user}) {
     console.log(user)
     return (
         <div>

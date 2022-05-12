@@ -17,6 +17,7 @@ class UsersController < ApplicationController
 
     #POST "/signup"
     def create
+        byebug 
         user = User.create(user_params)
         if user.valid?
             session[:user_id] = user.id

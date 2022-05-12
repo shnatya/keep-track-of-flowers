@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users
 
   #get '/flowers', to: 'flowers#index'
+  post "/planting-operations", to: "planting_operations#create"
 
   get '/database', to: 'flowers#index'
 

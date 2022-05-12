@@ -80,12 +80,15 @@ function App() {
   }
 
   function sendCheckedFlowers(checkedFlowers) {
+    console.log(checkedFlowers)
     setFinalCheckedFlowers(checkedFlowers)
   }
 
   function sendCheckedLocations(checkedLocations) {
+    console.log(checkedLocations)
     setFinalCheckedLocations(checkedLocations)
   }
+
   function loadHeader() {
     return (
     <div>
