@@ -21,21 +21,6 @@ function ChooseLocation({arrayOfUniqueLocations, finalCheckedFlowers, sendChecke
             setCheckedLocations(arrayOfCheckedLocations)
         }}
 
-  /*  function handlePlantFlowers(event){
-        event.preventDefault()
-        sendCheckedLocations(checkedLocations)
-        fetch("/planting-operations", {
-            method: "POST",
-            hearders: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                checkedLocations
-            })
-        }).then(res => res.json())
-        .then(data=> console.log(data))
-       // navigate('/planting-operations')
-    }*/
     function handlePlantFlowers(event) {
         event.preventDefault()
         sendCheckedLocations(checkedLocations)
@@ -46,9 +31,19 @@ function ChooseLocation({arrayOfUniqueLocations, finalCheckedFlowers, sendChecke
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            
-              flower_id: 2,
+            data1: {
+                flower_id: 2,
               location_id: 3
+            },
+            data2: {
+                flower_id: 2,
+              location_id: 3
+            },
+            data3: {
+                flower_id: 2,
+              location_id: 3
+            }
+              
             })
         })
         .then(res => res.json()

@@ -1,18 +1,26 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
+import ErrorList from "./ErrorList";
 import FlowerCard from "./FlowerCard";
 
 function Catalog({flowersToDisplay, sendCheckedFlowers}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
+    const [errors, setErrors] = useState([])
     const navigate=useNavigate()
 
     function handleAddFlowersToLocation(event) {
         event.preventDefault()
         sendCheckedFlowers(checkedFlowers)
-        navigate('/choose-location')
+        if(checkedFlowers.length == 0) {
+            setErrors(["Please choose at least one flower!"])
+        }else{
+            navigate('/choose-location')
+        }
+        
     }
 
     function addCheckedFlowers(flower) {
+        setErrors([])
         let arrayOfCheckedFlowers = checkedFlowers
         let result = arrayOfCheckedFlowers.find(obj => obj === flower)
         if(result === undefined) {
@@ -25,6 +33,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers}) {
     }
     return (
         <div>
+            <ErrorList errors={errors}/>
             <form onSubmit={handleAddFlowersToLocation}>
                 <button type="submit" className="button">Choose location</button>
                 {flowersToDisplay.map((flower, index) => <FlowerCard addFlower={addCheckedFlowers} key={index} flower={flower} />)}
