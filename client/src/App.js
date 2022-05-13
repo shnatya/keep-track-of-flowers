@@ -23,8 +23,6 @@ function App() {
       fetch("/database")
       .then(res => res.json())
       .then(data => {
-        console.log("Data:")
-        console.log(data)
         setFlowers(data)
         setFlowersToDisplay(data)
         collectTypeSpecies(data)

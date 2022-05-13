@@ -2,8 +2,7 @@ import React, { useState, useEffect,  } from "react";
 import Catalog from "./Catalog";
 
 
-function Welcome({flowersToDisplay, currentTypeFlower, sendCheckedFlowers, user}) {
-    console.log(user)
+function Welcome({flowersToDisplay, currentTypeFlower, sendCheckedFlowers}) {
     return (
         <div>
             <h1>Catalog</h1>

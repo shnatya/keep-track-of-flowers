@@ -32,8 +32,6 @@ function ChooseLocation({arrayOfUniqueLocations, finalCheckedFlowers, sendChecke
         })
         )
         let planting_operations = Object.assign({}, arrayOfFlowerLocation)
-        console.log(planting_operations)
-       
         fetch( "/planting-operations", {
           method: "POST",
           headers: {
