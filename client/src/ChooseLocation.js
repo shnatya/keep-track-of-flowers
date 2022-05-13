@@ -24,27 +24,22 @@ function ChooseLocation({arrayOfUniqueLocations, finalCheckedFlowers, sendChecke
     function handlePlantFlowers(event) {
         event.preventDefault()
         sendCheckedLocations(checkedLocations)
-
+        let arrayOfFlowerLocation = []
+       
+        finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
+                    let obj = Object.assign({}, {flower_id: flower.id, location_id: location.id})
+                    arrayOfFlowerLocation = [...arrayOfFlowerLocation, obj]
+        })
+        )
+        let planting_operations = Object.assign({}, arrayOfFlowerLocation)
+        console.log(planting_operations)
+       
         fetch( "/planting-operations", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            data1: {
-                flower_id: 2,
-              location_id: 3
-            },
-            data2: {
-                flower_id: 2,
-              location_id: 3
-            },
-            data3: {
-                flower_id: 2,
-              location_id: 3
-            }
-              
-            })
+          body: JSON.stringify(planting_operations)
         })
         .then(res => res.json()
         .then(data => console.log(data)))
