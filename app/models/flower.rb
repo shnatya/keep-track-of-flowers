@@ -4,4 +4,5 @@ class Flower < ApplicationRecord
   has_many :locations, through: :planting_operations
 
   validates :name, presence: true, uniqueness: true
+  validates :type_species, presence: true
 end

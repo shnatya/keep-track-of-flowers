@@ -3,8 +3,9 @@ import MiniCard from './MiniCard';
 import LocationCard from './LocationCard';
 import { useNavigate } from 'react-router';
 
-function ChooseLocation({arrayOfUniqueLocations, finalCheckedFlowers, sendCheckedLocations}) {
+function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, finalCheckedFlowers, sendCheckedLocations}) {
     const [checkedLocations, setCheckedLocations] = useState([])
+
     const navigate = useNavigate()
 
     let arrayOfCheckedFlowers = finalCheckedFlowers.map(flower => <MiniCard key={flower.name} flower={flower}/>)
@@ -24,23 +25,23 @@ function ChooseLocation({arrayOfUniqueLocations, finalCheckedFlowers, sendChecke
     function handlePlantFlowers(event) {
         event.preventDefault()
         sendCheckedLocations(checkedLocations)
-        let arrayOfFlowerLocation = []
        
         finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
-                    let obj = Object.assign({}, {flower_id: flower.id, location_id: location.id})
-                    arrayOfFlowerLocation = [...arrayOfFlowerLocation, obj]
+                    let objOperation = Object.assign({}, {flower_id: flower.id, location_id: location.id})
+                    fetch( "/create-planting-operations", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            planting: objOperation
+                        })
+                      })
+                      .then(res => res.json()
+                      .then(newOperation => updatePlantingOperations(newOperation)))
         })
         )
-        let planting_operations = Object.assign({}, arrayOfFlowerLocation)
-        fetch( "/planting-operations", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(planting_operations)
-        })
-        .then(res => res.json()
-        .then(data => console.log(data)))
+        navigate("/planting-operations")
       }
     return(
         <>

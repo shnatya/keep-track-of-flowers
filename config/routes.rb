@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   resources :planting_operations
-  resources :locations
+  #resources :locations
   resources :flowers
   resources :users
 
-  #get '/flowers', to: 'flowers#index'
-  post "/planting-operations", to: "planting_operations#create"
+
+  get "/locations", to: "locations#index"
+
+  post "/create-planting-operations", to: "planting_operations#create"
+  get "/planting-operations", to: "planting_operations#index"
 
   get '/database', to: 'flowers#index'
 

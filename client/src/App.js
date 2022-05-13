@@ -7,6 +7,7 @@ import Login from './Login';
 import Welcome from './Welcome';
 import Header from './Header';
 import ChooseLocation from './ChooseLocation'
+import Operations from './Operations';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -18,6 +19,7 @@ function App() {
   const [flowersToDisplay, setFlowersToDisplay] = useState([])
   const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
   const [finalCheckedLocations, setFinalCheckedLocations] = useState([])
+  const [plantingOperations, setPlantingOperations] = useState([])
 
   useEffect(() => {
       fetch("/database")
@@ -29,14 +31,20 @@ function App() {
       })
     }, [])
 
-    useEffect(() => {
-      fetch("/locations")
-      .then(res => res.json())
-      .then(locations => {
-        setArrayOfUniqueLocations(locations)
-      })
-    }, [])
+  useEffect(() => {
+    fetch("/locations")
+    .then(res => res.json())
+    .then(locations => {
+      setArrayOfUniqueLocations(locations)
+    })
+  }, [])
 
+  useEffect(() => {
+    fetch("/planting_operations")
+    .then(res => res.json())
+    .then(operations => setPlantingOperations(operations))
+  }, [])
+  
   useEffect(() => {
     fetch("/me").then(res => {
       if(res.ok) {
@@ -97,6 +105,9 @@ function App() {
     )
   }
 
+  function updatePlantingOperations(newOperation) {
+    setPlantingOperations([...plantingOperations, newOperation])
+  }
 
   return (
     <>
@@ -110,7 +121,8 @@ function App() {
                 currentTypeFlower={currentTypeFlower} />} />
           <Route path="/choose-location" element={<ChooseLocation database={flowers}
                 arrayOfUniqueLocations={arrayOfUniqueLocations} finalCheckedFlowers={finalCheckedFlowers}
-                sendCheckedLocations={sendCheckedLocations}/>} />
+                sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />
+          <Route path="/planting-operations" element={<Operations plantingOperations={plantingOperations}/>} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
         </Routes>
