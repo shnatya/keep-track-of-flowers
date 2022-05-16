@@ -65,6 +65,7 @@
   justify-self: center;
   height: 10rem;
   width: auto;
+  border-radius: 10px
 }
 
 .operation-page {
@@ -82,11 +83,20 @@
   box-shadow: 3px 4px #bae99b;
   border-radius: 10px;
 }
-
+.operation-filter-card {
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 45rem;
+  height: 20rem;
+  margin: 1rem 1rem;
+  box-shadow: 3px 4px #bae99b;
+  border-radius: 10px;
+}
 .location-pic {
   justify-self: center;
   height: 10rem;
   width: auto;
+  border-radius: 10px
 }
 
 .form {
@@ -136,4 +146,15 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.right{
+  padding-right: 50px;
+}
+
+.flower-shadow{
+  filter: drop-shadow(5px 30px 35px rgba(165, 225, 92, 0.4))
+}
+.location-shadow{
+  filter: drop-shadow(5px 30px 35px rgba(137, 234, 19, 0.4))
 }

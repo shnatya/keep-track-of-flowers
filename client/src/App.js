@@ -39,13 +39,16 @@ function App() {
     .then(res => res.json())
     .then(locations => {
       setArrayOfUniqueLocations(locations)
+      console.log(locations)
     })
   }, [])
 
   useEffect(() => {
     fetch("/planting_operations")
     .then(res => res.json())
-    .then(operations => setPlantingOperations(operations))
+    .then(operations => {
+      setPlantingOperations(operations)
+    setOperationsToDisplay(operations)})
   }, [])
   
   useEffect(() => {
@@ -97,8 +100,17 @@ function App() {
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
-      let newArray =[]
-      newArray = flowers.map(flower => console.log(flower))
+      let arrayOfFlowersAndLocations = []
+      flowers.forEach(flower => {
+        let arrayOfLocations =[]
+        let flower_obj = {name: flower.name, image_url: flower.image_url}
+        flower.locations.forEach(location => arrayOfLocations.push(location.image_url)
+        )
+        flower_obj = {...flower_obj, arrayOfLocations}
+        console.log(flower_obj)
+        arrayOfFlowersAndLocations.push(flower_obj)
+      })
+        setOperationsToDisplay(arrayOfFlowersAndLocations)
     }
   }
 
@@ -139,7 +151,7 @@ function App() {
           <Route path="/choose-location" element={<ChooseLocation database={flowers}
                 arrayOfUniqueLocations={arrayOfUniqueLocations} finalCheckedFlowers={finalCheckedFlowers}
                 sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />
-          <Route path="/planting-operations" element={<Operations plantingOperations={plantingOperations} 
+          <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter}/>} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />

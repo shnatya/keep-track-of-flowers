@@ -1,7 +1,8 @@
 import React from "react";
 import OperationCard from "./OperationCard";
+import ByFlowersCard from "./ByFlowersCard";
 
-function Operations({plantingOperations, changeCurrentOperaionFilter, currentOperationFilter}) {
+function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOperationFilter}) {
 
     return (
         <>
@@ -11,9 +12,12 @@ function Operations({plantingOperations, changeCurrentOperaionFilter, currentOpe
                 <option value="By locations">By locations</option>
             </select>
             <h1>Planting operations</h1>
-            <div className="operation-page">
-                {plantingOperations.map(operation => <OperationCard operation={operation} key={operation.id}/>)}
-            </div>
+            {currentOperationFilter === "By default" ? <div className="operation-page">
+                {operationsToDisplay.map(operation => <OperationCard operation={operation} key={operation.id}/>)}
+            </div>: null}
+            {currentOperationFilter === "By flowers" ? <div className="flex-container">
+                {operationsToDisplay.map((flower, index) => <ByFlowersCard flower={flower} key={index}/>)}
+            </div> : null}
         </>
     )
 }
