@@ -20,6 +20,9 @@ function App() {
   const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
   const [finalCheckedLocations, setFinalCheckedLocations] = useState([])
   const [plantingOperations, setPlantingOperations] = useState([])
+  const [showOperationsFilter, setShowOperationsFilter] = useState(false)
+  const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
+  const [operationsToDisplay, setOperationsToDisplay] = useState([])
 
   useEffect(() => {
       fetch("/database")
@@ -85,6 +88,20 @@ function App() {
     }
   }
 
+  function changeCurrentOperaionFilter(filter) {
+    setCurrentOperationFilter(filter)
+    updateOperationsToDisplay(filter) 
+  }
+
+  function updateOperationsToDisplay(filter) {
+    if(filter === "By default") {
+      setOperationsToDisplay(plantingOperations)
+    }else if(filter === "By flowers"){
+      let newArray =[]
+      newArray = flowers.map(flower => console.log(flower))
+    }
+  }
+
   function sendCheckedFlowers(checkedFlowers) {
     setFinalCheckedFlowers(checkedFlowers)
   }
@@ -99,14 +116,14 @@ function App() {
         <Header currentTypeFlower={currentTypeFlower} 
                    arrayOfTypes={arrayOfTypes}
                    user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                   setUser={setUser} setLoggedIn={setLoggedIn} />
+                   setUser={setUser} setLoggedIn={setLoggedIn} showOperationsFilter={showOperationsFilter}/>
         
     </div>
     )
   }
 
   function updatePlantingOperations(newOperation) {
-    setPlantingOperations([...plantingOperations, newOperation])
+    setPlantingOperations([newOperation, ...plantingOperations])
   }
 
   return (
@@ -122,7 +139,8 @@ function App() {
           <Route path="/choose-location" element={<ChooseLocation database={flowers}
                 arrayOfUniqueLocations={arrayOfUniqueLocations} finalCheckedFlowers={finalCheckedFlowers}
                 sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />
-          <Route path="/planting-operations" element={<Operations plantingOperations={plantingOperations}/>} />
+          <Route path="/planting-operations" element={<Operations plantingOperations={plantingOperations} 
+                changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter}/>} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
         </Routes>

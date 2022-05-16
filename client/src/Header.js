@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useNavigate} from "react-router-dom"
 
-function Hearder({currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes, changeTypeFlower, user, setUser, setLoggedIn}) {
+function Hearder({currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes, showOperationsFilter, user, setUser, setLoggedIn}) {
     const navigate = useNavigate()
 
     let typeOptions = arrayOfTypes.map(type => {
@@ -26,7 +26,9 @@ function Hearder({currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes, chan
                 <option value="All">All</option>
                 {typeOptions}
             </select>
+            
             <button onClick={handleLogout}>Log Out</button>
+            
             <h2>Hello {user}!</h2>
         </div>
     )
@@ -34,3 +36,4 @@ function Hearder({currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes, chan
 
 export default Hearder
 
+//{showOperationsFilter? <button onClick={showPlantingPage}>Planting</button> : null}

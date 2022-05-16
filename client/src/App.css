@@ -63,13 +63,29 @@
 
 .flower-pic {
   justify-self: center;
-  height: 12rem;
+  height: 10rem;
   width: auto;
+}
+
+.operation-page {
+  display: grid;
+  grid-column-gap: 1px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.operation-card {
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 25rem;
+  height: 10rem;
+  margin: 1rem 1rem;
+  box-shadow: 3px 4px #bae99b;
+  border-radius: 10px;
 }
 
 .location-pic {
   justify-self: center;
-  height: 12rem;
+  height: 10rem;
   width: auto;
 }
 
@@ -106,4 +122,18 @@
 
 .button {
   width: 5.5rem
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.settings{
+  display: block;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
