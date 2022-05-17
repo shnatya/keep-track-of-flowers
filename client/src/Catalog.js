@@ -9,7 +9,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
     const navigate=useNavigate()
 
     console.log(arrayOfTypes)
-    debugger
     let typeOptions = arrayOfTypes.map(type => {
         return (
             <option key={type} value={type}>{type}</option>
@@ -27,6 +26,11 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
         
     }
 
+    function handleFilter(event){
+        changeCurrentTypeFlower(event.target.value)
+        setErrors([])
+    }
+
     function addCheckedFlowers(flower) {
         setErrors([])
         let arrayOfCheckedFlowers = checkedFlowers
@@ -42,7 +46,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
     return (
         <div>
             <ErrorList errors={errors}/>
-            <select onChange={(event) => changeCurrentTypeFlower(event.target.value)} value={currentTypeFlower}>
+            <select onChange={(event) => handleFilter(event)} value={currentTypeFlower}>
                 <option value="All">All</option>
                 {typeOptions}
             </select>

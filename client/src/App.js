@@ -27,7 +27,7 @@ function App() {
       .then(res => res.json())
       .then(data => {
         console.log(data)
-        debugger
+      
         setFlowers(data)
         setFlowersToDisplay(data)
         collectTypeSpecies(data)
@@ -38,7 +38,7 @@ function App() {
     fetch("/locations")
     .then(res => res.json())
     .then(locations => {
-      debugger
+    
       setArrayOfUniqueLocations(locations)
       console.log(locations)
     })
@@ -63,17 +63,11 @@ function App() {
   
   function collectTypeSpecies(data) {
     let typeSpeciesArray = []
-debugger
     data.forEach(flower => {
-      debugger
       let result = typeSpeciesArray.find(el => el === flower.type_species)
-      debugger
       if (result === undefined) {
-        debugger
         typeSpeciesArray = [...typeSpeciesArray, flower.type_species]
       }})
-      debugger
-      console.log(typeSpeciesArray)
     setArrayOfTypes(typeSpeciesArray)
   }
 
@@ -131,7 +125,7 @@ debugger
     return (
     <div>
         <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                   setUser={setUser} />
+                   setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter}/>
         
     </div>
     )
@@ -151,9 +145,8 @@ debugger
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
                 arrayOfTypes={arrayOfTypes} />} />
-          <Route path="/choose-location" element={<ChooseLocation database={flowers}
-                arrayOfUniqueLocations={arrayOfUniqueLocations} finalCheckedFlowers={finalCheckedFlowers}
-                sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />
+          <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
+                finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter}/>} />
           <Route path="*" element={<Intro />} />

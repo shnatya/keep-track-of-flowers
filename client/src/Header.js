@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate} from "react-router-dom"
 
-function Hearder({user, setUser, changeCurrentTypeFlower}) {
+function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFilter}) {
     const navigate = useNavigate()
 
     function handleLogout() {
@@ -9,8 +9,8 @@ function Hearder({user, setUser, changeCurrentTypeFlower}) {
         .then(res => {
           if(res.ok) {
             setUser(null)
-            
             changeCurrentTypeFlower("All")
+            changeCurrentOperaionFilter("By default")
             navigate("/login")
           } })
       }

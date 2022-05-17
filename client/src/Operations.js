@@ -6,6 +6,7 @@ function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOp
 
     return (
         <>
+            <h3>Filter:</h3>
             <select onChange={(event) => changeCurrentOperaionFilter(event.target.value)} value={currentOperationFilter}>
                 <option value="By default">By default</option>
                 <option value="By flowers">By flowers</option>
