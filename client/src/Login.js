@@ -24,7 +24,7 @@ function Login({onLogin}) {
             if(res.ok){
                 res.json().then(user => {
                     onLogin(user)
-                    navigate('/welcome')
+                    navigate('/catalog')
                 })
             }else{
                 res.json().then(errors => {

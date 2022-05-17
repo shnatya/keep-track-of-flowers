@@ -4,14 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import SignUp from './SignUp';
 import Intro from './Intro';
 import Login from './Login';
-import Welcome from './Welcome';
 import Header from './Header';
 import ChooseLocation from './ChooseLocation'
 import Operations from './Operations';
+import Catalog from './Catalog';
 
 function App() {
   const [user, setUser] = useState(null)
-  const [loggedIn, setLoggedIn] = useState(false)
   const [flowers, setFlowers] = useState([])
   const [arrayOfTypes, setArrayOfTypes] = useState([])
   const [arrayOfUniqueLocations, setArrayOfUniqueLocations] = useState([])
@@ -20,7 +19,6 @@ function App() {
   const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
   const [finalCheckedLocations, setFinalCheckedLocations] = useState([])
   const [plantingOperations, setPlantingOperations] = useState([])
-  const [showOperationsFilter, setShowOperationsFilter] = useState(false)
   const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
   const [operationsToDisplay, setOperationsToDisplay] = useState([])
 
@@ -28,6 +26,8 @@ function App() {
       fetch("/database")
       .then(res => res.json())
       .then(data => {
+        console.log(data)
+        debugger
         setFlowers(data)
         setFlowersToDisplay(data)
         collectTypeSpecies(data)
@@ -38,6 +38,7 @@ function App() {
     fetch("/locations")
     .then(res => res.json())
     .then(locations => {
+      debugger
       setArrayOfUniqueLocations(locations)
       console.log(locations)
     })
@@ -62,18 +63,22 @@ function App() {
   
   function collectTypeSpecies(data) {
     let typeSpeciesArray = []
-
+debugger
     data.forEach(flower => {
+      debugger
       let result = typeSpeciesArray.find(el => el === flower.type_species)
+      debugger
       if (result === undefined) {
+        debugger
         typeSpeciesArray = [...typeSpeciesArray, flower.type_species]
       }})
+      debugger
+      console.log(typeSpeciesArray)
     setArrayOfTypes(typeSpeciesArray)
   }
 
   function onLogin(user) {
     setUser(user)
-    setLoggedIn(true)
   }
   function changeCurrentTypeFlower(type) {
     setCurrentTypeFlower(type)
@@ -125,10 +130,8 @@ function App() {
   function loadHeader() {
     return (
     <div>
-        <Header currentTypeFlower={currentTypeFlower} 
-                   arrayOfTypes={arrayOfTypes}
-                   user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                   setUser={setUser} setLoggedIn={setLoggedIn} showOperationsFilter={showOperationsFilter}/>
+        <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
+                   setUser={setUser} />
         
     </div>
     )
@@ -140,14 +143,14 @@ function App() {
 
   return (
     <>
-      {loggedIn ? loadHeader() : null}
+      {user ? loadHeader() : null}
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login onLogin={onLogin}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
-          <Route path="/welcome" element={<Welcome user={user} setLoggedIn={setLoggedIn}
-                setUser={setUser} flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
-                currentTypeFlower={currentTypeFlower} />} />
+          <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
+                currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
+                arrayOfTypes={arrayOfTypes} />} />
           <Route path="/choose-location" element={<ChooseLocation database={flowers}
                 arrayOfUniqueLocations={arrayOfUniqueLocations} finalCheckedFlowers={finalCheckedFlowers}
                 sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />

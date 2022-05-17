@@ -3,10 +3,18 @@ import { useNavigate } from "react-router-dom";
 import ErrorList from "./ErrorList";
 import FlowerCard from "./FlowerCard";
 
-function Catalog({flowersToDisplay, sendCheckedFlowers}) {
+function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
     const [errors, setErrors] = useState([])
     const navigate=useNavigate()
+
+    console.log(arrayOfTypes)
+    debugger
+    let typeOptions = arrayOfTypes.map(type => {
+        return (
+            <option key={type} value={type}>{type}</option>
+        )
+    })
 
     function handleAddFlowersToLocation(event) {
         event.preventDefault()
@@ -34,6 +42,11 @@ function Catalog({flowersToDisplay, sendCheckedFlowers}) {
     return (
         <div>
             <ErrorList errors={errors}/>
+            <select onChange={(event) => changeCurrentTypeFlower(event.target.value)} value={currentTypeFlower}>
+                <option value="All">All</option>
+                {typeOptions}
+            </select>
+            <h1>Catalog</h1>
             <form onSubmit={handleAddFlowersToLocation}>
                 <button type="submit" className="button">Choose location</button>
                 {flowersToDisplay.map((flower, index) => <FlowerCard addFlower={addCheckedFlowers} key={index} flower={flower} />)}
@@ -44,3 +57,4 @@ function Catalog({flowersToDisplay, sendCheckedFlowers}) {
 }
 
 export default Catalog;
+

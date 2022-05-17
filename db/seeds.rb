@@ -17,8 +17,8 @@ puts "✅ Done seeding flowers!"
 puts "Seeding locations ..."
 Location.create(name: "Planter", description: "Maple rectangular planter", image_url: "https://drive.google.com/uc?export=view&id=13K9bEeUl7kzW3xUONIDElUvi3MU9-p13")
 Location.create(name: "Pot", description: "Round grey conoid pot", image_url: "https://drive.google.com/uc?export=view&id=1nTPCspG_cBoYdaZ81DzcY3zXk42jI-p0")
-Location.create(name: "Basket", description: "Basket with rose")
-Location.create(name: "Ground", description: "In the ground under bluberry, against the garage")
+Location.create(name: "Basket", description: "Basket", imag_url: "https://drive.google.com/uc?export=view&id=1jnxh2hS4dt7CUQSCi6MPv8XpNZUz4Pzd")
+Location.create(name: "Ground", description: "In the ground under bluberry, against the garage", image_url: "https://drive.google.com/uc?export=view&id=1UZENKkwkSjt7WDLhJqKSRaKqwepm6b_6")
 Location.create(name: "Flowerbed", description: "Flowerbed in the side yard")
 Location.create(name: "Pot", description: "Yellow small pot", image_url: "https://drive.google.com/uc?export=view&id=1WknC9REFVPot0CX8haNp06L9efqgB4Cw")
 Location.create(name: "Pot", description: "Clay strawberry pot with side openings", image_url: "https://drive.google.com/uc?export=view&id=1rp2Cfacm18r_EpPEVH69pICs3yix-NB5")
@@ -28,6 +28,7 @@ Location.create(name: "Ground", description: "In the ground by the fence with th
 Location.create(name: "Ground", description: "In the ground by the arch on the side yard", image_url: "https://drive.google.com/uc?export=view&id=1MaTLcCe8yRSR-iBnZdgO0frOZM0JLkj9")
 Location.create(name: "Ground", description: "On the left from the steps by the garage", image_url: "https://drive.google.com/uc?export=view&id=1WTiEar56pPgcqAOZAbrndM-CHWehAXVZ")
 Location.create(name: "Ground", description: "On the right from the steps by the garage", image_url: "https://drive.google.com/uc?export=view&id=1355aV-XB2HsugTlWbecvB4SzZdpMIzaA")
+Location.create(name: "Pot", description: "Tall pot on the porch", image_url: "https://drive.google.com/uc?export=view&id=1vUYoVAXL6KBsRuDCDzUmoDiqjJMt5rSt")
 Location.create(name: "Pot", description: "Tall pot on the porch", image_url: "https://drive.google.com/uc?export=view&id=1vUYoVAXL6KBsRuDCDzUmoDiqjJMt5rSt")
 #Location.create(name: "Ground", description: "In the ground by the fence with the bell", image_url: "https://drive.google.com/uc?export=view&id=1Odl9PjSTJ4_6k9aVbtEoO34g2yCDFS2z")
 
