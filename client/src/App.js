@@ -132,7 +132,9 @@ function App() {
   }
 
   function updatePlantingOperations(newOperation) {
+    debugger
     setPlantingOperations([newOperation, ...plantingOperations])
+    setOperationsToDisplay([newOperation, ...plantingOperations])
   }
 
   return (

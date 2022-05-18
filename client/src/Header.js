@@ -14,10 +14,29 @@ function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionF
             navigate("/login")
           } })
       }
+
+    function showFlowers() {
+        changeCurrentTypeFlower("All")
+        navigate("/catalog")
+    }
+
+    function showLocations() {
+        navigate("/choose-location")
+      }
+    
+    function showOperations() {
+        navigate("/planting-operations")
+    }
     return (
-        <div>
-            <button onClick={handleLogout}>Log Out</button>
+        <div className="div">
+            <button onClick={handleLogout} className="button-logout">Log Out</button>
             <h2>Hello {user}!</h2>
+            <div className="button-header">
+                <button onClick={showFlowers} className="btn">Flowers</button>
+                <button onClick={showLocations} className="btn">Locations</button>
+                <button onClick={showOperations} className="btn">Planting</button>
+            </div>
+            
         </div>
     )
 }

@@ -54,7 +54,7 @@
   border: grey solid 1px;
   padding: 1rem;
   width: 15rem;
-  height: 15rem;
+  height: 17rem;
   display: inline-grid;
   margin: 1rem 2rem;
   box-shadow: 3px 4px #bae99b;
@@ -71,7 +71,7 @@
 .operation-page {
   display: grid;
   grid-column-gap: 1px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .operation-card {
@@ -113,10 +113,8 @@
 
 .errors {
     justify-self: center;
-    padding:40px;
-    left: 180%;
     text-align: center;
-    font-size: 15px;
+    font-size: 17px;
     color: palevioletred;
     display: table-cell;
 }
@@ -131,7 +129,33 @@
 }
 
 .button {
-  width: 5.5rem
+  width: 6.5rem;
+  height: 2rem;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  border-radius: 10px;
+}
+
+.button-logout {
+  width: 6.5rem;
+  height: 2rem;
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  border-radius: 10px;
+}
+
+.div {
+  position: relative;
+}
+.order {
+  display: inline;
+}
+.text-hello {
+  float: left;
+  margin-left: 1350px;
+  margin-right: 100px;
 }
 
 .flex-container {
@@ -141,7 +165,7 @@
   justify-content: space-evenly;
 }
 
-.settings{
+.button-header {
   display: block;
   flex-direction: row;
   flex-wrap: wrap;
@@ -161,4 +185,17 @@
 
 .between-text{
   margin: 0em 0em 0em;
+}
+
+.btn-group {
+  margin: auto;
+  display:block;
+}
+
+.btn {
+  width: 6.5rem;
+  height: 2rem;
+  right: 20px;
+  bottom: 20px;
+  border-radius: 10px;
 }

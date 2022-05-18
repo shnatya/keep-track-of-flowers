@@ -18,7 +18,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
     function handleAddFlowersToLocation(event) {
         event.preventDefault()
         sendCheckedFlowers(checkedFlowers)
-        if(checkedFlowers.length == 0) {
+        if(checkedFlowers.length === 0) {
             setErrors(["Please choose at least one flower!"])
         }else{
             navigate('/choose-location')
@@ -44,17 +44,18 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
         }
     }
     return (
-        <div>
-            <ErrorList errors={errors}/>
+        <div className="div">
+            <ErrorList errors={errors} className="between-text"/>
             <select onChange={(event) => handleFilter(event)} value={currentTypeFlower}>
                 <option value="All">All</option>
                 {typeOptions}
             </select>
             <h1>Catalog</h1>
+            <h3>Choose flower(-s) to plant:</h3>
             <form onSubmit={handleAddFlowersToLocation}>
-                <button type="submit" className="button">Choose location</button>
+                
                 {flowersToDisplay.map((flower, index) => <FlowerCard addFlower={addCheckedFlowers} key={index} flower={flower} />)}
-                <button type="submit" className="button">Choose location</button>
+                <button type="submit" className="button">Next step</button>
             </form>
         </div>
     )

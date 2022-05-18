@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import MiniCard from './MiniCard';
 import LocationCard from './LocationCard';
 import { useNavigate } from 'react-router';
 
@@ -8,7 +7,7 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
 
     const navigate = useNavigate()
 
-    let arrayOfCheckedFlowers = finalCheckedFlowers.map(flower => <MiniCard key={flower.name} flower={flower}/>)
+   // let arrayOfCheckedFlowers = finalCheckedFlowers.map(flower => <MiniCard key={flower.name} flower={flower}/>)
     let arrayOfLocations = arrayOfUniqueLocations.map(location => <LocationCard key={location.id} location={location} addLocation={addLocation}/> )
 
     function addLocation(location) {
@@ -28,6 +27,7 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
        
         finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
                     let objOperation = Object.assign({}, {flower_id: flower.id, location_id: location.id})
+                    debugger
                     fetch( "/create-planting-operations", {
                         method: "POST",
                         headers: {
@@ -44,19 +44,13 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
         navigate("/planting-operations")
       }
     return(
-        <>
-            <div className='card'>
-                <h1>Plant these flower(-s) here: </h1>
-                {arrayOfCheckedFlowers}
-            </div>
-            <div className='card'>
-                <form onSubmit={handlePlantFlowers}>
-                    <button type="submit" className="button">Plant flowers</button>
-                    {arrayOfLocations}
-                    <button type="submit" className="button">Plant flowers</button>
-                </form>
+        <div className='div'>
+            <h1>Choose location(-s): </h1>
+            <form onSubmit={handlePlantFlowers}>
+                {arrayOfLocations}
+                <button type="submit" className="button">Plant</button>
+            </form>
         </div>
-        </>
     )
 }
 
