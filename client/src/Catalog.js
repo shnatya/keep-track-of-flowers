@@ -8,7 +8,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
     const [errors, setErrors] = useState([])
     const navigate=useNavigate()
 
-    console.log(arrayOfTypes)
     let typeOptions = arrayOfTypes.map(type => {
         return (
             <option key={type} value={type}>{type}</option>

@@ -24,7 +24,8 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
     function handlePlantFlowers(event) {
         event.preventDefault()
         sendCheckedLocations(checkedLocations)
-       
+        let promises = []
+        
         finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
                     let objOperation = Object.assign({}, {flower_id: flower.id, location_id: location.id})
                     debugger
@@ -38,11 +39,28 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
                         })
                       })
                       .then(res => res.json()
-                      .then(newOperation => updatePlantingOperations(newOperation)))
+                      .then(data => {  
+                        promises.push(data)
+                        debugger
+                    }))
         })
         )
+        Promise.all(promises).then(() => {
+            updatePlantingOperations(promises)
+        })
         navigate("/planting-operations")
       }
+    /*  var promises = []; //here will be kept all returned promises
+   
+   someArray.map((data,i) => { //loop though something
+      //call the asynchronous method and store the promise
+      promises.push(doSomething(data)); 
+   }):
+   Promise.all(promises).then(() => {
+      //When all promises are donde, this code is executed;
+      console.log('yaaay!');
+   });   
+   then(newOperation => updatePlantingOperations(newOperation))  */
     return(
         <div className='div'>
             <h1>Choose location(-s): </h1>

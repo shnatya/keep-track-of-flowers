@@ -26,7 +26,6 @@ function App() {
       fetch("/database")
       .then(res => res.json())
       .then(data => {
-        console.log(data)
       
         setFlowers(data)
         setFlowersToDisplay(data)
@@ -38,9 +37,7 @@ function App() {
     fetch("/locations")
     .then(res => res.json())
     .then(locations => {
-    
       setArrayOfUniqueLocations(locations)
-      console.log(locations)
     })
   }, [])
 
@@ -93,12 +90,16 @@ function App() {
   function changeCurrentOperaionFilter(filter) {
     setCurrentOperationFilter(filter)
     updateOperationsToDisplay(filter) 
+    debugger
   }
 
   function updateOperationsToDisplay(filter) {
+    debugger
     if(filter === "By default") {
+      debugger
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
+      debugger
       let arrayOfFlowersAndLocations = []
       flowers.forEach(flower => {
         let arrayOfLocations =[]
@@ -106,7 +107,6 @@ function App() {
         flower.locations.forEach(location => arrayOfLocations.push(location.image_url)
         )
         flower_obj = {...flower_obj, arrayOfLocations}
-        console.log(flower_obj)
         arrayOfFlowersAndLocations.push(flower_obj)
       })
         setOperationsToDisplay(arrayOfFlowersAndLocations)
@@ -132,9 +132,12 @@ function App() {
   }
 
   function updatePlantingOperations(newOperation) {
+    console.log(newOperation)
     debugger
     setPlantingOperations([newOperation, ...plantingOperations])
-    setOperationsToDisplay([newOperation, ...plantingOperations])
+    setOperationsToDisplay([newOperation, ...plantingOperations]) //tried plantingOperations
+    console.log(operationsToDisplay)
+    debugger
   }
 
   return (
