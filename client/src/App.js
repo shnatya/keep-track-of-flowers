@@ -21,6 +21,7 @@ function App() {
   const [plantingOperations, setPlantingOperations] = useState([])
   const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
   const [operationsToDisplay, setOperationsToDisplay] = useState([])
+  const [showFlowerMessage, setShowFlowerMessage] = useState(false)
 
   useEffect(() => {
       fetch("/database")
@@ -87,18 +88,18 @@ function App() {
     }
   }
 
-  function updateFlowersArray(arrayOfDeletedFlowersId) {
+  function deleteFlower(arrayOfDeletedFlowersIds) {
     let newArrayOfFlowers = [...flowers]
-    arrayOfDeletedFlowersId.forEach(id => {
+    arrayOfDeletedFlowersIds.forEach(id => {
       newArrayOfFlowers = newArrayOfFlowers.filter(flower => flower.id !== id)
       console.log(newArrayOfFlowers)
-      debugger
     })
+    if(newArrayOfFlowers.length === 0) {
+      setShowFlowerMessage(true)
+    }
     console.log(newArrayOfFlowers)
-    debugger
     setFlowers(newArrayOfFlowers)
     setFlowersToDisplay(newArrayOfFlowers)
-    debugger
   }
 
   function changeCurrentOperaionFilter(filter) {
@@ -142,13 +143,26 @@ function App() {
     )
   }
 
-  function updatePlantingOperations(newOps) {
+  function addPlantingOperations(newOps) {
     let newArray = [...newOps, ...plantingOperations]
-    //let newArray = newOps.concat(plantingOperations)
     setPlantingOperations(newArray)
     setOperationsToDisplay(newArray)
   }
-  
+
+  function deletePlantingOperations(arrayOfDeletedFlowersIds) {
+    let newArrayOfOperations = [...plantingOperations]
+
+    arrayOfDeletedFlowersIds.forEach(id => {
+      newArrayOfOperations = newArrayOfOperations.filter(operation => operation.flower.id !== id)
+      
+    })
+    setPlantingOperations(newArrayOfOperations)
+    setOperationsToDisplay(newArrayOfOperations)
+  }
+  function updateFlowerMessage(v) {
+    setShowFlowerMessage(v)
+    debugger
+  }
   return (
     <>
       {user ? loadHeader() : null}
@@ -158,9 +172,10 @@ function App() {
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                arrayOfTypes={arrayOfTypes} updateFlowersArray={updateFlowersArray} />} />
+                arrayOfTypes={arrayOfTypes} deleteFlower={deleteFlower} deletePlantingOperations={deletePlantingOperations}
+                showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} />} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
-                finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />
+                finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} addPlantingOperations={addPlantingOperations}/>} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter}/>} />
           <Route path="*" element={<Intro />} />

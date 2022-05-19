@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LocationCard from './LocationCard';
 import { useNavigate } from 'react-router';
 
-function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, finalCheckedFlowers, sendCheckedLocations}) {
+function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalCheckedFlowers, sendCheckedLocations}) {
     const [checkedLocations, setCheckedLocations] = useState([])
 
     const navigate = useNavigate()
@@ -56,7 +56,7 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
                     let obj = jsonBodies[i]
                     newObjects.push(obj)
                 }
-                updatePlantingOperations(newObjects)
+                addPlantingOperations(newObjects)
             })
         });
            
