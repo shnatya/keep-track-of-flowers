@@ -48,7 +48,7 @@ function Login({onLogin}) {
                  type="text" id="username" value={username} autoComplete="off" placeholder="Username" className="input"></input>
                 <input onChange={(e) => setPassword(e.target.value)}
                 type="password" id="password" value={password}  autoComplete="current-password" placeholder="Password" className="input"></input>
-                <button type="submit" className="button">Log In</button>
+                <button type="submit" className="button-login">Log In</button>
             </form>
             <ErrorList errors={errors} />
             <h3>Don't have an account? Please </h3>

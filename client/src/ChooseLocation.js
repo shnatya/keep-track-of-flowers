@@ -6,8 +6,6 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
     const [checkedLocations, setCheckedLocations] = useState([])
 
     const navigate = useNavigate()
-
-   // let arrayOfCheckedFlowers = finalCheckedFlowers.map(flower => <MiniCard key={flower.name} flower={flower}/>)
     let arrayOfLocations = arrayOfUniqueLocations.map(location => <LocationCard key={location.id} location={location} addLocation={addLocation}/> )
 
     function addLocation(location) {
@@ -21,96 +19,59 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
             setCheckedLocations(arrayOfCheckedLocations)
         }}
 
-     function handlePlantFlowers(event) {
+    function myFetch(objOperation) {
+        return new Promise(resolve => {
+            fetch("/create-planting-operations", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    planting: objOperation
+                })
+            }).then(response => resolve(response))
+                .catch((error) => {
+                    console.error(error);
+            });
+        });
+    }
+
+    function handlePlantFlowers(event) {
         event.preventDefault()
         sendCheckedLocations(checkedLocations)
-        debugger
-        (async () => {
-            for (let iFl = 0; iFl < finalCheckedFlowers.length; iFl++){
-                debugger
-                (async () => {
-                    for (let iLoc = 0; iLoc < checkedLocations.length; iLoc++){
-                        debugger
-                        let objOperation = Object.assign({}, {flower_id: finalCheckedFlowers[iFl].id, location_id: checkedLocations[iLoc].id})
-                        debugger
-                        const response = await fetch( "/create-planting-operations", {
-                            method: "POST",
-                            headers: {
-                            "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                planting: objOperation
-                            })
-                        });
-                        debugger
-                        const data = await response.json()
-                        debugger
-                        if (response.ok) {
-                            updatePlantingOperations(data)
-                            debugger
-                        }else {
-                            console.log(data.errors)
-                        }   
-                        debugger
-                    }
-                })()
-            }
-        })() 
-           /* finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => (async () => { {
-                let objOperation = Object.assign({}, {flower_id: flower.id, location_id: location.id})
-                debugger
-                const response = await fetch( "/create-planting-operations", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        planting: objOperation
-                    })
-                  });
-                  const data = await response.json()
-                  if (response.ok) {
-                    updatePlantingOperations(data)
-                    debugger
-                  }else {
-                      console.log(data.errors)
-                  }    
-    }  })())
-    )   */
+
+        let promises = [];
+        finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
+            let objOperation = Object.assign({}, { flower_id: flower.id, location_id: location.id })
+            promises.push(myFetch(objOperation))
+        })
+        )
+        let jsonPromises = []
+        Promise.all(promises).then(responses => {
+            responses.forEach(res => jsonPromises.push(res.json()))
+
+            Promise.all(jsonPromises).then(jsonBodies => {
+                let newObjects = [];
+                for (let i = 0; i < jsonBodies.length; i++) {
+                    let obj = jsonBodies[i]
+                    newObjects.push(obj)
+                }
+                updatePlantingOperations(newObjects)
+            })
+        });
+           
         navigate("/planting-operations")
       }
- 
-/*
-const start = async () => {
-  await asyncForEach([1, 2, 3], async (num) => {
-    await waitFor(50);
-    console.log(num);
-  });
-  console.log('Done');
-}
-start();
 
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}*/
     return(
         <div className='div'>
-            <h1>Choose location(-s): </h1>
+            <h3>Choose location(-s): </h3>
             <form onSubmit={handlePlantFlowers}>
                 {arrayOfLocations}
-                <button type="submit" className="button">Plant</button>
+                <button type="submit" className="button-plant">Plant</button>
             </form>
         </div>
     )
 }
 
 export default ChooseLocation;
-
-/*// wait for the array of results
-let results = await Promise.all([
-  fetch(url1),
-  fetch(url2),
-  ...
-]); */

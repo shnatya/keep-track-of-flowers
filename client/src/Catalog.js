@@ -54,7 +54,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
             <form onSubmit={handleAddFlowersToLocation}>
                 
                 {flowersToDisplay.map((flower, index) => <FlowerCard addFlower={addCheckedFlowers} key={index} flower={flower} />)}
-                <button type="submit" className="button">Next step</button>
+                <button type="submit" className="button-flowers">Next step</button>
             </form>
         </div>
     )

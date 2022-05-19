@@ -131,18 +131,13 @@ function App() {
     )
   }
 
-  
-
-  function updatePlantingOperations(newOperation) {
-    console.log(newOperation)
+  function updatePlantingOperations(newOps) {
     debugger
-    setPlantingOperations([newOperation, ...plantingOperations])
-    // setOperationsToDisplay((newOperation) => [newOperation, ...plantingOperations])
-    var newArray = [newOperation, ...plantingOperations]
+    console.log(newOps)
+    // let newArray = [newOps, ...plantingOperations]
+    let newArray = newOps.concat(plantingOperations)
+    setPlantingOperations(newArray)
     setOperationsToDisplay(newArray)
-    console.log('newArray = ', newArray)
-    console.log(operationsToDisplay)
-    debugger
   }
   
   return (
