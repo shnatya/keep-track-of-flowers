@@ -3,7 +3,7 @@ import OperationCard from "./OperationCard";
 import ByFlowersCard from "./ByFlowersCard";
 
 function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOperationFilter}) {
-
+    
     return (
         <>
             <h3>Filter:</h3>

@@ -1,6 +1,7 @@
 import React from "react";
 
 function OperationCard({operation}) {
+    
     return (
         <div className="operation-card flex-container">
             <img src={operation.flower.image_url} alt="Flower name" className="flower-pic"></img>

@@ -21,46 +21,80 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
             setCheckedLocations(arrayOfCheckedLocations)
         }}
 
-    function handlePlantFlowers(event) {
+     function handlePlantFlowers(event) {
         event.preventDefault()
         sendCheckedLocations(checkedLocations)
-        let promises = []
-        
-        finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
-                    let objOperation = Object.assign({}, {flower_id: flower.id, location_id: location.id})
-                    debugger
-                    fetch( "/create-planting-operations", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            planting: objOperation
-                        })
-                      })
-                      .then(res => res.json()
-                      .then(data => {  
-                        promises.push(data)
+        debugger
+        (async () => {
+            for (let iFl = 0; iFl < finalCheckedFlowers.length; iFl++){
+                debugger
+                (async () => {
+                    for (let iLoc = 0; iLoc < checkedLocations.length; iLoc++){
                         debugger
-                    }))
-        })
-        )
-        Promise.all(promises).then(() => {
-            updatePlantingOperations(promises)
-        })
+                        let objOperation = Object.assign({}, {flower_id: finalCheckedFlowers[iFl].id, location_id: checkedLocations[iLoc].id})
+                        debugger
+                        const response = await fetch( "/create-planting-operations", {
+                            method: "POST",
+                            headers: {
+                            "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                planting: objOperation
+                            })
+                        });
+                        debugger
+                        const data = await response.json()
+                        debugger
+                        if (response.ok) {
+                            updatePlantingOperations(data)
+                            debugger
+                        }else {
+                            console.log(data.errors)
+                        }   
+                        debugger
+                    }
+                })()
+            }
+        })() 
+           /* finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => (async () => { {
+                let objOperation = Object.assign({}, {flower_id: flower.id, location_id: location.id})
+                debugger
+                const response = await fetch( "/create-planting-operations", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        planting: objOperation
+                    })
+                  });
+                  const data = await response.json()
+                  if (response.ok) {
+                    updatePlantingOperations(data)
+                    debugger
+                  }else {
+                      console.log(data.errors)
+                  }    
+    }  })())
+    )   */
         navigate("/planting-operations")
       }
-    /*  var promises = []; //here will be kept all returned promises
-   
-   someArray.map((data,i) => { //loop though something
-      //call the asynchronous method and store the promise
-      promises.push(doSomething(data)); 
-   }):
-   Promise.all(promises).then(() => {
-      //When all promises are donde, this code is executed;
-      console.log('yaaay!');
-   });   
-   then(newOperation => updatePlantingOperations(newOperation))  */
+ 
+/*
+const start = async () => {
+  await asyncForEach([1, 2, 3], async (num) => {
+    await waitFor(50);
+    console.log(num);
+  });
+  console.log('Done');
+}
+start();
+
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}*/
     return(
         <div className='div'>
             <h1>Choose location(-s): </h1>
@@ -73,3 +107,10 @@ function ChooseLocation({arrayOfUniqueLocations, updatePlantingOperations, final
 }
 
 export default ChooseLocation;
+
+/*// wait for the array of results
+let results = await Promise.all([
+  fetch(url1),
+  fetch(url2),
+  ...
+]); */

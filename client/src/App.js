@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useDebugValue } from 'react';
 import { Route, Routes } from "react-router-dom";
 import SignUp from './SignUp';
 import Intro from './Intro';
@@ -131,15 +131,20 @@ function App() {
     )
   }
 
+  
+
   function updatePlantingOperations(newOperation) {
     console.log(newOperation)
     debugger
     setPlantingOperations([newOperation, ...plantingOperations])
-    setOperationsToDisplay([newOperation, ...plantingOperations]) //tried plantingOperations
+    // setOperationsToDisplay((newOperation) => [newOperation, ...plantingOperations])
+    var newArray = [newOperation, ...plantingOperations]
+    setOperationsToDisplay(newArray)
+    console.log('newArray = ', newArray)
     console.log(operationsToDisplay)
     debugger
   }
-
+  
   return (
     <>
       {user ? loadHeader() : null}
