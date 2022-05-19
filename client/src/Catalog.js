@@ -22,7 +22,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
         }else{
             navigate('/choose-location')
         }
-        
     }
 
     function handleFilter(event){

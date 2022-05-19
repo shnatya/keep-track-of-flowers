@@ -90,16 +90,13 @@ function App() {
   function changeCurrentOperaionFilter(filter) {
     setCurrentOperationFilter(filter)
     updateOperationsToDisplay(filter) 
-    debugger
   }
 
   function updateOperationsToDisplay(filter) {
-    debugger
     if(filter === "By default") {
-      debugger
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
-      debugger
+
       let arrayOfFlowersAndLocations = []
       flowers.forEach(flower => {
         let arrayOfLocations =[]
@@ -132,10 +129,8 @@ function App() {
   }
 
   function updatePlantingOperations(newOps) {
-    debugger
-    console.log(newOps)
-    // let newArray = [newOps, ...plantingOperations]
-    let newArray = newOps.concat(plantingOperations)
+    let newArray = [...newOps, ...plantingOperations]
+    //let newArray = newOps.concat(plantingOperations)
     setPlantingOperations(newArray)
     setOperationsToDisplay(newArray)
   }
