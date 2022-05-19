@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  resources :planting_operations
+  #resources :planting_operations
   #resources :locations
-  resources :flowers
-  resources :users
+  #resources :flowers
+  #resources :users
 
 
   get "/locations", to: "locations#index"
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/planting-operations", to: "planting_operations#index"
 
   get '/database', to: 'flowers#index'
+  delete '/delete-flower/:id', to: 'flowers#destroy'
 
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

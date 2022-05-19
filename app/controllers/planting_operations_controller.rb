@@ -1,5 +1,5 @@
 class PlantingOperationsController < ApplicationController
-    #GET "/planting_operations" 
+    #GET "/planting-operations" 
     def index
         planting_operations = PlantingOperation.all
         render json: planting_operations

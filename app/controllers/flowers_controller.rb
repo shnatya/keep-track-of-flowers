@@ -6,6 +6,12 @@ class FlowersController < ApplicationController
         render json: flowers, include: ['flower', 'flower.user', 'locations']
     end
 
+    #DELETE "/delete-flower"
+    def destroy
+        flower = Flower.find_by(id: params[:id])
+        flower.destroy
+        render json: flower.id
+    end
 
 end
 

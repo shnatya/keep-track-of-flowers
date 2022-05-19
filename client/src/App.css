@@ -112,14 +112,6 @@
   border-radius: 10px;
 }
 
-.errors {
-    justify-self: center;
-    text-align: center;
-    font-size: 17px;
-    color: palevioletred;
-    display: table-cell;
-}
-
 .links {
   padding: 2rem;
   justify-self: center;
@@ -130,34 +122,42 @@
 }
 
 .button-plant {
-  width: 3rem;
-  height: 4rem;
+  width: 3.4em;
+  height: 4em;
   position: fixed;
   right: 20px;
-  bottom: 370px;
+  bottom: 390px;
   border-radius: 10px;
 }
 .button-flowers {
+  width: 3.4em;
+  height: 4em;
+  position: fixed;
+  right: 20px;
+  bottom: 245px;
+  border-radius: 10px;
+}
+.button-login {
+  width: 6.5em;
+  height: 1.8em;
+  margin-top: 5mm;
+  margin-bottom: 15mm;
+  border-radius: 7px;
+}
+.button-logout {
+  width: 5.5em;
+  height: 2em;
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  border-radius: 10px;
+}
+.button-flowers-manip {
   width: 3rem;
   height: 4rem;
   position: fixed;
   right: 20px;
   bottom: 290px;
-  border-radius: 10px;
-}
-.button-login {
-  width: 5.5rem;
-  height: 1.8rem;
-  margin-top: 5mm;
-  margin-bottom: 15mm;
-  border-radius: 10px;
-}
-.button-logout {
-  width: 5.5rem;
-  height: 2rem;
-  position: absolute;
-  right: 10px;
-  bottom: 0;
   border-radius: 10px;
 }
 
@@ -208,9 +208,33 @@
 }
 
 .btn {
-  width: 6.5rem;
-  height: 2rem;
+  width: 6.5em;
+  height: 2em;
   right: 20px;
   bottom: 20px;
   border-radius: 10px;
 }
+
+.btn-add-flower {
+  width: 6.5em;
+  height: 2em;
+  right: 20px;
+  bottom: 20px;
+  border-radius: 10px;
+  margin: 7px;
+}
+
+.errors 
+{
+    display: flex;
+    position: relative;
+    padding:20px;
+    left: 165%;
+    text-align: center;
+    font-size: 17px;
+    color: palevioletred;
+    display: table-cell;
+    font-size: 20px;
+  
+}
+

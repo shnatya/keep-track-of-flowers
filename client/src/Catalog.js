@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorList from "./ErrorList";
 import FlowerCard from "./FlowerCard";
 
-function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, changeCurrentTypeFlower, arrayOfTypes}) {
+function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, updateFlowersArray, changeCurrentTypeFlower, arrayOfTypes}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
     const [errors, setErrors] = useState([])
     const navigate=useNavigate()
@@ -41,14 +41,61 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, chang
             setCheckedFlowers(arrayOfCheckedFlowers)
         }
     }
+
+    function handleAddFlowerButton() {
+        
+    }
+
+    function handleDeleteFlowerButton(event) {
+        event.preventDefault()
+        let promises = []
+        checkedFlowers.forEach(flowerObj => {
+
+            promises.push(myFetch(flowerObj.id))})
+        let jsonPromises = []
+        Promise.all(promises).then(responses => {
+            responses.forEach(res => {
+                jsonPromises.push(res.json())
+})
+
+            Promise.all(jsonPromises).then(jsonBodies => {
+                let deletedFlowersId = [];
+                for (let i = 0; i < jsonBodies.length; i++) {
+                    let obj = jsonBodies[i]
+                    deletedFlowersId.push(obj)
+                }
+                updateFlowersArray(deletedFlowersId)
+            debugger
+            }) 
+        });
+    }
+
+    function myFetch(flowerId) {
+        return new Promise(resolve => {
+
+            fetch(`/delete-flower/${flowerId}`, {
+                method: "DELETE"
+            }).then(response => resolve(response))
+                .catch((error) => {
+                    console.error(error);
+            });
+        });
+    }
+
+    function handleUpdateFlowerButton() {
+        
+    }
     return (
         <div className="div">
             <ErrorList errors={errors} className="between-text"/>
+            <h1>Catalog</h1>
             <select onChange={(event) => handleFilter(event)} value={currentTypeFlower}>
                 <option value="All">All</option>
                 {typeOptions}
             </select>
-            <h1>Catalog</h1>
+            <button onClick={handleAddFlowerButton} className="btn-add-flower">Add</button>
+            <button onClick={handleDeleteFlowerButton} className="btn-add-flower">Delete</button>
+            <button onClick={handleUpdateFlowerButton} className="btn-add-flower">Update</button>
             <h3>Choose flower(-s) to plant:</h3>
             <form onSubmit={handleAddFlowersToLocation}>
                 

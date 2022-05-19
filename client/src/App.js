@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect, useDebugValue } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes } from "react-router-dom";
 import SignUp from './SignUp';
 import Intro from './Intro';
@@ -42,7 +42,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    fetch("/planting_operations")
+    fetch("/planting-operations")
     .then(res => res.json())
     .then(operations => {
       setPlantingOperations(operations)
@@ -73,10 +73,10 @@ function App() {
   }
   function changeCurrentTypeFlower(type) {
     setCurrentTypeFlower(type)
-    updateFlowersToDisplay(type) 
+    updateFlowersToDisplayByType(type) 
   }
   
-  function updateFlowersToDisplay(type) {
+  function updateFlowersToDisplayByType(type) {
     setCurrentTypeFlower(type)
     if(type === "All") {
       setFlowersToDisplay(flowers)
@@ -85,6 +85,20 @@ function App() {
       newArray = flowers.filter(flower => type === flower.type_species)
       setFlowersToDisplay(newArray)
     }
+  }
+
+  function updateFlowersArray(arrayOfDeletedFlowersId) {
+    let newArrayOfFlowers = [...flowers]
+    arrayOfDeletedFlowersId.forEach(id => {
+      newArrayOfFlowers = newArrayOfFlowers.filter(flower => flower.id !== id)
+      console.log(newArrayOfFlowers)
+      debugger
+    })
+    console.log(newArrayOfFlowers)
+    debugger
+    setFlowers(newArrayOfFlowers)
+    setFlowersToDisplay(newArrayOfFlowers)
+    debugger
   }
 
   function changeCurrentOperaionFilter(filter) {
@@ -144,7 +158,7 @@ function App() {
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                arrayOfTypes={arrayOfTypes} />} />
+                arrayOfTypes={arrayOfTypes} updateFlowersArray={updateFlowersArray} />} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} updatePlantingOperations={updatePlantingOperations}/>} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
