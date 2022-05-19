@@ -28,7 +28,7 @@ Location.create(name: "Ground", description: "In the ground by the arch on the s
 Location.create(name: "Ground", description: "On the left from the steps by the garage", image_url: "https://drive.google.com/uc?export=view&id=1WTiEar56pPgcqAOZAbrndM-CHWehAXVZ")
 Location.create(name: "Ground", description: "On the right from the steps by the garage", image_url: "https://drive.google.com/uc?export=view&id=1355aV-XB2HsugTlWbecvB4SzZdpMIzaA")
 Location.create(name: "Pot", description: "Tall pot on the porch", image_url: "https://drive.google.com/uc?export=view&id=1vUYoVAXL6KBsRuDCDzUmoDiqjJMt5rSt")
-#Location.create(name: "Pot", description: "Tall pot on the porch", image_url: "https://drive.google.com/uc?export=view&id=1vUYoVAXL6KBsRuDCDzUmoDiqjJMt5rSt")
+Location.create(name: "Flowerbed", description: "Flowerbed on the side yard", image_url: "https://drive.google.com/uc?export=view&id=1HGbb87eEOR42_TAfJKvR--NxCVDYU3Cb")
 Location.create(name: "Pot", description: "Black medium pot", image_url: "https://drive.google.com/uc?export=view&id=1va7O6DZOIMe5M0mdyyb0bfT_xPLpcyHC")
 Location.create(name: "Ground", description: "Under the raspberry", image_url: "https://drive.google.com/uc?export=view&id=1INsn5xogtVDra0kMwJs9IjAMUo2iFhF7")
 Location.create(name: "Ground", description: "In the corner of side yard, under the porch", image_url: "https://drive.google.com/uc?export=view&id=1W_RQW54paSSWbi4XbI4Bq_OHEgHKtyn1")
@@ -40,15 +40,18 @@ puts "✅ Done seeding locations!"
 
 puts "Seeding planting operations ..."
 PlantingOperation.create(flower_id: 1, location_id: 4 )
-PlantingOperation.create(flower_id: 1, location_id: 5 )
+PlantingOperation.create(flower_id: 1, location_id: 14 )
+PlantingOperation.create(flower_id: 2, location_id: 12)
+PlantingOperation.create(flower_id: 2, location_id: 10)
 PlantingOperation.create(flower_id: 2, location_id: 7)
 PlantingOperation.create(flower_id: 2, location_id: 6)
+PlantingOperation.create(flower_id: 2, location_id: 5)
 PlantingOperation.create(flower_id: 2, location_id: 4)
 PlantingOperation.create(flower_id: 3, location_id: 1)
-PlantingOperation.create(flower_id: 3, location_id: 8)
+PlantingOperation.create(flower_id: 3, location_id: 7)
 PlantingOperation.create(flower_id: 4, location_id: 2)
 PlantingOperation.create(flower_id: 4, location_id: 3)
-PlantingOperation.create(flower_id: 5, location_id: 7)
+PlantingOperation.create(flower_id: 5, location_id: 6)
 puts "✅ Done seeding planting operations!"
 
 
