@@ -171,7 +171,16 @@ function App() {
       })
       .then(res => res.json()
       .then(data => {
-        console.log(data)
+        if(data.errors) {
+          setErrors(data.errors)
+        }else {
+          //updateCategoriesArray(data.categories)      
+          setFlowers([...flowers, data])
+        
+          setCurrentTypeFlower("All") 
+          setFlowersToDisplay([data, ...flowers])
+          navigate('/catalog')
+        }
       }))
   }
   function loadHeader() {

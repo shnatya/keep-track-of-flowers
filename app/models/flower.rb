@@ -1,4 +1,5 @@
 class Flower < ApplicationRecord
+  #does not validate a new flower, need to send array woth errors and display them
   belongs_to :user
   has_many :planting_operations, dependent: :destroy
   has_many :locations, through: :planting_operations
@@ -6,7 +7,7 @@ class Flower < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :type_species, :height, subseason, presence: true
   validate :height, numericality: {less_than: 100}
-  #validates :subseason, inclusion: {in: %w(Early Mid Late), message: "%{value} is not accebtable. Please use Early, Mid or Late"}
+  validates :subseason, inclusion: {in: %w(Early Mid Late), message: "%{value} is not accebtable. Please use Early, Mid or Late"}
 end
 
 #begin custom messs
