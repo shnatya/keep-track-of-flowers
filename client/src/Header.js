@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate} from "react-router-dom"
+import ErrorList from "./ErrorList";
 
-function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFilter}) {
+function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFilter, errors}) {
     const navigate = useNavigate()
-
+   
     function handleLogout() {
         fetch(("/logout"), { method: "DELETE"})
         .then(res => {
@@ -36,7 +37,7 @@ function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionF
                 <button onClick={showLocations} className="btn">Locations</button>
                 <button onClick={showOperations} className="btn">Planting</button>
             </div>
-            
+            <ErrorList errors={errors} className="between-text"/>
         </div>
     )
 }

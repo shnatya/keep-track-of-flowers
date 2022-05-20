@@ -4,9 +4,10 @@ import ErrorList from "./ErrorList";
 import FlowerCard from "./FlowerCard";
 
 function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, deleteFlower,
-                    changeCurrentTypeFlower, arrayOfTypes, deletePlantingOperations, showFlowerMessage, updateFlowerMessage}) {
+                    changeCurrentTypeFlower, arrayOfTypes, deletePlantingOperations, showFlowerMessage,
+                    updateFlowerMessage, updateErrors}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
-    const [errors, setErrors] = useState([])
+    //const [errors, updateErrors] = useState([])
     const navigate=useNavigate()
 
     let typeOptions = arrayOfTypes.map(type => {
@@ -19,7 +20,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
         event.preventDefault()
         sendCheckedFlowers(checkedFlowers)
         if(checkedFlowers.length === 0) {
-            setErrors(["Please choose at least one flower!"])
+            updateErrors(["Please choose at least one flower!"])
         }else{
             navigate('/choose-location')
         }
@@ -27,11 +28,11 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
     function handleFilter(event){
         changeCurrentTypeFlower(event.target.value)
-        setErrors([])
+        updateErrors([])
     }
 
     function addCheckedFlowers(flower) {
-        setErrors([])
+        updateErrors([])
         let arrayOfCheckedFlowers = checkedFlowers
         let result = arrayOfCheckedFlowers.find(obj => obj === flower)
         if(result === undefined) {
@@ -45,11 +46,10 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
     function handleAddFlowerButton() {
         updateFlowerMessage(false)
+        navigate('/add-new-flower')
     }
 
-    function handleDeleteFlowerButton(event) {
-       // event.preventDefault()
-        
+    function handleDeleteFlowerButton() {
         let promises = []
         checkedFlowers.forEach(flowerObj => {
 
@@ -68,7 +68,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                 deleteFlower(deletedFlowersIds)
                 deletePlantingOperations(deletedFlowersIds)
             })
-            
         });
     }
 
@@ -89,15 +88,14 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     }
     return (
         <div className="div">
-            <ErrorList errors={errors} className="between-text"/>
             <h1>Catalog</h1>
             <select onChange={(event) => handleFilter(event)} value={currentTypeFlower}>
                 <option value="All">All</option>
                 {typeOptions}
             </select>
-            <button onClick={handleAddFlowerButton} className="btn-add-flower">Add</button>
-            <button onClick={handleDeleteFlowerButton} className="btn-add-flower">Delete</button>
-            <button onClick={handleUpdateFlowerButton} className="btn-add-flower">Update</button>
+            <button onClick={handleAddFlowerButton} className="btn-flower">Add</button>
+            <button onClick={handleDeleteFlowerButton} className="btn-flower">Delete</button>
+            <button onClick={handleUpdateFlowerButton} className="btn-flower">Update</button>
             <h3>Choose flower(-s) to plant:</h3>
             {showFlowerMessage ? <h1 style={{color: "green"}}>No more flowers left. Do you want to add new?</h1> : null}
             <form onSubmit={handleAddFlowersToLocation}>

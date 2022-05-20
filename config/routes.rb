@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/planting-operations", to: "planting_operations#index"
 
   get '/database', to: 'flowers#index'
+  post '/add-new-flower', to: 'flowers#create'
   delete '/delete-flower/:id', to: 'flowers#destroy'
 
   post '/login', to: 'sessions#create'

@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import SignUp from './SignUp';
 import Intro from './Intro';
 import Login from './Login';
@@ -8,6 +8,7 @@ import Header from './Header';
 import ChooseLocation from './ChooseLocation'
 import Operations from './Operations';
 import Catalog from './Catalog';
+import NewFlowerForm from './NewFlowerForm';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -22,6 +23,8 @@ function App() {
   const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
   const [operationsToDisplay, setOperationsToDisplay] = useState([])
   const [showFlowerMessage, setShowFlowerMessage] = useState(false)
+  const [errors, setErrors] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
       fetch("/database")
@@ -54,11 +57,15 @@ function App() {
     fetch("/me").then(res => {
       if(res.ok) {
         res.json().then(user => {
+          console.log(user)
           onLogin(user)})
       } 
     })
   }, [])
   
+  function updateErrors(newErrors) {
+    setErrors(newErrors)
+  }
   function collectTypeSpecies(data) {
     let typeSpeciesArray = []
     data.forEach(flower => {
@@ -133,16 +140,6 @@ function App() {
     setFinalCheckedLocations(checkedLocations)
   }
 
-  function loadHeader() {
-    return (
-    <div>
-        <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                   setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter}/>
-        
-    </div>
-    )
-  }
-
   function addPlantingOperations(newOps) {
     let newArray = [...newOps, ...plantingOperations]
     setPlantingOperations(newArray)
@@ -163,6 +160,29 @@ function App() {
     setShowFlowerMessage(v)
     debugger
   }
+
+  function addNewFlower(newFlower) {
+      fetch("/add-new-flower", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({...newFlower, user_id: user.id})
+      })
+      .then(res => res.json()
+      .then(data => {
+        console.log(data)
+      }))
+  }
+  function loadHeader() {
+    return (
+    <div>
+        <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
+                   setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter} errors={errors}/>
+        
+    </div>
+    )
+  }
   return (
     <>
       {user ? loadHeader() : null}
@@ -170,10 +190,11 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login onLogin={onLogin}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
+          <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} />} />
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
                 arrayOfTypes={arrayOfTypes} deleteFlower={deleteFlower} deletePlantingOperations={deletePlantingOperations}
-                showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} />} />
+                showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}/>} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} addPlantingOperations={addPlantingOperations}/>} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 

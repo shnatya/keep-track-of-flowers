@@ -7,10 +7,9 @@ function FlowerCard({flower, addFlower}) {
             <input type="checkbox" onClick={() => addFlower(flower)} id={flower.name} name={flower.name} value={flower.name}
                     className="between-text"></input>
             <h2 className="between-text">{flower.name}</h2> 
-            <img src = {flower.image_url} className = "flower-pic"></img>
+            <img src = {flower.image_url} className = "flower-pic" alt={flower.type_species}></img>
             <h4 className="between-text">Height: {flower.height}</h4>
             <h4 className="between-text">Subseason: {flower.subseason}</h4>
-           
         </div>
     )
 }
