@@ -5,8 +5,7 @@ class Flower < ApplicationRecord
   has_many :locations, through: :planting_operations
 
   validates :name, presence: true, uniqueness: true
-  validates :type_species, :height, subseason, presence: true
-  validate :height, numericality: {less_than: 100}
+  validates :type_species, :height, :subseason, presence: true
   validates :subseason, inclusion: {in: %w(Early Mid Late), message: "%{value} is not accebtable. Please use Early, Mid or Late"}
 end
 

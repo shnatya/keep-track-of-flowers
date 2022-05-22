@@ -2,10 +2,11 @@ import React from "react";
 import { useNavigate} from "react-router-dom"
 import ErrorList from "./ErrorList";
 
-function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFilter, errors}) {
+function Header({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFilter, errors, updateErrors}) {
     const navigate = useNavigate()
    
     function handleLogout() {
+        updateErrors([])
         fetch(("/logout"), { method: "DELETE"})
         .then(res => {
           if(res.ok) {
@@ -18,14 +19,17 @@ function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionF
 
     function showFlowers() {
         changeCurrentTypeFlower("All")
+        updateErrors([])
         navigate("/catalog")
     }
 
     function showLocations() {
+        updateErrors([])
         navigate("/choose-location")
       }
     
     function showOperations() {
+        updateErrors([])
         navigate("/planting-operations")
     }
     return (
@@ -42,5 +46,5 @@ function Hearder({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionF
     )
 }
 
-export default Hearder
+export default Header;
 

@@ -46,6 +46,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
     function handleAddFlowerButton() {
         updateFlowerMessage(false)
+        updateErrors([])
         navigate('/add-new-flower')
     }
 

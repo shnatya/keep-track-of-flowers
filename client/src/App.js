@@ -10,6 +10,7 @@ import Operations from './Operations';
 import Catalog from './Catalog';
 import NewFlowerForm from './NewFlowerForm';
 
+//need to update array of locations for new planted flower when filter by flower
 function App() {
   const [user, setUser] = useState(null)
   const [flowers, setFlowers] = useState([])
@@ -66,6 +67,7 @@ function App() {
   function updateErrors(newErrors) {
     setErrors(newErrors)
   }
+
   function collectTypeSpecies(data) {
     let typeSpeciesArray = []
     data.forEach(flower => {
@@ -118,7 +120,6 @@ function App() {
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
-
       let arrayOfFlowersAndLocations = []
       flowers.forEach(flower => {
         let arrayOfLocations =[]
@@ -172,7 +173,9 @@ function App() {
       .then(res => res.json()
       .then(data => {
         if(data.errors) {
-          setErrors(data.errors)
+          console.log(data.errors)
+          updateErrors(data.errors)
+          debugger
         }else {
           //updateCategoriesArray(data.categories)      
           setFlowers([...flowers, data])
@@ -187,7 +190,8 @@ function App() {
     return (
     <div>
         <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                   setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter} errors={errors}/>
+                   setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter} errors={errors}
+                   updateErrors={updateErrors}/>
         
     </div>
     )
@@ -205,7 +209,8 @@ function App() {
                 arrayOfTypes={arrayOfTypes} deleteFlower={deleteFlower} deletePlantingOperations={deletePlantingOperations}
                 showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}/>} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
-                finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} addPlantingOperations={addPlantingOperations}/>} />
+                finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} addPlantingOperations={addPlantingOperations}
+                changeCurrentOperaionFilter={changeCurrentOperaionFilter}/>} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter}/>} />
           <Route path="*" element={<Intro />} />

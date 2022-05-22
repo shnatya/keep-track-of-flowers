@@ -10,7 +10,7 @@ class FlowersController < ApplicationController
     #POST "/add-new-flower"
     def create
         
-        flower = Flower.create(flower_params)
+        flower = Flower.create!(flower_params)
         render json: flower
     end
 
@@ -27,6 +27,6 @@ class FlowersController < ApplicationController
     end
 
     def render_unprocessable_entity_response(invalid)
-        render json: {errors: invalid.record.errors}, status: :unprocessable_entity
+        render json: {errors: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
 end
