@@ -39,6 +39,7 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
 
     function handlePlantFlowers(event) {
         event.preventDefault()
+        
         sendCheckedLocations(checkedLocations)
         changeCurrentOperaionFilter("By default")
 

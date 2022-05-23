@@ -12,6 +12,9 @@ Flower.create(name: "Armeniacum", type_species: "Muscari", season: "Spring", sub
 Flower.create(name: "Columbus", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Pinkish red with cream edge", height: "18 inches and up", description: "Double tulip", user_id: 1, image_url: "https://www.tulips.com/images/popup/columbus-double-tulip.jpg")
 Flower.create(name: "Yellow crocus", type_species: "Crocuses", season: "Spring", subseason: "Early", color: "Yellow", height: "4 to 6 inches", description: "Multiply very quickly", user_id: 2, image_url: "https://www.tulips.com/images/popup/Yellow-Crocus.jpg")
 Flower.create(name: "Joan of Arc", type_species: "Crocuses", season: "Spring", subseason: "Early", color: "White", height: "4 to 6 inches", description: "Multiply very quickly", user_id: 2, image_url: "https://www.tulips.com/images/popup/Joan-of-Arc.jpg")
+Flower.create(name: "Addison June", type_species: "Dahlias", season: "Summer", subseason: "Mid", color: "Pink", height: "3 feet", description: "", user_id: 2, image_url: "https://drive.google.com/uc?export=view&id=1F_GKblrC2W1tMnZjjnXQKR_Xy1EdFDf9")
+Flower.create(name: "Orange Princess", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Orange", height: "16 to 18 inches", description: "A normal tulip has six petals while a Double tulip has at least twice that amount! ", user_id: 1, image_url: "https://s3.amazonaws.com/cdn.tulips.com/images/large/Orange-Princess-2017.jpg")
+
 puts "✅ Done seeding flowers!"
 
 puts "Seeding locations ..."
@@ -32,6 +35,10 @@ Location.create(name: "Flowerbed", description: "Flowerbed on the side yard", im
 Location.create(name: "Pot", description: "Black medium pot", image_url: "https://drive.google.com/uc?export=view&id=1va7O6DZOIMe5M0mdyyb0bfT_xPLpcyHC")
 Location.create(name: "Ground", description: "Under the raspberry", image_url: "https://drive.google.com/uc?export=view&id=1INsn5xogtVDra0kMwJs9IjAMUo2iFhF7")
 Location.create(name: "Ground", description: "In the corner of side yard, under the porch", image_url: "https://drive.google.com/uc?export=view&id=1W_RQW54paSSWbi4XbI4Bq_OHEgHKtyn1")
+Location.create(name: "Pot", description: "Green triangle pot", image_url: "https://drive.google.com/uc?export=view&id=1sEzKHaHsegYaD44ChUEamWztfa1zBcTp")
+Location.create(name: "Pot", description: "Brownish pot", image_url: "https://drive.google.com/uc?export=view&id=1srXUYYS1qdwOlAr8kDMtKyonjzC8gZk6")
+Location.create(name: "Pot", description: "Wooden triangle pot", image_url: "https://drive.google.com/uc?export=view&id=17RUYvSAHmMhKaHXXM2rVKXBI5HevITAM")
+Location.create(name: "Pot", description: "Black pot", image_url: "https://drive.google.com/uc?export=view&id=10brDv2ClksKcUCCtXsU-6P44rsXBByZ8")
 
 
 
@@ -52,6 +59,13 @@ PlantingOperation.create(flower_id: 3, location_id: 7)
 PlantingOperation.create(flower_id: 4, location_id: 2)
 PlantingOperation.create(flower_id: 4, location_id: 3)
 PlantingOperation.create(flower_id: 5, location_id: 6)
+
+PlantingOperation.create(flower_id: 6, location_id: 19)
+PlantingOperation.create(flower_id: 6, location_id: 20)
+PlantingOperation.create(flower_id: 6, location_id: 21)
+PlantingOperation.create(flower_id: 7, location_id: 18)
+PlantingOperation.create(flower_id: 7, location_id: 14)
+
 puts "✅ Done seeding planting operations!"
 
 

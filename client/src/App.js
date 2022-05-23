@@ -58,7 +58,6 @@ function App() {
     fetch("/me").then(res => {
       if(res.ok) {
         res.json().then(user => {
-          console.log(user)
           onLogin(user)})
       } 
     })
@@ -89,6 +88,7 @@ function App() {
   function updateFlowersToDisplayByType(type) {
     setCurrentTypeFlower(type)
     if(type === "All") {
+      console.log(flowers)
       setFlowersToDisplay(flowers)
     }else {
       let newArray = []
@@ -117,6 +117,7 @@ function App() {
   }
 
   function updateOperationsToDisplay(filter) {
+  
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
@@ -127,6 +128,8 @@ function App() {
         flower.locations.forEach(location => arrayOfLocations.push(location.image_url)
         )
         flower_obj = {...flower_obj, arrayOfLocations}
+        console.log(flower_obj)
+        
         arrayOfFlowersAndLocations.push(flower_obj)
       })
         setOperationsToDisplay(arrayOfFlowersAndLocations)
@@ -145,6 +148,26 @@ function App() {
     let newArray = [...newOps, ...plantingOperations]
     setPlantingOperations(newArray)
     setOperationsToDisplay(newArray)
+    console.log(newOps)
+    debugger
+    updateFlowersWithNewLocations(newOps)
+    debugger
+  }
+
+  /*function extractNewLocationsForFlower(newOps) {
+    let arrayOfNewLocations = []
+    arrayOfNewLocations = newOps.map(operation => operation.location)
+  }*/
+
+  function updateFlowersWithNewLocations(newOps) {
+    //let newLocations = extractNewLocationsForFlower(newOps)
+    debugger
+    let updatedFlowers = [...flowers]
+    newOps.forEach(operation => updatedFlowers.forEach(flower => {
+                                                if(flower.id === operation.flower.id) {
+                                                  flower.locations.push(operation.location)
+                                                }})) 
+    setFlowers(updatedFlowers)
   }
 
   function deletePlantingOperations(arrayOfDeletedFlowersIds) {
@@ -159,7 +182,6 @@ function App() {
   }
   function updateFlowerMessage(v) {
     setShowFlowerMessage(v)
-    debugger
   }
 
   function addNewFlower(newFlower) {
@@ -175,7 +197,6 @@ function App() {
         if(data.errors) {
           console.log(data.errors)
           updateErrors(data.errors)
-          debugger
         }else {
           //updateCategoriesArray(data.categories)      
           setFlowers([...flowers, data])

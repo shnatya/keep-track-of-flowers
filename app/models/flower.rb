@@ -1,5 +1,4 @@
 class Flower < ApplicationRecord
-  #does not validate a new flower, need to send array woth errors and display them
   belongs_to :user
   has_many :planting_operations, dependent: :destroy
   has_many :locations, through: :planting_operations
