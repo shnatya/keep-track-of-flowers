@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function NewFlowerForm({addNewFlower}) {
+function NewFlowerForm({addNewFlower, updateErrors}) {
     const [newFlower, setNewFlower] = useState({
         name: "",
         type_species: "",
@@ -14,6 +14,7 @@ function NewFlowerForm({addNewFlower}) {
     
 
     function handleInput(event) {
+        updateErrors([])
         setNewFlower({
             ...newFlower,
             [event.target.name]: event.target.value
@@ -48,12 +49,12 @@ function NewFlowerForm({addNewFlower}) {
                     <div className="div-flower-input-order">
                         <label htmlFor="type" className="label">Type: </label>
                         <input type="text" id="type" name="type_species" value={newFlower.type_species} onChange={handleInput} className="input-flower"
-                            placeholder="tulips, crocuses, ..." />
+                            placeholder="Tulips, Crocuses, ..." />
                     </div>
                     <div className="div-flower-input-order">
                         <label htmlFor="height" className="label">Height: </label>
                         <input type="text" id="height" name="height" value={newFlower.height} onChange={handleInput} className="input-flower"
-                                placeholder="in inches" />
+                                placeholder="Specify units of measurement ..." />
                     </div>
                     <div className="div-flower-input-order">
                         <label htmlFor="season" className="label">Season: </label>
@@ -77,7 +78,7 @@ function NewFlowerForm({addNewFlower}) {
                         <input type="text" id="image_url" name="image_url" value={newFlower.image_url} onChange={handleInput} className="input-flower" />
                     </div>
                     <div>
-                        <button type="submit">Submit</button>
+                        <button className="button-login" type="submit">Submit</button>
                     </div>
                     
                 </form>

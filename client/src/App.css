@@ -139,7 +139,7 @@
 }
 .button-login {
   width: 6.5em;
-  height: 1.8em;
+  height: 2em;
   margin-top: 5mm;
   margin-bottom: 15mm;
   border-radius: 7px;
@@ -161,6 +161,13 @@
   border-radius: 10px;
 }
 
+.button-flowers-update {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 190px;
+  border-radius: 5px;
+  border-width: 0.05mm;
+}
 .div {
   position: relative;
 }
@@ -269,7 +276,7 @@
   border: grey solid 1px;
   padding: 1rem;
   width: 650px;
-  height: 550px;
+  height: 420px;
   display: inline-grid;
   margin: 1rem 2rem;
   box-shadow: 3px 4px #bae99b;

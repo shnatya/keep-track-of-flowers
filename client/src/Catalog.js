@@ -4,13 +4,13 @@ import ErrorList from "./ErrorList";
 import FlowerCard from "./FlowerCard";
 
 function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, deleteFlower,
-                    changeCurrentTypeFlower, arrayOfTypes, deletePlantingOperations, showFlowerMessage,
-                    updateFlowerMessage, updateErrors}) {
+                    changeCurrentTypeFlower, arrayTypesOfFlowers, deletePlantingOperations, showFlowerMessage,
+                    updateFlowerMessage, updateErrors, extractFlowerObjById}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
     //const [errors, updateErrors] = useState([])
     const navigate=useNavigate()
 
-    let typeOptions = arrayOfTypes.map(type => {
+    let typeOptions = arrayTypesOfFlowers.map(type => {
         return (
             <option key={type} value={type}>{type}</option>
         )
@@ -84,23 +84,22 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
         });
     }
 
-    function handleUpdateFlowerButton() {
-        
-    }
+
     return (
         <div className="div">
             <h1>Catalog</h1>
-            <select onChange={(event) => handleFilter(event)} value={currentTypeFlower}>
-                <option value="All">All</option>
+            <select onChange={(event) => handleFilter(event)} value={currentTypeFlower} >
+                <option value="All">All</option>  
                 {typeOptions}
             </select>
             <button onClick={handleAddFlowerButton} className="btn-flower">Add</button>
             <button onClick={handleDeleteFlowerButton} className="btn-flower">Delete</button>
-            <button onClick={handleUpdateFlowerButton} className="btn-flower">Update</button>
+           
             <h3>Choose flower(-s) to plant:</h3>
             {showFlowerMessage ? <h1 style={{color: "green"}}>No more flowers left. Do you want to add new?</h1> : null}
             <form onSubmit={handleAddFlowersToLocation}>
-                {flowersToDisplay.map((flower, index) => <FlowerCard addFlower={addCheckedFlowers} key={index} flower={flower} />)}
+                {flowersToDisplay.map((flower, index) => <FlowerCard addFlower={addCheckedFlowers} key={index} flower={flower} 
+                                                                        extractFlowerObjById={extractFlowerObjById} />)}
                 <button type="submit" className="button-flowers">Next step</button>
             </form>
         </div>

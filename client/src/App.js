@@ -9,12 +9,13 @@ import ChooseLocation from './ChooseLocation'
 import Operations from './Operations';
 import Catalog from './Catalog';
 import NewFlowerForm from './NewFlowerForm';
+import UpdateFlowerForm from './UpdateFlowerForm'
 
 //need to update array of locations for new planted flower when filter by flower
 function App() {
   const [user, setUser] = useState(null)
   const [flowers, setFlowers] = useState([])
-  const [arrayOfTypes, setArrayOfTypes] = useState([])
+  const [arrayTypesOfFlowers, setArrayTypesOfFlowers] = useState([])
   const [arrayOfUniqueLocations, setArrayOfUniqueLocations] = useState([])
   const [currentTypeFlower, setCurrentTypeFlower] = useState("All")
   const [flowersToDisplay, setFlowersToDisplay] = useState([])
@@ -24,6 +25,7 @@ function App() {
   const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
   const [operationsToDisplay, setOperationsToDisplay] = useState([])
   const [showFlowerMessage, setShowFlowerMessage] = useState(false)
+  const [flowerNeedToUpdate, setFlowerNeedToUpdate] = useState({})
   const [errors, setErrors] = useState([])
   const navigate = useNavigate()
 
@@ -67,14 +69,14 @@ function App() {
     setErrors(newErrors)
   }
 
-  function collectTypeSpecies(data) {
+  function collectTypeSpecies(flowersArray) {
     let typeSpeciesArray = []
-    data.forEach(flower => {
+    flowersArray.forEach(flower => {
       let result = typeSpeciesArray.find(el => el === flower.type_species)
       if (result === undefined) {
         typeSpeciesArray = [...typeSpeciesArray, flower.type_species]
       }})
-    setArrayOfTypes(typeSpeciesArray)
+    setArrayTypesOfFlowers(typeSpeciesArray)
   }
 
   function onLogin(user) {
@@ -88,7 +90,6 @@ function App() {
   function updateFlowersToDisplayByType(type) {
     setCurrentTypeFlower(type)
     if(type === "All") {
-      console.log(flowers)
       setFlowersToDisplay(flowers)
     }else {
       let newArray = []
@@ -101,14 +102,14 @@ function App() {
     let newArrayOfFlowers = [...flowers]
     arrayOfDeletedFlowersIds.forEach(id => {
       newArrayOfFlowers = newArrayOfFlowers.filter(flower => flower.id !== id)
-      console.log(newArrayOfFlowers)
     })
     if(newArrayOfFlowers.length === 0) {
       setShowFlowerMessage(true)
     }
-    console.log(newArrayOfFlowers)
     setFlowers(newArrayOfFlowers)
     setFlowersToDisplay(newArrayOfFlowers)
+    collectTypeSpecies(newArrayOfFlowers)
+    setCurrentOperationFilter("By default")
   }
 
   function changeCurrentOperaionFilter(filter) {
@@ -128,8 +129,6 @@ function App() {
         flower.locations.forEach(location => arrayOfLocations.push(location.image_url)
         )
         flower_obj = {...flower_obj, arrayOfLocations}
-        console.log(flower_obj)
-        
         arrayOfFlowersAndLocations.push(flower_obj)
       })
         setOperationsToDisplay(arrayOfFlowersAndLocations)
@@ -148,10 +147,7 @@ function App() {
     let newArray = [...newOps, ...plantingOperations]
     setPlantingOperations(newArray)
     setOperationsToDisplay(newArray)
-    console.log(newOps)
-    debugger
     updateFlowersWithNewLocations(newOps)
-    debugger
   }
 
   /*function extractNewLocationsForFlower(newOps) {
@@ -195,11 +191,10 @@ function App() {
       .then(res => res.json()
       .then(data => {
         if(data.errors) {
-          console.log(data.errors)
           updateErrors(data.errors)
-        }else {
-          //updateCategoriesArray(data.categories)      
+        }else {     
           setFlowers([...flowers, data])
+          collectTypeSpecies([...flowers, data])
         
           setCurrentTypeFlower("All") 
           setFlowersToDisplay([data, ...flowers])
@@ -207,6 +202,14 @@ function App() {
         }
       }))
   }
+
+  function extractFlowerObjById(flowerId) {
+    let intFlowerId = parseInt(flowerId)
+    let flowerObj = flowers.find(flower => flower.id === intFlowerId)
+    setFlowerNeedToUpdate(flowerObj)
+    console.log(flowerObj)
+  }
+
   function loadHeader() {
     return (
     <div>
@@ -224,11 +227,13 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login onLogin={onLogin}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
-          <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} />} />
+          <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} updateErrors={updateErrors} />} />
+          <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate}/>} />
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                arrayOfTypes={arrayOfTypes} deleteFlower={deleteFlower} deletePlantingOperations={deletePlantingOperations}
-                showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}/>} />
+                arrayTypesOfFlowers={arrayTypesOfFlowers} deleteFlower={deleteFlower} deletePlantingOperations={deletePlantingOperations}
+                showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}
+                extractFlowerObjById={extractFlowerObjById}/>} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} addPlantingOperations={addPlantingOperations}
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter}/>} />
@@ -243,3 +248,4 @@ function App() {
 }
 
 export default App;
+
