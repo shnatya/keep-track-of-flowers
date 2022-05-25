@@ -65,6 +65,52 @@ function App() {
     })
   }, [])
   
+  function addNewFlower(newFlower) {
+    fetch("/add-new-flower", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({...newFlower, user_id: user.id})
+    })
+    .then(res => res.json()
+    .then(data => {
+      if(data.errors) {
+        updateErrors(data.errors)
+      }else {     
+        setFlowers([...flowers, data])
+        collectTypeSpecies([...flowers, data])
+      
+        setCurrentTypeFlower("All") 
+        setFlowersToDisplay([data, ...flowers])
+        navigate('/catalog')
+      }
+    }))
+  }
+
+  function addUpdatedFlower(updatedFlower) {
+    fetch(`/update-flower/${updatedFlower.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({...updatedFlower, user_id: user.id})
+    })
+    .then(res => res.json()
+    .then(data => {
+      if(data.errors) {
+        updateErrors(data.errors)
+      }else { 
+        console.log(data)    
+        setFlowers([...flowers, data])
+        collectTypeSpecies([...flowers, data])
+      
+        setCurrentTypeFlower("All") 
+        setFlowersToDisplay([data, ...flowers])
+       navigate('/catalog')
+      }
+    }))
+  }
   function updateErrors(newErrors) {
     setErrors(newErrors)
   }
@@ -150,13 +196,7 @@ function App() {
     updateFlowersWithNewLocations(newOps)
   }
 
-  /*function extractNewLocationsForFlower(newOps) {
-    let arrayOfNewLocations = []
-    arrayOfNewLocations = newOps.map(operation => operation.location)
-  }*/
-
   function updateFlowersWithNewLocations(newOps) {
-    //let newLocations = extractNewLocationsForFlower(newOps)
     debugger
     let updatedFlowers = [...flowers]
     newOps.forEach(operation => updatedFlowers.forEach(flower => {
@@ -180,35 +220,13 @@ function App() {
     setShowFlowerMessage(v)
   }
 
-  function addNewFlower(newFlower) {
-      fetch("/add-new-flower", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({...newFlower, user_id: user.id})
-      })
-      .then(res => res.json()
-      .then(data => {
-        if(data.errors) {
-          updateErrors(data.errors)
-        }else {     
-          setFlowers([...flowers, data])
-          collectTypeSpecies([...flowers, data])
-        
-          setCurrentTypeFlower("All") 
-          setFlowersToDisplay([data, ...flowers])
-          navigate('/catalog')
-        }
-      }))
-  }
-
   function extractFlowerObjById(flowerId) {
     let intFlowerId = parseInt(flowerId)
     let flowerObj = flowers.find(flower => flower.id === intFlowerId)
     setFlowerNeedToUpdate(flowerObj)
     console.log(flowerObj)
   }
+
 
   function loadHeader() {
     return (
@@ -228,7 +246,8 @@ function App() {
           <Route path="/login" element={<Login onLogin={onLogin}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
           <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} updateErrors={updateErrors} />} />
-          <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate}/>} />
+          <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate} addUpdatedFlower={addUpdatedFlower}
+                  updateErrors={updateErrors}/>} />
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
                 arrayTypesOfFlowers={arrayTypesOfFlowers} deleteFlower={deleteFlower} deletePlantingOperations={deletePlantingOperations}

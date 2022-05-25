@@ -9,8 +9,14 @@ class FlowersController < ApplicationController
 
     #POST "/add-new-flower"
     def create
-        
         flower = Flower.create!(flower_params)
+        render json: flower
+    end
+
+    #PATCH "/update-flower/:id"
+    def update
+        flower = Flower.find_by(id: params[:id])
+        flower.update!(flower_params)
         render json: flower
     end
 
@@ -23,7 +29,7 @@ class FlowersController < ApplicationController
 
     private 
     def flower_params
-        params.permit(:name, :type_species, :season, :subseason, :color, :height, :description, :image_url, :user_id)
+        params.permit(:id, :name, :type_species, :season, :subseason, :color, :height, :description, :image_url, :user_id)
     end
 
     def render_unprocessable_entity_response(invalid)
