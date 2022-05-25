@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import FlowerCard from "./FlowerCard";
 
 function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, deleteFlower,
-                    changeCurrentTypeFlower, arrayTypesOfFlowers, deletePlantingOperations, showFlowerMessage,
+                    changeCurrentTypeFlower, arrayTypesOfFlowers, deletePlantingOperationsByFlowers, showFlowerMessage,
                     updateFlowerMessage, updateErrors, extractFlowerObjById}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
     //const [errors, updateErrors] = useState([])
@@ -66,7 +66,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                     deletedFlowersIds.push(obj)
                 }
                 deleteFlower(deletedFlowersIds)
-                deletePlantingOperations(deletedFlowersIds)
+                deletePlantingOperationsByFlowers(deletedFlowersIds)
             })
         });
     }

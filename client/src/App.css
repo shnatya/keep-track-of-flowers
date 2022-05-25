@@ -168,6 +168,25 @@
   border-radius: 5px;
   border-width: 0.05mm;
 }
+.button-operation-delete {
+  width: 1.5rem;
+  height: 1.5rem;
+  float: left;
+
+  border-radius: 5px;
+  border-width: 0.05mm;
+}
+.button-operation-delete {
+  width: 1.5rem;
+  height: 1.5rem;
+  float: right;
+
+  border-radius: 5px;
+  border-width: 0.05mm;
+}
+.div-operation-delete {
+  text-align: right;
+}
 .div {
   position: relative;
 }

@@ -1,14 +1,10 @@
 Rails.application.routes.draw do
-  #resources :planting_operations
-  #resources :locations
-  #resources :flowers
-  #resources :users
-
 
   get "/locations", to: "locations#index"
 
   post "/create-planting-operations", to: "planting_operations#create"
   get "/planting-operations", to: "planting_operations#index"
+  delete "/delete-planting-operation/:id", to: "planting_operations#destroy"
 
   get '/flowers', to: 'flowers#index'
   post '/add-new-flower', to: 'flowers#create'
@@ -21,7 +17,6 @@ Rails.application.routes.draw do
   get '/me', to: 'users#show'
   post '/signup', to: 'users#create'
 
-  get '/hello', to: 'application#hello_world'
   get '*path', to: 'fallback#index',
       constraints: ->(req) { !req.xhr? && req.format.html? }
 end

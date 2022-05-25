@@ -13,6 +13,15 @@ class PlantingOperationsController < ApplicationController
         render json: planting_operation, status: :created  
     end
 
+    #DELETE "/delete-planting-operation/:id"
+    def destroy
+        planting_operation = PlantingOperation.find_by(id: params[:id])
+        
+        planting_operation.destroy
+        
+        render json: planting_operation.id
+    end
+
     private
 
     def planting_operations_params

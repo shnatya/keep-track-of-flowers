@@ -176,7 +176,6 @@ function App() {
     let intFlowerId = parseInt(flowerId)
     let flowerObj = flowers.find(flower => flower.id === intFlowerId)
     setFlowerNeedToUpdate(flowerObj)
-    console.log(flowerObj)
   }
 //-----------------------------------Locations---------------------------------//
   useEffect(() => {
@@ -225,7 +224,7 @@ function App() {
     updateFlowersWithNewLocations(newOps)
   }
 
-  function deletePlantingOperations(arrayOfDeletedFlowersIds) {
+  function deletePlantingOperationsByFlowers(arrayOfDeletedFlowersIds) {
     let newArrayOfOperations = [...plantingOperations]
 
     arrayOfDeletedFlowersIds.forEach(id => {
@@ -234,6 +233,14 @@ function App() {
     })
     setPlantingOperations(newArrayOfOperations)
     setOperationsToDisplay(newArrayOfOperations)
+  }
+
+  function deletePlantingOperation(id) {
+    let newArrayOfOperations = [...plantingOperations]
+    newArrayOfOperations = newArrayOfOperations.filter(operation => operation.id !== id)
+    setPlantingOperations(newArrayOfOperations)
+    setOperationsToDisplay(newArrayOfOperations)
+    console.log(newArrayOfOperations)
   }
 
   function loadHeader() {
@@ -257,14 +264,15 @@ function App() {
                   updateErrors={updateErrors}/>} />
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
-                arrayTypesOfFlowers={arrayTypesOfFlowers} deleteFlower={deleteFlower} deletePlantingOperations={deletePlantingOperations}
+                arrayTypesOfFlowers={arrayTypesOfFlowers} deleteFlower={deleteFlower} deletePlantingOperationsByFlowers={deletePlantingOperationsByFlowers}
                 showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}
                 extractFlowerObjById={extractFlowerObjById}/>} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers}  addPlantingOperations={addPlantingOperations}
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter}/>} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
-                changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter} updateErrors={updateErrors}/>} />
+                changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter} updateErrors={updateErrors}
+                deletePlantingOperation={deletePlantingOperation}/>} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
         </Routes>
@@ -277,3 +285,5 @@ export default App;
 
 //when plant flowers, check flowers, and send them from Catalog/sibling component to App/parent component 
 //in order to transfer checked flowers to ChooseLocation/sibling component.
+//From Header I choose to navigate to Planting, I go to App where i keep all my routes, and there I keep my planting operations state
+//And can transfer all planting operations to the component
