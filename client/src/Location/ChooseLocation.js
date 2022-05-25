@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LocationCard from './LocationCard';
 import { useNavigate } from 'react-router';
 
-function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalCheckedFlowers, sendCheckedLocations,
+function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalCheckedFlowers,
                         changeCurrentOperaionFilter}) {
     const [checkedLocations, setCheckedLocations] = useState([])
 
@@ -39,8 +39,8 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
 
     function handlePlantFlowers(event) {
         event.preventDefault()
-        
-        sendCheckedLocations(checkedLocations)
+
+        //sendCheckedLocations(checkedLocations)
         changeCurrentOperaionFilter("By default")
 
         let promises = [];

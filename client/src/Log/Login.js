@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate  } from "react-router-dom";
-import ErrorList from "./ErrorList";
+import ErrorList from "../Errors/ErrorList";
 
 function Login({onLogin}) {
     const [username, setUsername] = useState("")

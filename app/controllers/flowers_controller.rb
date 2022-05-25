@@ -1,7 +1,7 @@
 class FlowersController < ApplicationController
     wrap_parameters format: []
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-     #GET "/database" 
+     #GET "/flowers" 
      def index
         flowers = Flower.all
         render json: flowers, include: ['flower', 'flower.user', 'locations']

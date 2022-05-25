@@ -1,36 +1,55 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from "react-router-dom";
-import SignUp from './SignUp';
+import SignUp from './Log/SignUp';
 import Intro from './Intro';
-import Login from './Login';
+import Login from './Log/Login';
 import Header from './Header';
-import ChooseLocation from './ChooseLocation'
-import Operations from './Operations';
-import Catalog from './Catalog';
-import NewFlowerForm from './NewFlowerForm';
-import UpdateFlowerForm from './UpdateFlowerForm'
+import ChooseLocation from './Location/ChooseLocation'
+import Operations from './Operations/Operations';
+import Catalog from './Flowers/Catalog';
+import NewFlowerForm from './Flowers/NewFlowerForm';
+import UpdateFlowerForm from './Flowers/UpdateFlowerForm'
 
 //need to update array of locations for new planted flower when filter by flower
 function App() {
-  const [user, setUser] = useState(null)
   const [flowers, setFlowers] = useState([])
   const [arrayTypesOfFlowers, setArrayTypesOfFlowers] = useState([])
-  const [arrayOfUniqueLocations, setArrayOfUniqueLocations] = useState([])
+  const [showFlowerMessage, setShowFlowerMessage] = useState(false)
+  const [flowerNeedToUpdate, setFlowerNeedToUpdate] = useState({})
   const [currentTypeFlower, setCurrentTypeFlower] = useState("All")
   const [flowersToDisplay, setFlowersToDisplay] = useState([])
   const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
-  const [finalCheckedLocations, setFinalCheckedLocations] = useState([])
+  
   const [plantingOperations, setPlantingOperations] = useState([])
   const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
   const [operationsToDisplay, setOperationsToDisplay] = useState([])
-  const [showFlowerMessage, setShowFlowerMessage] = useState(false)
-  const [flowerNeedToUpdate, setFlowerNeedToUpdate] = useState({})
+  
+  const [arrayOfUniqueLocations, setArrayOfUniqueLocations] = useState([])
+
+  const [user, setUser] = useState(null)
   const [errors, setErrors] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-      fetch("/database")
+    fetch("/me").then(res => {
+      if(res.ok) {
+        res.json().then(user => {
+          onLogin(user)})} 
+    })
+  }, [])
+
+  function onLogin(user) {
+    setUser(user)
+  }
+
+  function updateErrors(newErrors) {
+    setErrors(newErrors)
+  }
+
+//----------------------------Flowers----------------------------------//
+  useEffect(() => {
+      fetch("/flowers")
       .then(res => res.json())
       .then(data => {
       
@@ -40,31 +59,6 @@ function App() {
       })
     }, [])
 
-  useEffect(() => {
-    fetch("/locations")
-    .then(res => res.json())
-    .then(locations => {
-      setArrayOfUniqueLocations(locations)
-    })
-  }, [])
-
-  useEffect(() => {
-    fetch("/planting-operations")
-    .then(res => res.json())
-    .then(operations => {
-      setPlantingOperations(operations)
-    setOperationsToDisplay(operations)})
-  }, [])
-  
-  useEffect(() => {
-    fetch("/me").then(res => {
-      if(res.ok) {
-        res.json().then(user => {
-          onLogin(user)})
-      } 
-    })
-  }, [])
-  
   function addNewFlower(newFlower) {
     fetch("/add-new-flower", {
       method: "POST",
@@ -80,7 +74,6 @@ function App() {
       }else {     
         setFlowers([...flowers, data])
         collectTypeSpecies([...flowers, data])
-      
         setCurrentTypeFlower("All") 
         setFlowersToDisplay([data, ...flowers])
         navigate('/catalog')
@@ -88,7 +81,7 @@ function App() {
     }))
   }
 
-  function addUpdatedFlower(updatedFlower) {
+  function handleUpdatedFlower(updatedFlower) {
     fetch(`/update-flower/${updatedFlower.id}`, {
       method: "PATCH",
       headers: {
@@ -101,18 +94,25 @@ function App() {
       if(data.errors) {
         updateErrors(data.errors)
       }else { 
-        console.log(data)    
-        setFlowers([...flowers, data])
+        debugger
+        addUpdatedFlowerToFlowerDB(data)
         collectTypeSpecies([...flowers, data])
       
         setCurrentTypeFlower("All") 
-        setFlowersToDisplay([data, ...flowers])
-       navigate('/catalog')
+        //setFlowersToDisplay([data, ...flowers])
+        navigate('/catalog')
       }
     }))
   }
-  function updateErrors(newErrors) {
-    setErrors(newErrors)
+
+  function addUpdatedFlowerToFlowerDB(updatedFlower) {
+    let updatedFlowerDB = []
+    debugger
+    updatedFlowerDB = flowers.map(flower => {
+      return flower.id === updatedFlower.id ? updatedFlower : flower})
+    
+      setFlowers(updatedFlowerDB)
+      setFlowersToDisplay(updatedFlowerDB)
   }
 
   function collectTypeSpecies(flowersArray) {
@@ -125,9 +125,6 @@ function App() {
     setArrayTypesOfFlowers(typeSpeciesArray)
   }
 
-  function onLogin(user) {
-    setUser(user)
-  }
   function changeCurrentTypeFlower(type) {
     setCurrentTypeFlower(type)
     updateFlowersToDisplayByType(type) 
@@ -158,13 +155,53 @@ function App() {
     setCurrentOperationFilter("By default")
   }
 
+  function sendCheckedFlowers(checkedFlowers) {
+    setFinalCheckedFlowers(checkedFlowers)
+  }
+
+  function updateFlowersWithNewLocations(newOps) {
+    let updatedFlowers = [...flowers]
+    newOps.forEach(operation => updatedFlowers.forEach(flower => {
+                                                if(flower.id === operation.flower.id) {
+                                                  flower.locations.push(operation.location)
+                                                }})) 
+    setFlowers(updatedFlowers)
+  }
+
+  function updateFlowerMessage(bool_var) {
+    setShowFlowerMessage(bool_var)
+  }
+
+  function extractFlowerObjById(flowerId) {
+    let intFlowerId = parseInt(flowerId)
+    let flowerObj = flowers.find(flower => flower.id === intFlowerId)
+    setFlowerNeedToUpdate(flowerObj)
+    console.log(flowerObj)
+  }
+//-----------------------------------Locations---------------------------------//
+  useEffect(() => {
+    fetch("/locations")
+    .then(res => res.json())
+    .then(locations => {
+      setArrayOfUniqueLocations(locations)
+    })
+  }, [])
+
+//-------------------------------Planting Operations---------------------------------//
+  useEffect(() => {
+    fetch("/planting-operations")
+    .then(res => res.json())
+    .then(operations => {
+      setPlantingOperations(operations)
+    setOperationsToDisplay(operations)})
+  }, [])
+
   function changeCurrentOperaionFilter(filter) {
     setCurrentOperationFilter(filter)
     updateOperationsToDisplay(filter) 
   }
 
   function updateOperationsToDisplay(filter) {
-  
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
@@ -181,29 +218,11 @@ function App() {
     }
   }
 
-  function sendCheckedFlowers(checkedFlowers) {
-    setFinalCheckedFlowers(checkedFlowers)
-  }
-
-  function sendCheckedLocations(checkedLocations) {
-    setFinalCheckedLocations(checkedLocations)
-  }
-
   function addPlantingOperations(newOps) {
     let newArray = [...newOps, ...plantingOperations]
     setPlantingOperations(newArray)
     setOperationsToDisplay(newArray)
     updateFlowersWithNewLocations(newOps)
-  }
-
-  function updateFlowersWithNewLocations(newOps) {
-    debugger
-    let updatedFlowers = [...flowers]
-    newOps.forEach(operation => updatedFlowers.forEach(flower => {
-                                                if(flower.id === operation.flower.id) {
-                                                  flower.locations.push(operation.location)
-                                                }})) 
-    setFlowers(updatedFlowers)
   }
 
   function deletePlantingOperations(arrayOfDeletedFlowersIds) {
@@ -216,17 +235,6 @@ function App() {
     setPlantingOperations(newArrayOfOperations)
     setOperationsToDisplay(newArrayOfOperations)
   }
-  function updateFlowerMessage(v) {
-    setShowFlowerMessage(v)
-  }
-
-  function extractFlowerObjById(flowerId) {
-    let intFlowerId = parseInt(flowerId)
-    let flowerObj = flowers.find(flower => flower.id === intFlowerId)
-    setFlowerNeedToUpdate(flowerObj)
-    console.log(flowerObj)
-  }
-
 
   function loadHeader() {
     return (
@@ -234,7 +242,6 @@ function App() {
         <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
                    setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter} errors={errors}
                    updateErrors={updateErrors}/>
-        
     </div>
     )
   }
@@ -246,7 +253,7 @@ function App() {
           <Route path="/login" element={<Login onLogin={onLogin}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
           <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} updateErrors={updateErrors} />} />
-          <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate} addUpdatedFlower={addUpdatedFlower}
+          <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate} handleUpdatedFlower={handleUpdatedFlower}
                   updateErrors={updateErrors}/>} />
           <Route path="/catalog" element={<Catalog flowersToDisplay={flowersToDisplay} sendCheckedFlowers={sendCheckedFlowers}
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
@@ -254,10 +261,10 @@ function App() {
                 showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}
                 extractFlowerObjById={extractFlowerObjById}/>} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
-                finalCheckedFlowers={finalCheckedFlowers} sendCheckedLocations={sendCheckedLocations} addPlantingOperations={addPlantingOperations}
+                finalCheckedFlowers={finalCheckedFlowers}  addPlantingOperations={addPlantingOperations}
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter}/>} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
-                changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter}/>} />
+                changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter} updateErrors={updateErrors}/>} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
         </Routes>
@@ -268,3 +275,5 @@ function App() {
 
 export default App;
 
+//when plant flowers, check flowers, and send them from Catalog/sibling component to App/parent component 
+//in order to transfer checked flowers to ChooseLocation/sibling component.

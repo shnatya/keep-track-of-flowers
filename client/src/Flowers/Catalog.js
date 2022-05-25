@@ -1,6 +1,5 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorList from "./ErrorList";
 import FlowerCard from "./FlowerCard";
 
 function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, deleteFlower,
@@ -33,7 +32,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
     function addCheckedFlowers(flower) {
         updateErrors([])
-        let arrayOfCheckedFlowers = checkedFlowers
+        let arrayOfCheckedFlowers = [...checkedFlowers]
         let result = arrayOfCheckedFlowers.find(obj => obj === flower)
         if(result === undefined) {
             arrayOfCheckedFlowers = [...arrayOfCheckedFlowers, flower]
@@ -84,7 +83,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
         });
     }
 
-
     return (
         <div className="div">
             <h1>Catalog</h1>
@@ -98,7 +96,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
             <h3>Choose flower(-s) to plant:</h3>
             {showFlowerMessage ? <h1 style={{color: "green"}}>No more flowers left. Do you want to add new?</h1> : null}
             <form onSubmit={handleAddFlowersToLocation}>
-                {flowersToDisplay.map((flower, index) => <FlowerCard addFlower={addCheckedFlowers} key={index} flower={flower} 
+                {flowersToDisplay.map((flower, index) => <FlowerCard addCheckedFlowers={addCheckedFlowers} key={index} flower={flower} 
                                                                         extractFlowerObjById={extractFlowerObjById} />)}
                 <button type="submit" className="button-flowers">Next step</button>
             </form>

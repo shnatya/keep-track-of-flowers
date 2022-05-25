@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-function FlowerCard({flower, addFlower, extractFlowerObjById}) {
+function FlowerCard({flower, addCheckedFlowers, extractFlowerObjById}) {
     const navigate = useNavigate()
 
     function handleUpdateFlower(event) {
@@ -12,7 +12,7 @@ function FlowerCard({flower, addFlower, extractFlowerObjById}) {
     return (
         <div className="card">
              <div className="div">
-                <input type="checkbox" onClick={() => addFlower(flower)} id={flower.name} name={flower.name} value={flower.name}
+                <input type="checkbox" onClick={() => addCheckedFlowers(flower)} id={flower.name} name={flower.name} value={flower.name}
                         className="between-text"></input>
                 <button type="button" id={flower.id} onClick={handleUpdateFlower} className="button-flowers-update">🛠</button>
             </div>

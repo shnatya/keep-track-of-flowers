@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate} from "react-router-dom"
-import ErrorList from "./ErrorList";
+import ErrorList from "./Errors/ErrorList";
 
 function Header({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFilter, errors, updateErrors}) {
     const navigate = useNavigate()

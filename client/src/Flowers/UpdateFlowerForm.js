@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 
-function UpdateFlowerForm({flowerNeedToUpdate, updateErrors, addUpdatedFlower}) {
+function UpdateFlowerForm({flowerNeedToUpdate, updateErrors, handleUpdatedFlower}) {
     const [updatedFlower, setUpdatedFlower] = useState({
         name: flowerNeedToUpdate.name,
         type_species: flowerNeedToUpdate.type_species,
@@ -24,7 +24,7 @@ function UpdateFlowerForm({flowerNeedToUpdate, updateErrors, addUpdatedFlower}) 
     function handleSubmit(event) {
         event.preventDefault()
         
-        addUpdatedFlower(updatedFlower)
+        handleUpdatedFlower(updatedFlower)
         
     }
     return (
