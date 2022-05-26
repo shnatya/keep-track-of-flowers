@@ -3,7 +3,7 @@ import LocationCard from './LocationCard';
 import { useNavigate } from 'react-router';
 
 function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalCheckedFlowers,
-                        changeCurrentOperaionFilter}) {
+                        changeCurrentOperaionFilter, updateErrors}) {
     const [checkedLocations, setCheckedLocations] = useState([])
 
     const navigate = useNavigate()
@@ -21,6 +21,7 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
         }}
 
     function myFetch(objOperation) {
+        debugger
         return new Promise(resolve => {
             fetch("/create-planting-operations", {
                 method: "POST",
@@ -42,9 +43,12 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
 
         //sendCheckedLocations(checkedLocations)
         changeCurrentOperaionFilter("By default")
-
+        debugger
         let promises = [];
-        finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
+        console.log("Final checked flowers:")
+        console.log(finalCheckedFlowers)
+        if(finalCheckedFlowers.length !== 0) {
+            finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
             let objOperation = Object.assign({}, { flower_id: flower.id, location_id: location.id })
             promises.push(myFetch(objOperation))
         })
@@ -54,7 +58,6 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
             responses.forEach(res => jsonPromises.push(res.json()))
 
             Promise.all(jsonPromises).then(jsonBodies => {
-                debugger
                 let newObjects = []
                 let newErrors =[]
                 for (let i = 0; i < jsonBodies.length; i++) {
@@ -70,6 +73,9 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
         });
            
         navigate("/planting-operations")
+        }else {
+            updateErrors(["First choose flowers to plant."])
+        }
       }
 
 

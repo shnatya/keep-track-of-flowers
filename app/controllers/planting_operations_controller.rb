@@ -10,7 +10,7 @@ class PlantingOperationsController < ApplicationController
 
     #POST "/planting-operations"
     def create
-        flower = Flower.find_by_id(params[:planting][:flower_id])
+        flower = Flower.find(params[:planting][:flower_id])
         location = Location.find_by_id(params[:planting][:location_id])
         planting_operation = PlantingOperation.create!(flower_id: flower.id, location_id: location.id)
         render json: planting_operation, status: :created  
@@ -19,9 +19,7 @@ class PlantingOperationsController < ApplicationController
     #DELETE "/delete-planting-operation/:id"
     def destroy
         planting_operation = PlantingOperation.find_by(id: params[:id])
-        
         planting_operation.destroy
-        
         render json: planting_operation
     end
 

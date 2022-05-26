@@ -11,7 +11,6 @@ import Catalog from './Flowers/Catalog';
 import NewFlowerForm from './Flowers/NewFlowerForm';
 import UpdateFlowerForm from './Flowers/UpdateFlowerForm'
 
-//need to update array of locations for new planted flower when filter by flower
 function App() {
   const [flowers, setFlowers] = useState([])
   const [arrayTypesOfFlowers, setArrayTypesOfFlowers] = useState([])
@@ -76,6 +75,7 @@ function App() {
         collectTypeSpecies([...flowers, data])
         setCurrentTypeFlower("All") 
         setFlowersToDisplay([data, ...flowers])
+        updateErrors([`${data.name} has been added.`])
         navigate('/catalog')
       }
     }))
@@ -142,10 +142,19 @@ function App() {
   }
 
   function deleteFlower(arrayOfDeletedFlowersIds) {
-    debugger
     let newArrayOfFlowers = [...flowers]
+    let arrayOfErrors = []
     arrayOfDeletedFlowersIds.forEach(id => {
-      newArrayOfFlowers = newArrayOfFlowers.filter(flower => flower.id !== id)
+      
+      newArrayOfFlowers = newArrayOfFlowers.filter(flower => {
+        debugger
+                        if(flower.id !== id) {
+                          return flower
+                        }else{
+                          arrayOfErrors.push(`${flower.name} has been deleted.`)
+                        }
+                        
+                      })
     })
     if(newArrayOfFlowers.length === 0) {
       setShowFlowerMessage(true)
@@ -154,6 +163,8 @@ function App() {
     setFlowersToDisplay(newArrayOfFlowers)
     collectTypeSpecies(newArrayOfFlowers)
     setCurrentOperationFilter("By default")
+    setFinalCheckedFlowers([])
+    updateErrors(arrayOfErrors)
   }
 
   function sendCheckedFlowers(checkedFlowers) {
@@ -251,7 +262,7 @@ function App() {
     if(newErrs.length !== 0) {
       setErrors([...newErrs])
     }
-    
+    setFinalCheckedFlowers([])
   }
 
   function deletePlantingOperationsByFlowers(arrayOfDeletedFlowersIds) {
