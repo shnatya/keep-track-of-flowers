@@ -232,8 +232,10 @@ function App() {
         let flower_obj = {name: flower.name, image_url: flower.image_url}
         flower.locations.forEach(location => arrayOfLocations.push(location.image_url)
         )
-        flower_obj = {...flower_obj, arrayOfLocations}
-        arrayOfFlowersAndLocations.push(flower_obj)
+        if(arrayOfLocations.length !== 0) {
+          flower_obj = {...flower_obj, arrayOfLocations}
+          arrayOfFlowersAndLocations.push(flower_obj)
+        }
       })
         setOperationsToDisplay(arrayOfFlowersAndLocations)
     }
