@@ -179,6 +179,23 @@ function App() {
     let flowerObj = flowers.find(flower => flower.id === intFlowerId)
     setFlowerNeedToUpdate(flowerObj)
   }
+
+  function deleteLocationOutOfFlowerObj(flower_id, location_id) {
+    let newArrayOfFlowers = [...flowers]
+    newArrayOfFlowers = newArrayOfFlowers.map(flower => {
+                        if(flower.id === flower_id) {
+                          let updatedLocations = flower.locations.filter(location => location.id !== location_id)
+                          console.log({...flower, locations: updatedLocations})
+                          return {...flower, locations: updatedLocations}
+                        }else{
+                          return flower
+                        }
+    })
+    setFlowers(newArrayOfFlowers)
+    setFlowersToDisplay(newArrayOfFlowers)
+    console.log(newArrayOfFlowers)
+    
+  }
 //-----------------------------------Locations---------------------------------//
   useEffect(() => {
     fetch("/locations")
@@ -208,7 +225,7 @@ function App() {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
       let arrayOfFlowersAndLocations = []
-      debugger
+
       //flowers has old info about locations
       flowers.forEach(flower => {
         let arrayOfLocations =[]
@@ -247,13 +264,12 @@ function App() {
   }
 
   function deletePlantingOperation(operationObj) {
-    debugger
     let newArrayOfOperations = [...plantingOperations]
     newArrayOfOperations = newArrayOfOperations.filter(operation => operation.id !== operationObj.id)
     setPlantingOperations(newArrayOfOperations)
     setOperationsToDisplay(newArrayOfOperations)
     
-    //deleteLocationOutOfflowerObj([operationObj.flower.id])//////////////////////////////////
+    deleteLocationOutOfFlowerObj(operationObj.flower.id, operationObj.location.id)
     //need to update flowers state in the frontend- delete location out of flower's locations
   }
 
