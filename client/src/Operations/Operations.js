@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import OperationCard from "./OperationCard";
 import ByFlowersCard from "./ByFlowersCard";
 
@@ -8,7 +8,8 @@ function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOp
         fetch(`/delete-planting-operation/${operation.id}`, {
             method: "DELETE"})
             .then(res => res.json())
-            .then(id => deletePlantingOperation(id))
+            .then(operationObj => {
+                deletePlantingOperation(operationObj)})
     }
     
     return (

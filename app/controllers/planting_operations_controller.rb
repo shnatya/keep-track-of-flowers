@@ -1,4 +1,7 @@
 class PlantingOperationsController < ApplicationController
+    wrap_parameters format: []
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+
     #GET "/planting-operations" 
     def index
         planting_operations = PlantingOperation.all
@@ -19,12 +22,16 @@ class PlantingOperationsController < ApplicationController
         
         planting_operation.destroy
         
-        render json: planting_operation.id
+        render json: planting_operation
     end
 
     private
 
     def planting_operations_params
         params.permit(:flower_id, :location_id)
+    end
+
+    def render_unprocessable_entity_response(invalid)
+        render json: {errors: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
 end

@@ -54,17 +54,24 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
             responses.forEach(res => jsonPromises.push(res.json()))
 
             Promise.all(jsonPromises).then(jsonBodies => {
-                let newObjects = [];
+                debugger
+                let newObjects = []
+                let newErrors =[]
                 for (let i = 0; i < jsonBodies.length; i++) {
-                    let obj = jsonBodies[i]
-                    newObjects.push(obj)
+                    if(jsonBodies[i].errors) {
+                        newErrors.push(jsonBodies[i].errors)
+                    }else{
+                        let obj = jsonBodies[i]
+                        newObjects.push(obj)
+                    }
                 }
-                addPlantingOperations(newObjects)
+                addPlantingOperations(newObjects, newErrors)
             })
         });
            
         navigate("/planting-operations")
       }
+
 
     return(
         <div className='div'>

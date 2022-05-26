@@ -71,13 +71,13 @@
 .operation-page {
   display: grid;
   grid-column-gap: 1px;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr ;
 }
 
 .operation-card {
   border: grey solid 1px;
   padding: 1rem;
-  width: 25rem;
+  width: 28rem;
   height: 10rem;
   margin: 1rem 1rem;
   box-shadow: 3px 4px #bae99b;
@@ -205,7 +205,10 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
-
+.images-horizontal {
+  display: inline-block;
+    margin: 0 40px 0 0;
+}
 .button-header {
   display: block;
   flex-direction: row;

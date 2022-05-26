@@ -142,6 +142,7 @@ function App() {
   }
 
   function deleteFlower(arrayOfDeletedFlowersIds) {
+    debugger
     let newArrayOfFlowers = [...flowers]
     arrayOfDeletedFlowersIds.forEach(id => {
       newArrayOfFlowers = newArrayOfFlowers.filter(flower => flower.id !== id)
@@ -160,6 +161,7 @@ function App() {
   }
 
   function updateFlowersWithNewLocations(newOps) {
+    debugger
     let updatedFlowers = [...flowers]
     newOps.forEach(operation => updatedFlowers.forEach(flower => {
                                                 if(flower.id === operation.flower.id) {
@@ -196,6 +198,7 @@ function App() {
   }, [])
 
   function changeCurrentOperaionFilter(filter) {
+    setErrors([])
     setCurrentOperationFilter(filter)
     updateOperationsToDisplay(filter) 
   }
@@ -205,6 +208,8 @@ function App() {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
       let arrayOfFlowersAndLocations = []
+      debugger
+      //flowers has old info about locations
       flowers.forEach(flower => {
         let arrayOfLocations =[]
         let flower_obj = {name: flower.name, image_url: flower.image_url}
@@ -217,11 +222,17 @@ function App() {
     }
   }
 
-  function addPlantingOperations(newOps) {
-    let newArray = [...newOps, ...plantingOperations]
-    setPlantingOperations(newArray)
-    setOperationsToDisplay(newArray)
-    updateFlowersWithNewLocations(newOps)
+  function addPlantingOperations(newOps, newErrs) {
+    if(newOps.length !== 0) {
+      let newArray = [...newOps, ...plantingOperations]
+      setPlantingOperations(newArray)
+      setOperationsToDisplay(newArray)
+      updateFlowersWithNewLocations(newOps)
+    }
+    if(newErrs.length !== 0) {
+      setErrors([...newErrs])
+    }
+    
   }
 
   function deletePlantingOperationsByFlowers(arrayOfDeletedFlowersIds) {
@@ -235,12 +246,15 @@ function App() {
     setOperationsToDisplay(newArrayOfOperations)
   }
 
-  function deletePlantingOperation(id) {
+  function deletePlantingOperation(operationObj) {
+    debugger
     let newArrayOfOperations = [...plantingOperations]
-    newArrayOfOperations = newArrayOfOperations.filter(operation => operation.id !== id)
+    newArrayOfOperations = newArrayOfOperations.filter(operation => operation.id !== operationObj.id)
     setPlantingOperations(newArrayOfOperations)
     setOperationsToDisplay(newArrayOfOperations)
-    console.log(newArrayOfOperations)
+    
+    //deleteLocationOutOfflowerObj([operationObj.flower.id])//////////////////////////////////
+    //need to update flowers state in the frontend- delete location out of flower's locations
   }
 
   function loadHeader() {
@@ -269,7 +283,7 @@ function App() {
                 extractFlowerObjById={extractFlowerObjById}/>} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers}  addPlantingOperations={addPlantingOperations}
-                changeCurrentOperaionFilter={changeCurrentOperaionFilter}/>} />
+                changeCurrentOperaionFilter={changeCurrentOperaionFilter} updateErrors={updateErrors} />} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter} updateErrors={updateErrors}
                 deletePlantingOperation={deletePlantingOperation}/>} />
