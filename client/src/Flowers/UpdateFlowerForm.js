@@ -78,18 +78,4 @@ function UpdateFlowerForm({flowerNeedToUpdate, updateErrors, handleUpdatedFlower
     )
 }
 
-
-/*UpdateFlowerForm.defaultProps =  {
-    flowerNeedToUpdate: {
-        name: "",
-        type_species: "",
-        season: "",
-        subseason: "",
-        color: "",
-        height: "",
-        description: "",
-        image_url: ""
-    }
-}*/
-
 export default UpdateFlowerForm;

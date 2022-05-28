@@ -6,6 +6,8 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                     changeCurrentTypeFlower, arrayTypesOfFlowers, deletePlantingOperationsByFlowers, showFlowerMessage,
                     updateFlowerMessage, updateErrors, extractFlowerObjById}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
+    const [checkedState, setCheckedState] = useState(new Array(flowersToDisplay.length).fill(false))
+    console.log(checkedState)
     //const [errors, updateErrors] = useState([])
     const navigate=useNavigate()
                 
@@ -17,10 +19,11 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
     function handleAddFlowersToLocation(event) {
         event.preventDefault()
-        sendCheckedFlowers(checkedFlowers)
+        
         if(checkedFlowers.length === 0) {
             updateErrors(["Please choose at least one flower!"])
         }else{
+            sendCheckedFlowers(checkedFlowers)
             navigate('/choose-location')
         }
     }
@@ -41,6 +44,11 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
             arrayOfCheckedFlowers = arrayOfCheckedFlowers.filter(obj => obj !== result)
             setCheckedFlowers(arrayOfCheckedFlowers)
         }
+    }
+    function updateCheckedState(position) {
+        debugger
+        const updatedArrayOfCheckboxes = checkedState.map((item, index) => parseInt(position) === index ? !item : item)
+        setCheckedState(updatedArrayOfCheckboxes)
     }
 
     function handleAddFlowerButton() {
@@ -67,6 +75,8 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                 }
                 deleteFlower(deletedFlowersIds)
                 deletePlantingOperationsByFlowers(deletedFlowersIds)
+                setCheckedState(new Array(flowersToDisplay.length).fill(false))
+                setCheckedFlowers([])
             })
         });
     }
@@ -82,7 +92,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
             });
         });
     }
-
+    
     return (
         <div className="div">
             <h1>Catalog</h1>
@@ -96,8 +106,9 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
             <h3>Choose flower(-s) to plant:</h3>
             {showFlowerMessage ? <h1 style={{color: "green"}}>No more flowers left. Do you want to add new?</h1> : null}
             <form onSubmit={handleAddFlowersToLocation}>
-                {flowersToDisplay.map((flower, index) => <FlowerCard addCheckedFlowers={addCheckedFlowers} key={index} flower={flower} 
-                                                                        extractFlowerObjById={extractFlowerObjById} />)}
+                {flowersToDisplay.map((flower, index) => <FlowerCard addCheckedFlowers={addCheckedFlowers} checkboxId={index} key={index} flower={flower} 
+                                                                        checkedValue={checkedState[index]} extractFlowerObjById={extractFlowerObjById}
+                                                                        updateCheckedState={updateCheckedState} />)}
                 <button type="submit" className="button-flowers">Next step</button>
             </form>
         </div>

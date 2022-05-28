@@ -94,12 +94,10 @@ function App() {
       if(data.errors) {
         updateErrors(data.errors)
       }else { 
-        debugger
         addUpdatedFlowerToFlowerDB(data)
         collectTypeSpecies([...flowers, data])
       
         setCurrentTypeFlower("All") 
-        //setFlowersToDisplay([data, ...flowers])
         navigate('/catalog')
       }
     }))
@@ -113,6 +111,7 @@ function App() {
     
       setFlowers(updatedFlowerDB)
       setFlowersToDisplay(updatedFlowerDB)
+      
   }
 
   function collectTypeSpecies(flowersArray) {
@@ -225,6 +224,9 @@ function App() {
     setOperationsToDisplay(operations)})
   }, [])
 
+  useEffect(() => updateOperationsToDisplay(currentOperationFilter),
+   [flowers])
+
   function changeCurrentOperaionFilter(filter) {
     setErrors([])
     setCurrentOperationFilter(filter)
@@ -232,12 +234,12 @@ function App() {
   }
 
   function updateOperationsToDisplay(filter) {
+    debugger
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
       let arrayOfFlowersAndLocations = []
 
-      //flowers has old info about locations
       flowers.forEach(flower => {
         let arrayOfLocations =[]
         let flower_obj = {name: flower.name, image_url: flower.image_url}
@@ -283,7 +285,6 @@ function App() {
     setOperationsToDisplay(newArrayOfOperations)
     
     deleteLocationOutOfFlowerObj(operationObj.flower.id, operationObj.location.id)
-    //need to update flowers state in the frontend- delete location out of flower's locations
   }
 
   function loadHeader() {
@@ -315,7 +316,7 @@ function App() {
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} updateErrors={updateErrors} />} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter} updateErrors={updateErrors}
-                deletePlantingOperation={deletePlantingOperation}/>} />
+                deletePlantingOperation={deletePlantingOperation} updateOperationsToDisplay={updateOperationsToDisplay} />} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
         </Routes>

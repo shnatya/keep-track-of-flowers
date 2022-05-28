@@ -1,19 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-function FlowerCard({flower, addCheckedFlowers, extractFlowerObjById}) {
+function FlowerCard({flower, updateCheckedState, addCheckedFlowers, extractFlowerObjById, checkboxId, checkedValue}) {
     const navigate = useNavigate()
+    console.log(checkedValue)
 
     function handleUpdateFlower(event) {
         extractFlowerObjById(event.target.id)
         navigate('/update-flower')
     }
+
+    function handleOnChange(event) {
+        debugger
+        console.log(event)
+        addCheckedFlowers(flower)
+       updateCheckedState(event.target.id)
+    }
     
     return (
         <div className="card">
              <div className="div">
-                <input type="checkbox" onClick={() => addCheckedFlowers(flower)} id={flower.name} name={flower.name} value={flower.name}
-                        className="between-text"></input>
+                <input type="checkbox" onChange={handleOnChange} id={checkboxId} name={flower.name} value={flower.name}
+                        checked={checkedValue} className="between-text"></input>
                 <button type="button" id={flower.id} onClick={handleUpdateFlower} className="button-flowers-update">🛠</button>
             </div>
             <h2 className="between-text">{flower.name}</h2> 

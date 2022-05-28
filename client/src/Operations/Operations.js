@@ -4,6 +4,7 @@ import ByFlowersCard from "./ByFlowersCard";
 
 function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOperationFilter, deletePlantingOperation}) {
 
+    
     function handleDeleteOperationButton(operation) {
         fetch(`/delete-planting-operation/${operation.id}`, {
             method: "DELETE"})
