@@ -45,8 +45,6 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
         changeCurrentOperaionFilter("By default")
         debugger
         let promises = [];
-        console.log("Final checked flowers:")
-        console.log(finalCheckedFlowers)
         if(finalCheckedFlowers.length !== 0) {
             finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
             let objOperation = Object.assign({}, { flower_id: flower.id, location_id: location.id })
@@ -66,6 +64,7 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
                     }else{
                         let obj = jsonBodies[i]
                         newObjects.push(obj)
+                        newErrors.push(`${obj.flower.name} has been planted ${obj.location.description}`)
                     }
                 }
                 addPlantingOperations(newObjects, newErrors)
