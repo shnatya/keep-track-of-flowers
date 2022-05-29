@@ -21,29 +21,19 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
         }}
 
     function myFetch(objOperation) {
-        debugger
-        return new Promise(resolve => {
-            fetch("/create-planting-operations", {
+        
+        return fetch("/create-planting-operations", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    planting: objOperation
-                })
-            }).then(response => resolve(response))
-                .catch((error) => {
-                    console.error(error);
-            });
-        });
-    }
+                    planting: objOperation})
+            })}
 
     function handlePlantFlowers(event) {
         event.preventDefault()
-
-        //sendCheckedLocations(checkedLocations)
         changeCurrentOperaionFilter("By default")
-        debugger
         let promises = [];
         if(finalCheckedFlowers.length !== 0) {
             finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
@@ -65,18 +55,15 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
                         let obj = jsonBodies[i]
                         newObjects.push(obj)
                         newErrors.push(`${obj.flower.name} has been planted ${obj.location.description}`)
-                    }
-                }
+                    }}
                 addPlantingOperations(newObjects, newErrors)
             })
         });
            
         navigate("/planting-operations")
         }else {
-            updateErrors(["First choose flowers to plant."])
-        }
+            updateErrors(["First choose flowers to plant."])}
       }
-
 
     return(
         <div className='div'>
