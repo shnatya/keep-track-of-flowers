@@ -1,7 +1,6 @@
 import React from "react";
 
 function ByFlowersCard({flower}) {
-    debugger
     return (
         <div className="operation-filter-card">
             <section>

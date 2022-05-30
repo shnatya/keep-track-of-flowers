@@ -46,7 +46,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
         }
     }
     function updateCheckedState(position) {
-        debugger
         const updatedArrayOfCheckboxes = checkedState.map((item, index) => parseInt(position) === index ? !item : item)
         setCheckedState(updatedArrayOfCheckboxes)
     }
@@ -108,7 +107,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
             <form onSubmit={handleAddFlowersToLocation}>
                 {flowersToDisplay.map((flower, index) => <FlowerCard addCheckedFlowers={addCheckedFlowers} checkboxId={index} key={index} flower={flower} 
                                                                         checkedValue={checkedState[index]} extractFlowerObjById={extractFlowerObjById}
-                                                                        updateCheckedState={updateCheckedState} />)}
+                                                                        updateCheckedState={updateCheckedState} updateErrors={updateErrors} />)}
                 <button type="submit" className="button-flowers">Next step</button>
             </form>
         </div>

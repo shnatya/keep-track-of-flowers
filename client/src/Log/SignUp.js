@@ -54,7 +54,7 @@ function SignUp({onLogin}) {
                 type="password" id="password" value={password} placeholder="Password" className="input"></input>
                 <input onChange={(e) => setPasswordConfirmation(e.target.value)}
                 type="password" id="password_confirmation" value={passwordConfirmation} placeholder="Password confirmation" className="input"></input>
-                <button type="submit" className="button">Sign up</button>
+                <button type="submit" className="button-login">Sign up</button>
             </form>
             <ErrorList errors={errors} />
         </div>

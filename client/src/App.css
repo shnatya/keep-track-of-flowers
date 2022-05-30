@@ -231,6 +231,10 @@
   margin: 0em 0em 0em;
 }
 
+.between{
+  margin: 4em 4em 4em 4em;
+}
+
 .btn-group {
   margin: auto;
   display:block;

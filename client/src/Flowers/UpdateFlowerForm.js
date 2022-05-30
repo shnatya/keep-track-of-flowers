@@ -23,7 +23,6 @@ function UpdateFlowerForm({flowerNeedToUpdate, updateErrors, handleUpdatedFlower
 
     function handleSubmit(event) {
         event.preventDefault()
-        
         handleUpdatedFlower(updatedFlower)
         
     }

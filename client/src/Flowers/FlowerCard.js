@@ -1,17 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-function FlowerCard({flower, updateCheckedState, addCheckedFlowers, extractFlowerObjById, checkboxId, checkedValue}) {
+function FlowerCard({flower, updateCheckedState, updateErrors, addCheckedFlowers, extractFlowerObjById, checkboxId, checkedValue}) {
     const navigate = useNavigate()
     console.log(checkedValue)
 
     function handleUpdateFlower(event) {
         extractFlowerObjById(event.target.id)
+        updateErrors([])
         navigate('/update-flower')
     }
 
     function handleOnChange(event) {
-        debugger
         console.log(event)
         addCheckedFlowers(flower)
        updateCheckedState(event.target.id)

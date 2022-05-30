@@ -105,7 +105,6 @@ function App() {
 
   function addUpdatedFlowerToFlowerDB(updatedFlower) {
     let updatedFlowerDB = []
-    debugger
     updatedFlowerDB = flowers.map(flower => {
       return flower.id === updatedFlower.id ? updatedFlower : flower})
     
@@ -146,7 +145,6 @@ function App() {
     arrayOfDeletedFlowersIds.forEach(id => {
       
       newArrayOfFlowers = newArrayOfFlowers.filter(flower => {
-        debugger
                         if(flower.id !== id) {
                           return flower
                         }else{
@@ -171,7 +169,6 @@ function App() {
   }
 
   function updateFlowersWithNewLocations(newOps) {
-    debugger
     let updatedFlowers = [...flowers]
     newOps.forEach(operation => updatedFlowers.forEach(flower => {
                                                 if(flower.id === operation.flower.id) {
@@ -234,7 +231,6 @@ function App() {
   }
 
   function updateOperationsToDisplay(filter) {
-    debugger
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
     }else if(filter === "By flowers"){
@@ -326,7 +322,6 @@ function App() {
 }
 
 export default App;
-
 //when plant flowers, check flowers, and send them from Catalog/sibling component to App/parent component 
 //in order to transfer checked flowers to ChooseLocation/sibling component.
 //From Header I choose to navigate to Planting, I go to App where i keep all my routes, and there I keep my planting operations state
