@@ -149,9 +149,10 @@ function App() {
                           return flower
                         }else{
                           arrayOfErrors.push(`${flower.name} has been deleted.`)
+                          return null 
                         }
-                        
                       })
+
     })
     if(newArrayOfFlowers.length === 0) {
       setShowFlowerMessage(true)
