@@ -10,6 +10,7 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
     let arrayOfLocations = arrayOfUniqueLocations.map(location => <LocationCard key={location.id} location={location} addLocation={addLocation}/> )
 
     function addLocation(location) {
+        updateErrors([])
         let arrayOfCheckedLocations = checkedLocations
         let result = arrayOfCheckedLocations.find(obj => obj === location)
         if(result === undefined) {

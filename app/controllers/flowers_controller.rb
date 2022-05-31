@@ -1,10 +1,9 @@
 class FlowersController < ApplicationController
     wrap_parameters format: []
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+
      #GET "/flowers" 
      def index
-        #user = User.find_by_id(session[:user_id])
-        #flowers = user.flowers
         flowers = Flower.all
         render json: flowers, include: ['flower', 'flower.user', 'locations']
     end
@@ -30,6 +29,7 @@ class FlowersController < ApplicationController
     end
 
     private 
+
     def flower_params
         params.permit(:id, :name, :type_species, :season, :subseason, :color, :height, :description, :image_url, :user_id)
     end
@@ -38,3 +38,16 @@ class FlowersController < ApplicationController
         render json: {errors: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
 end
+
+
+#def index
+    #user = User.find_by_id(session[:user_id])
+    #flowers = user.flowers
+    #render json: flowers, include: ['flower', 'flower.user', 'locations']
+#end
+
+#def authorize
+     #   return json: {errors: ["Not authorized"]}, status: :unauthorized unless session.include? :user_id
+    #end
+
+# before_action :authorize #cant do this i need flowers to collect type at the beginnign

@@ -8,7 +8,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     const [checkedFlowers, setCheckedFlowers] = useState([])
     const [checkedState, setCheckedState] = useState(new Array(flowersToDisplay.length).fill(false))
     const navigate=useNavigate()
-                
     let typeOptions = arrayTypesOfFlowers.map(type => {
         return (
             <option key={type} value={type}>{type}</option>

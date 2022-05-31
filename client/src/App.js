@@ -48,14 +48,20 @@ function App() {
 
 //----------------------------Flowers----------------------------------//
   useEffect(() => {
-    console.log(user)
-      fetch("/flowers")
+      fetch("/flowers", {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        }
+      })
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         setFlowers(data)
         setFlowersToDisplay(data)
         collectTypeSpecies(data)
       })
+      .catch(errors => console.log(errors))
     }, [])  //[user]
 
   function addNewFlower(newFlower) {
@@ -217,11 +223,16 @@ function App() {
 
 //-------------------------------Planting Operations---------------------------------//
   useEffect(() => {
-    fetch("/planting-operations")
+    fetch("/planting-operations", {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
     .then(res => res.json())
     .then(operations => {
       setPlantingOperations(operations)
-    setOperationsToDisplay(operations)})
+      setOperationsToDisplay(operations)})
   }, [])
 
   useEffect(() => updateOperationsToDisplay(currentOperationFilter),
