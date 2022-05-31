@@ -17,7 +17,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
     function handleAddFlowersToLocation(event) {
         event.preventDefault()
-        setCheckedState(new Array(flowersToDisplay.length).fill(false)) ///?????added
+        setCheckedState(new Array(flowersToDisplay.length).fill(false)) 
         if(checkedFlowers.length === 0) {
             updateErrors(["Please choose at least one flower!"])
         }else{
