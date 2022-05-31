@@ -159,6 +159,7 @@ function App() {
     }
     setFlowers(newArrayOfFlowers)
     setFlowersToDisplay(newArrayOfFlowers)
+    setCurrentTypeFlower("All")
     collectTypeSpecies(newArrayOfFlowers)
     setCurrentOperationFilter("By default")
     setFinalCheckedFlowers([])
