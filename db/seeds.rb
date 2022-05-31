@@ -1,8 +1,8 @@
 
 
 puts "Seeding users ..."
-User.create(username: "John", password: "testtest")
-User.create(username: "Mary", password: "testtest")
+User.create(username: "John", password: "test")
+User.create(username: "Mary", password: "test")
 puts "✅ Done seeding users!"
 
 

@@ -7,7 +7,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                     updateFlowerMessage, updateErrors, extractFlowerObjById}) {
     const [checkedFlowers, setCheckedFlowers] = useState([])
     const [checkedState, setCheckedState] = useState(new Array(flowersToDisplay.length).fill(false))
-    console.log(checkedState)
     const navigate=useNavigate()
                 
     let typeOptions = arrayTypesOfFlowers.map(type => {
@@ -17,7 +16,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     })
 
     function handleAddFlowersToLocation(event) {
-        debugger
         event.preventDefault()
         setCheckedState(new Array(flowersToDisplay.length).fill(false)) ///?????added
         if(checkedFlowers.length === 0) {
@@ -31,17 +29,13 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     function handleFilter(event){
         
         changeCurrentTypeFlower(event.target.value)
-        debugger
         setCheckedState(new Array(flowersToDisplay.length).fill(false)) ///?????added
         setCheckedFlowers([])
-        console.log(checkedState)
-        debugger
         updateErrors([])
     }
 
     function addCheckedFlowers(flower) {
         updateErrors([])
-        debugger
         let arrayOfCheckedFlowers = [...checkedFlowers]
         let result = arrayOfCheckedFlowers.find(obj => obj === flower)
         if(result === undefined) {
@@ -58,14 +52,12 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     }
 
     function handleAddFlowerButton() {
-        debugger
         updateFlowerMessage(false)
         updateErrors([])
         navigate('/add-new-flower')
     }
 
     function handleDeleteFlowerButton() {
-        debugger
         let promises = []
         checkedFlowers.forEach(flowerObj => {
 
@@ -81,7 +73,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                     let obj = jsonBodies[i]
                     deletedFlowersIds.push(obj)
                 }
-                debugger
                 deleteFlower(deletedFlowersIds)
                 deletePlantingOperationsByFlowers(deletedFlowersIds)
                 setCheckedState(new Array(flowersToDisplay.length - deletedFlowersIds.length).fill(false)) ////????

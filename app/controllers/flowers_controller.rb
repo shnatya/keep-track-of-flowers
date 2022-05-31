@@ -3,6 +3,8 @@ class FlowersController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
      #GET "/flowers" 
      def index
+        #user = User.find_by_id(session[:user_id])
+        #flowers = user.flowers
         flowers = Flower.all
         render json: flowers, include: ['flower', 'flower.user', 'locations']
     end

@@ -48,15 +48,15 @@ function App() {
 
 //----------------------------Flowers----------------------------------//
   useEffect(() => {
+    console.log(user)
       fetch("/flowers")
       .then(res => res.json())
       .then(data => {
-      
         setFlowers(data)
         setFlowersToDisplay(data)
         collectTypeSpecies(data)
       })
-    }, [])
+    }, [])  //[user]
 
   function addNewFlower(newFlower) {
     fetch("/add-new-flower", {
@@ -115,6 +115,7 @@ function App() {
 
   function collectTypeSpecies(flowersArray) {
     let typeSpeciesArray = []
+    console.log(flowersArray)
     flowersArray.forEach(flower => {
       let result = typeSpeciesArray.find(el => el === flower.type_species)
       if (result === undefined) {
