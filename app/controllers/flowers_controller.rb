@@ -5,7 +5,8 @@ class FlowersController < ApplicationController
      #GET "/flowers" 
      def index
         flowers = Flower.all
-        render json: flowers, include: ['flower', 'flower.user', 'locations']
+        byebug
+        render json: flowers
     end
 
     #POST "/add-new-flower"

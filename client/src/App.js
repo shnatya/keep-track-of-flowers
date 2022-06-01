@@ -48,12 +48,7 @@ function App() {
 
 //----------------------------Flowers----------------------------------//
   useEffect(() => {
-      fetch("/flowers", {
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        }
-      })
+      fetch("/flowers")
       .then(res => res.json())
       .then(data => {
         console.log(data)
