@@ -7,6 +7,10 @@ class Flower < ApplicationRecord
   validates :image_url, presence: true, uniqueness: true
   validates :type_species, :height, :subseason, presence: true
   validates :subseason, inclusion: {in: %w(Early Mid Late), message: "%{value} is not accebtable. Please use Early, Mid or Late"}
+
+  def bloom
+    "#{self.season} - #{self.subseason}"
+  end
 end
 
 

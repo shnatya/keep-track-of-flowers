@@ -10,6 +10,8 @@ class PlantingOperationsController < ApplicationController
 
     #POST "/planting-operations"
     def create
+
+        ##write a rescue method just for this craete action 
         flower = Flower.find(params[:planting][:flower_id])
         location = Location.find_by_id(params[:planting][:location_id])
         planting_operation = PlantingOperation.create!(flower_id: flower.id, location_id: location.id)
