@@ -12,11 +12,12 @@ class PlantingOperationsController < ApplicationController
     def create
         @flower = Flower.find(params[:planting][:flower_id])
         @location = Location.find_by_id(params[:planting][:location_id])
-        if @flower.locations.include?(@location)
-            render_duplicate_response
-        else
-            planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)
+        planting_operation = PlantingOperation.new(flower_id: @flower.id, location_id: @location.id)
+        if planting_operation.valid?
+            planting_operation.save
             render json: planting_operation, status: :created
+        else
+            render_duplicate_response
         end
           
     end
@@ -39,9 +40,25 @@ private
     end
 
     def render_duplicate_response
-        render json: {errors: ["NOT PLANTED!!! Duplication not allowed - #{@flower.name} : #{@location.description}"]}
+        render json: {errors: ["NOT PLANTED!!! Duplication not allowed - {#{@flower.name} : #{@location.description}} already exists!"]}
     end
 
 end
 
+
+
+
+
 ##{self.flower_id}
+
+#def create
+  #  @flower = Flower.find(params[:planting][:flower_id])
+   # @location = Location.find_by_id(params[:planting][:location_id])
+    #if @flower.locations.include?(@location)
+     #   render_duplicate_response
+    #else
+     #   planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)
+      #  render json: planting_operation, status: :created
+    #end
+      
+#end

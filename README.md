@@ -41,7 +41,7 @@ To **delete** a flower or flowers, check as many flowers as many you want to del
 
 To **update** a flower, push **Tools** in the upper right conner of each flower card. Update the flower and submit.
 
-To **plant** flower/flowers, first check flowers on the Flowers page, push **Next Step** on the right side ofthe page. Then on the Locations page check as many locations as you'd like and push **Plant**. On the Planting Operations page, you see new just added planting operations and old ones. 
+To **plant** flower/flowers, first check flowers on the Flowers page, push **Next Step** on the right side of the page. Then on the Locations page check as many locations as you'd like and push **Plant**. On the Planting Operations page, you see new just added planting operations and old ones. Remember, flowers are allowered to be planted at unique locations, otherwise you will get a message about the duplicate planting operation. 
 
 
 ## Routing using Rails on Ruby

@@ -55,7 +55,7 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
                     }else{
                         let obj = jsonBodies[i]
                         newObjects.push(obj)
-                        newErrors.push(`${obj.flower.name} has been planted at ${obj.location.description}`)
+                        newErrors.push(`SUCCESS! ${obj.flower.name} has been planted at ${obj.location.description}.`)
                     }}
                 addPlantingOperations(newObjects, newErrors)
             })
