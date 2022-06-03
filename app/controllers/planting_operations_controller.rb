@@ -10,12 +10,15 @@ class PlantingOperationsController < ApplicationController
 
     #POST "/planting-operations"
     def create
-
-        ##write a rescue method just for this craete action 
-        flower = Flower.find(params[:planting][:flower_id])
-        location = Location.find_by_id(params[:planting][:location_id])
-        planting_operation = PlantingOperation.create!(flower_id: flower.id, location_id: location.id)
-        render json: planting_operation, status: :created  
+        @flower = Flower.find(params[:planting][:flower_id])
+        @location = Location.find_by_id(params[:planting][:location_id])
+        if @flower.locations.include?(@location)
+            render_duplicate_response
+        else
+            planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)
+            render json: planting_operation, status: :created
+        end
+          
     end
 
     #DELETE "/delete-planting-operation/:id"
@@ -25,7 +28,7 @@ class PlantingOperationsController < ApplicationController
         render json: planting_operation
     end
 
-    private
+private
 
     def planting_operations_params
         params.permit(:flower_id, :location_id)
@@ -34,4 +37,11 @@ class PlantingOperationsController < ApplicationController
     def render_unprocessable_entity_response(invalid)
         render json: {errors: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
+
+    def render_duplicate_response
+        render json: {errors: ["NOT PLANTED!!! Duplication not allowed - #{@flower.name} : #{@location.description}"]}
+    end
+
 end
+
+##{self.flower_id}
