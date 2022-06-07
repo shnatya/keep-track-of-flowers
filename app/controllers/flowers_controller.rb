@@ -1,5 +1,7 @@
 class FlowersController < ApplicationController
     wrap_parameters format: []
+    before_action :find_flower, only: [:destroy, :update]
+
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
@@ -17,16 +19,14 @@ class FlowersController < ApplicationController
 
     #PATCH "/update-flower/:id"
     def update
-        flower = find_flower
-        flower.update!(flower_params)
-        render json: flower
+        @flower.update!(flower_params)
+        render json: @flower
     end
 
     #DELETE "/delete-flower"
     def destroy
-        flower = find_flower
-        flower.destroy
-        render json: flower.id
+        @flower.destroy
+        render json: @flower.id
     end
 
     private 
@@ -36,7 +36,7 @@ class FlowersController < ApplicationController
     end
 
     def find_flower
-        Flower.find(params[:id])
+        @flower = Flower.find(params[:id])
     end
 
     def render_unprocessable_entity_response(invalid)

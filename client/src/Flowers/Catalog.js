@@ -122,3 +122,9 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
 export default Catalog;
 
+
+
+
+
+//useEffect needs to update checkedState when our flowerToDisplay updated. flowersToDispaly get updated
+//when  we push Delete button or change type of flowers to display. So we get rid of Warning controll/uncontrol
