@@ -19,6 +19,7 @@ function App() {
   const [currentTypeFlower, setCurrentTypeFlower] = useState("All")
   const [flowersToDisplay, setFlowersToDisplay] = useState([])
   const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
+  //const [lengthOfCheckedState, setLengthOfCheckedState] = useState(flowers.length)
   
   const [plantingOperations, setPlantingOperations] = useState([])
   const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
@@ -67,7 +68,7 @@ function App() {
       },
       body: JSON.stringify({...newFlower, user_id: user.id})
     })
-    .then(res => res.json()
+    .then(res => res.json())
     .then(data => {
       if(data.errors) {
         updateErrors(data.errors)
@@ -80,7 +81,6 @@ function App() {
         navigate('/catalog')
       }
     })
-    .catch(error => console.log(error))) ////??????? what errors it catch?
   }
 
   function handleUpdatedFlower(updatedFlower) {
@@ -128,17 +128,19 @@ function App() {
 
   function changeCurrentTypeFlower(type) {
     setCurrentTypeFlower(type)
-    updateFlowersToDisplayByType(type) 
+    updateFlowersToDisplayByType(type)
   }
   
   function updateFlowersToDisplayByType(type) {
     setCurrentTypeFlower(type)
     if(type === "All") {
       setFlowersToDisplay(flowers)
+     // setLengthOfCheckedState(flowers.length) 
     }else {
       let newArray = []
       newArray = flowers.filter(flower => type === flower.type_species)
       setFlowersToDisplay(newArray)
+     // setLengthOfCheckedState(newArray.length)
     }
   }
 
@@ -315,7 +317,7 @@ function App() {
                 currentTypeFlower={currentTypeFlower} changeCurrentTypeFlower={changeCurrentTypeFlower}
                 arrayTypesOfFlowers={arrayTypesOfFlowers} deleteFlower={deleteFlower} deletePlantingOperationsByFlowers={deletePlantingOperationsByFlowers}
                 showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}
-                extractFlowerObjById={extractFlowerObjById}/>} />
+                extractFlowerObjById={extractFlowerObjById} />} />
           <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers}  addPlantingOperations={addPlantingOperations}
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} updateErrors={updateErrors} />} />

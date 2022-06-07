@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import FlowerCard from "./FlowerCard";
 
@@ -8,12 +8,17 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     const [checkedFlowers, setCheckedFlowers] = useState([])
     const [checkedState, setCheckedState] = useState(new Array(flowersToDisplay.length).fill(false))
     const navigate=useNavigate()
+
     let typeOptions = arrayTypesOfFlowers.map(type => {
         return (
             <option key={type} value={type}>{type}</option>
         )
     })
 
+    useEffect(() => {
+        setCheckedState(new Array(flowersToDisplay.length).fill(false)) 
+      }, [flowersToDisplay])
+      
     function handleAddFlowersToLocation(event) {
         event.preventDefault()
         setCheckedState(new Array(flowersToDisplay.length).fill(false)) 
@@ -25,10 +30,10 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
         }
     }
 
-    function handleFilter(event){
+    async function handleFilter(event){
+        await changeCurrentTypeFlower(event.target.value)
         
-        changeCurrentTypeFlower(event.target.value)
-        setCheckedState(new Array(flowersToDisplay.length).fill(false)) ///?????added
+       // setCheckedState(new Array(flowersToDisplay.length).fill(false))
         setCheckedFlowers([])
         updateErrors([])
     }
@@ -56,6 +61,17 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
         navigate('/add-new-flower')
     }
 
+    function myFetch(flowerId) {
+        return new Promise(resolve => {
+
+            fetch(`/delete-flower/${flowerId}`, {
+                method: "DELETE"
+            }).then(response => resolve(response))
+                .catch((error) => {
+                    console.error(error);
+            })
+        })}
+
     function handleDeleteFlowerButton() {
         let promises = []
         checkedFlowers.forEach(flowerObj => {
@@ -74,21 +90,11 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                 }
                 deleteFlower(deletedFlowersIds)
                 deletePlantingOperationsByFlowers(deletedFlowersIds)
-                setCheckedState(new Array(flowersToDisplay.length - deletedFlowersIds.length).fill(false)) ////????
+                //setCheckedState(new Array(flowersToDisplay.length - deletedFlowersIds.length).fill(false)) ////????
+                console.log("Checked state:")
+                console.log(checkedState)
                 setCheckedFlowers([])
             })
-        });
-    }
-
-    function myFetch(flowerId) {
-        return new Promise(resolve => {
-
-            fetch(`/delete-flower/${flowerId}`, {
-                method: "DELETE"
-            }).then(response => resolve(response))
-                .catch((error) => {
-                    console.error(error);
-            });
         });
     }
     
