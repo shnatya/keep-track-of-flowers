@@ -57,7 +57,7 @@ function App() {
         collectTypeSpecies(data)
       })
       .catch(errors => console.log(errors))
-    }, [])  //[user]
+    }, []) 
 
   function addNewFlower(newFlower) {
     fetch("/add-new-flower", {
@@ -79,7 +79,8 @@ function App() {
         updateErrors([`${data.name} has been added.`])
         navigate('/catalog')
       }
-    }))
+    })
+    .catch(error => console.log(error))) ////??????? what errors it catch?
   }
 
   function handleUpdatedFlower(updatedFlower) {
@@ -215,7 +216,6 @@ function App() {
       setArrayOfUniqueLocations(locations)
     })
   }, [])
-
 //-------------------------------Planting Operations---------------------------------//
   useEffect(() => {
     fetch("/planting-operations", {
@@ -223,7 +223,7 @@ function App() {
         "Accept": "application/json",
         "Content-Type": "application/json"
       }
-    })
+})
     .then(res => res.json())
     .then(operations => {
       setPlantingOperations(operations)
@@ -259,15 +259,15 @@ function App() {
     }
   }
 
-  function addPlantingOperations(newOps, newErrs) {
+  function addPlantingOperations(newOps, newMessages) {
     if(newOps.length !== 0) {
       let newArray = [...newOps, ...plantingOperations]
       setPlantingOperations(newArray)
       setOperationsToDisplay(newArray)
       updateFlowersWithNewLocations(newOps)
     }
-    if(newErrs.length !== 0) {
-      setErrors([...newErrs])
+    if(newMessages.length !== 0) {
+      setErrors([...newMessages])
     }
     setFinalCheckedFlowers([])
   }
@@ -331,7 +331,21 @@ function App() {
 }
 
 export default App;
+
+
 //when plant flowers, check flowers, and send them from Catalog/sibling component to App/parent component 
 //in order to transfer checked flowers to ChooseLocation/sibling component.
 //From Header I choose to navigate to Planting, I go to App where i keep all my routes, and there I keep my planting operations state
 //And can transfer all planting operations to the component
+
+
+ /*useEffect(() => {
+    fetch("/locations")
+    .then(response => {
+      if(response.ok) {
+        response.json().then(locations => setArrayOfUniqueLocations(locations))
+      }else{
+        response.json().then(error => console.log(error))
+      }
+    })
+  }, [])*/

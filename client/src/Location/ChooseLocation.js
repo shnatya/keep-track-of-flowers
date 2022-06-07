@@ -48,16 +48,16 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
 
             Promise.all(jsonPromises).then(jsonBodies => {
                 let newObjects = []
-                let newErrors =[]
+                let newMessages =[]
                 for (let i = 0; i < jsonBodies.length; i++) {
                     if(jsonBodies[i].errors) {
-                        newErrors.push(jsonBodies[i].errors)
+                        newMessages.push(jsonBodies[i].errors)
                     }else{
                         let obj = jsonBodies[i]
                         newObjects.push(obj)
-                        newErrors.push(`SUCCESS! ${obj.flower.name} has been planted at ${obj.location.description}.`)
+                        newMessages.push(`SUCCESS! ${obj.flower.name} has been planted at ${obj.location.description}.`)
                     }}
-                addPlantingOperations(newObjects, newErrors)
+                addPlantingOperations(newObjects, newMessages)
             })
         });
            
