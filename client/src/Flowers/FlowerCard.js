@@ -23,6 +23,7 @@ function FlowerCard({flower, updateCheckedState, updateErrors, addCheckedFlowers
                 <button type="button" id={flower.id} onClick={handleUpdateFlower} className="button-flowers-update">🛠</button>
             </div>
             <h2 className="between-text">{flower.name}</h2> 
+            <h6 className="between-text">{flower.summary}</h6>
             <img src = {flower.image_url} className = "flower-pic" alt={flower.type_species}></img>
             <h4 className="between-text">Height: {flower.height}</h4>
             <h4 className="between-text">Bloom: {flower.bloom}</h4>
