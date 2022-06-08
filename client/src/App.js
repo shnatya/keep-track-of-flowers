@@ -215,6 +215,7 @@ function App() {
     fetch("/locations")
     .then(res => res.json())
     .then(locations => {
+      console.log(locations)
       setArrayOfUniqueLocations(locations)
     })
   }, [])
@@ -228,6 +229,7 @@ function App() {
 })
     .then(res => res.json())
     .then(operations => {
+      console.log(operations)
       setPlantingOperations(operations)
       setOperationsToDisplay(operations)})
   }, [])

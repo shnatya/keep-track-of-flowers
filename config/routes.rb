@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
   get "locations", to: "locations#index"
 
-  post "create-planting-operations", to: "planting_operations#create"
   get "planting-operations", to: "planting_operations#index"
+  post "create-planting-operations", to: "planting_operations#create"
   delete "delete-planting-operation/:id", to: "planting_operations#destroy"
 
   get 'flowers', to: 'flowers#index'
