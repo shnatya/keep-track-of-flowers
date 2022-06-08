@@ -33,7 +33,7 @@ First, log in or sign up.
 
 On the first page called **Catalog** there are all flowers saved in the flowers table.
 
-In order to **add** a new flower, push **Add**, then fill out the form. Such fields as flower name, type, height, subseason, and url image are necessary.
+In order to **add** a new flower, push **Add**, then fill out the form. Such fields as flower name, type, height,season, subseason, and url image are necessary.
 
 If you upload pictures from Google Drive, then use Google Drive Image URL Converter, for example https://codepen.io/DrewJaynes/details/abJNNjb to convert the url. Also, make sure that a file's extension is jpg, but not HEIC. HEIC stands for High-Efficiency Image Container file and is usually created on Apple devices (iPad, iPhone).
 

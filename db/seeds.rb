@@ -62,7 +62,6 @@ PlantingOperation.create(flower_id: f3.id, location_id: l7.id)
 PlantingOperation.create(flower_id: f4.id, location_id: l2.id)
 PlantingOperation.create(flower_id: f4.id, location_id: l3.id)
 PlantingOperation.create(flower_id: f5.id, location_id: l6.id)
-
 PlantingOperation.create(flower_id: f6.id, location_id: l19.id)
 PlantingOperation.create(flower_id: f6.id, location_id: l20.id)
 PlantingOperation.create(flower_id: f6.id, location_id: l21.id)

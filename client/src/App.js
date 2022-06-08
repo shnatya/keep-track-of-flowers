@@ -12,14 +12,22 @@ import NewFlowerForm from './Flowers/NewFlowerForm';
 import UpdateFlowerForm from './Flowers/UpdateFlowerForm'
 
 function App() {
-  const [flowers, setFlowers] = useState([])
+  const [flowers, setFlowers] = useState([
+            {name: "Fabio",
+            type_species: "Tulips",
+            season: "Spring",
+            subseason: "Mid",
+            color: "Red-yellow",
+            height: "12 inches",
+            description: "",
+            image_url: "https://www.tulips.com/images/popup/fabio-fringed-tulips.jpg"}
+  ])
   const [arrayTypesOfFlowers, setArrayTypesOfFlowers] = useState([])
   const [showFlowerMessage, setShowFlowerMessage] = useState(false)
   const [flowerNeedToUpdate, setFlowerNeedToUpdate] = useState({})
   const [currentTypeFlower, setCurrentTypeFlower] = useState("All")
   const [flowersToDisplay, setFlowersToDisplay] = useState([])
   const [finalCheckedFlowers, setFinalCheckedFlowers] = useState([])
-  //const [lengthOfCheckedState, setLengthOfCheckedState] = useState(flowers.length)
   
   const [plantingOperations, setPlantingOperations] = useState([])
   const [currentOperationFilter, setCurrentOperationFilter] = useState("By default")
@@ -61,7 +69,7 @@ function App() {
     }, []) 
 
   function addNewFlower(newFlower) {
-    fetch("/add-new-flower", {
+    fetch("/flowers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +92,7 @@ function App() {
   }
 
   function handleUpdatedFlower(updatedFlower) {
-    fetch(`/update-flower/${updatedFlower.id}`, {
+    fetch(`/flowers/${updatedFlower.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -135,12 +143,10 @@ function App() {
     setCurrentTypeFlower(type)
     if(type === "All") {
       setFlowersToDisplay(flowers)
-     // setLengthOfCheckedState(flowers.length) 
     }else {
       let newArray = []
       newArray = flowers.filter(flower => type === flower.type_species)
       setFlowersToDisplay(newArray)
-     // setLengthOfCheckedState(newArray.length)
     }
   }
 
@@ -221,7 +227,7 @@ function App() {
   }, [])
 //-------------------------------Planting Operations---------------------------------//
   useEffect(() => {
-    fetch("/planting-operations", {
+    fetch("/planting_operations", {
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"

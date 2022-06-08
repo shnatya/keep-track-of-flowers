@@ -6,7 +6,7 @@ function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOp
 
     
     function handleDeleteOperationButton(operation) {
-        fetch(`/delete-planting-operation/${operation.id}`, {
+        fetch(`/planting_operation/${operation.id}`, {
             method: "DELETE"})
             .then(res => res.json())
             .then(operationObj => {

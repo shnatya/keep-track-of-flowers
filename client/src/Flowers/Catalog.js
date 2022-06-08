@@ -32,8 +32,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
     async function handleFilter(event){
         await changeCurrentTypeFlower(event.target.value)
-        
-       // setCheckedState(new Array(flowersToDisplay.length).fill(false))
         setCheckedFlowers([])
         updateErrors([])
     }
@@ -64,7 +62,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     function myFetch(flowerId) {
         return new Promise(resolve => {
 
-            fetch(`/delete-flower/${flowerId}`, {
+            fetch(`/flowers/${flowerId}`, {
                 method: "DELETE"
             }).then(response => resolve(response))
                 .catch((error) => {

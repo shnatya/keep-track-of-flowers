@@ -23,7 +23,7 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
 
     function myFetch(objOperation) {
         
-        return fetch("/create-planting-operations", {
+        return fetch("/planting_operations", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
