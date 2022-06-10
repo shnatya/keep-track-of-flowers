@@ -1,21 +1,21 @@
 
 
 puts "Seeding users ..."
-User.create(username: "John", password: "test")
-User.create(username: "Mary", password: "test")
+u1 = User.create(username: "Nastya", password: "test")
+u2 = User.create(username: "Mary", password: "test")
 puts "✅ Done seeding users!"
 
 
 puts "Seeding flowers ..."
-f1 = Flower.create(name: "Fabio", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Red and yellow", height: "16 inches", description: "Fringed tulips", user_id: 1, image_url: "https://www.tulips.com/images/popup/fabio-fringed-tulips.jpg")
-f2 = Flower.create(name: "Armeniacum", type_species: "Muscari", season: "Spring", subseason: "Early", color: "Blue", height: "6 to 9 inches", description: "Mimic grapes. Fragrant.", user_id: 1, image_url: "https://www.tulips.com/images/popup/Muscari-Armeniacum.jpg")
-f3 = Flower.create(name: "Columbus", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Pinkish red with cream edge", height: "18 inches and up", description: "Double tulip", user_id: 1, image_url: "https://www.tulips.com/images/popup/columbus-double-tulip.jpg")
-f4 = Flower.create(name: "Yellow Crocus", type_species: "Crocuses", season: "Spring", subseason: "Early", color: "Yellow", height: "4 to 6 inches", description: "Multiply very quickly", user_id: 2, image_url: "https://www.tulips.com/images/popup/Yellow-Crocus.jpg")
-f5 = Flower.create(name: "Joan of Arc", type_species: "Crocuses", season: "Spring", subseason: "Early", color: "White", height: "4 to 6 inches", description: "Multiply very quickly", user_id: 2, image_url: "https://www.tulips.com/images/popup/Joan-of-Arc.jpg")
-f6 = Flower.create(name: "Ivanetti", type_species: "Dahlias", season: "Summer", subseason: "Mid", color: "Pink", height: "3 feet", description: "Cute small balls", user_id: 2, image_url: "https://drive.google.com/uc?export=view&id=1F_GKblrC2W1tMnZjjnXQKR_Xy1EdFDf9")
-f7 = Flower.create(name: "Orange Princess", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Orange", height: "16 to 18 inches", description: "A normal tulip has six petals while a Double tulip has at least twice that amount!", user_id: 1, image_url: "https://s3.amazonaws.com/cdn.tulips.com/images/large/Orange-Princess-2017.jpg")
-f8 = Flower.create(name: "Fruit Punch", type_species: "Oriental Poppies", season: "Spring", subseason: "Late", color: "Orange", height: "2 feet", description: "Huge flowers, long lasting", user_id: 1, image_url: "https://drive.google.com/uc?export=view&id=1tKf0AfUSuL57MjKD1CFOzK7XMJ8U4nlt")
-f9 = Flower.create(name: "Dwarf Yellow Lilium", type_species: "Asiatic Lily", season: "Summer", subseason: "Early", color: "Yellow", height: "12 to 18 inches", description: "Bright flowers", user_id: 1, image_url: "https://drive.google.com/uc?export=view&id=10FT6e_2XlI0IFUwX-cb9upxzQVxFLNCR")
+f1 = Flower.create(name: "Fabio", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Red and yellow", height: "16 inches", description: "Fringed tulips", , user_id: u1.id, image_url: "https://www.tulips.com/images/popup/fabio-fringed-tulips.jpg")
+f2 = Flower.create(name: "Armeniacum", type_species: "Muscari", season: "Spring", subseason: "Early", color: "Blue", height: "6 to 9 inches", description: "Mimic grapes. Fragrant.", , user_id: u1.id, image_url: "https://www.tulips.com/images/popup/Muscari-Armeniacum.jpg")
+f3 = Flower.create(name: "Columbus", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Pinkish red with cream edge", height: "18 inches and up", description: "Double tulip", , user_id: u1.id, image_url: "https://www.tulips.com/images/popup/columbus-double-tulip.jpg")
+f4 = Flower.create(name: "Yellow Crocus", type_species: "Crocuses", season: "Spring", subseason: "Early", color: "Yellow", height: "4 to 6 inches", description: "Multiply very quickly", user_id: u2.id, image_url: "https://www.tulips.com/images/popup/Yellow-Crocus.jpg")
+f5 = Flower.create(name: "Joan of Arc", type_species: "Crocuses", season: "Spring", subseason: "Early", color: "White", height: "4 to 6 inches", description: "Multiply very quickly", user_id: u2.id, image_url: "https://www.tulips.com/images/popup/Joan-of-Arc.jpg")
+f6 = Flower.create(name: "Ivanetti", type_species: "Dahlias", season: "Summer", subseason: "Mid", color: "Pink", height: "3 feet", description: "Cute small balls", user_id: u2.id, image_url: "https://drive.google.com/uc?export=view&id=1F_GKblrC2W1tMnZjjnXQKR_Xy1EdFDf9")
+f7 = Flower.create(name: "Orange Princess", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Orange", height: "16 to 18 inches", description: "A normal tulip has six petals while a Double tulip has at least twice that amount!", , user_id: u1.id, image_url: "https://s3.amazonaws.com/cdn.tulips.com/images/large/Orange-Princess-2017.jpg")
+f8 = Flower.create(name: "Fruit Punch", type_species: "Oriental Poppies", season: "Spring", subseason: "Late", color: "Orange", height: "2 feet", description: "Huge flowers, long lasting", , user_id: u1.id, image_url: "https://drive.google.com/uc?export=view&id=1tKf0AfUSuL57MjKD1CFOzK7XMJ8U4nlt")
+f9 = Flower.create(name: "Dwarf Yellow Lilium", type_species: "Asiatic Lily", season: "Summer", subseason: "Early", color: "Yellow", height: "12 to 18 inches", description: "Bright flowers", , user_id: u1.id, image_url: "https://drive.google.com/uc?export=view&id=10FT6e_2XlI0IFUwX-cb9upxzQVxFLNCR")
 
 
 puts "✅ Done seeding flowers!"
@@ -49,24 +49,24 @@ puts "✅ Done seeding locations!"
 
 
 puts "Seeding planting operations ..."
-PlantingOperation.create(flower_id: f1.id, location_id: l4.id )
-PlantingOperation.create(flower_id: f1.id, location_id: l14.id )
-PlantingOperation.create(flower_id: f2.id, location_id: l12.id)
-PlantingOperation.create(flower_id: f2.id, location_id: l10.id)
-PlantingOperation.create(flower_id: f2.id, location_id: l7.id)
-PlantingOperation.create(flower_id: f2.id, location_id: l6.id)
-PlantingOperation.create(flower_id: f2.id, location_id: l5.id)
-PlantingOperation.create(flower_id: f2.id, location_id: l4.id)
-PlantingOperation.create(flower_id: f3.id, location_id: l1.id)
-PlantingOperation.create(flower_id: f3.id, location_id: l7.id)
-PlantingOperation.create(flower_id: f4.id, location_id: l2.id)
-PlantingOperation.create(flower_id: f4.id, location_id: l3.id)
-PlantingOperation.create(flower_id: f5.id, location_id: l6.id)
-PlantingOperation.create(flower_id: f6.id, location_id: l19.id)
-PlantingOperation.create(flower_id: f6.id, location_id: l20.id)
-PlantingOperation.create(flower_id: f6.id, location_id: l21.id)
-PlantingOperation.create(flower_id: f7.id, location_id: l18.id)
-PlantingOperation.create(flower_id: f7.id, location_id: l14.id)
+PlantingOperation.create(flower_id: f1.id, location_id: l4.id, user_id: u1.id )
+PlantingOperation.create(flower_id: f1.id, location_id: l14.id, user_id: u1.id )
+PlantingOperation.create(flower_id: f2.id, location_id: l12.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f2.id, location_id: l10.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f2.id, location_id: l7.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f2.id, location_id: l6.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f2.id, location_id: l5.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f2.id, location_id: l4.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f3.id, location_id: l1.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f3.id, location_id: l7.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f4.id, location_id: l2.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f4.id, location_id: l3.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f5.id, location_id: l6.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f6.id, location_id: l19.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f6.id, location_id: l20.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f6.id, location_id: l21.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f7.id, location_id: l18.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f7.id, location_id: l14.id, user_id: u1.id)
 
 puts "✅ Done seeding planting operations!"
 
