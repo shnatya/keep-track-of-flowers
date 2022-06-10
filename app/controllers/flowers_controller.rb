@@ -29,6 +29,17 @@ class FlowersController < ApplicationController
         render json: @flower.id
     end
 
+    #GET "users/:id/flowers/summary"
+    def summary
+        user = User.find_by_id(session[:user_id])
+        if user
+            flowers = user.flowers
+            render json: flowers, each_serializer: FlowerSummarySerializer
+        else
+            render json: {errors: ["Not authorized!"]}, status: :unauthorized
+        end
+    end
+
     private 
 
     def flower_params
@@ -73,4 +84,8 @@ byebug
         end
         render json: @flowers, methods: [:bloom]
     end
+=end
+
+=begin
+
 =end

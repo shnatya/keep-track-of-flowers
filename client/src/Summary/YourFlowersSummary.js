@@ -9,7 +9,7 @@ function YourFlowersSummary({user, updateErrors, retrieveUser}) {
         if(user === null){
             retrieveUser()
         }else{
-            fetch(`/users/${user.id}/flowers_summary`)
+            fetch(`/users/${user.id}/flowers/summary`)
             .then(res => {
                 if(res.ok){
                     res.json().then(flowers => setMyFlowers(flowers))

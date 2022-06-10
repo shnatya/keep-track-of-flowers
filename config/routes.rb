@@ -10,12 +10,12 @@ Rails.application.routes.draw do
   post 'flowers', to: 'flowers#create'
   patch 'flowers/:id', to: 'flowers#update'
   delete 'flowers/:id', to: 'flowers#destroy'
+  get 'users/:id/flowers/summary', to: 'flowers#summary'
 
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
   get 'me', to: 'users#show'
-  get 'users/:id/flowers_summary', to: 'users#summary'
   post 'signup', to: 'users#create'
 
   get '*path', to: 'fallback#index',
