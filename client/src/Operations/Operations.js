@@ -12,7 +12,7 @@ function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOp
             .then(operationObj => {
                 deletePlantingOperation(operationObj)})
     }
-    
+    console.log(operationsToDisplay)
     return (
         <>
             <h1>Planting operations</h1>

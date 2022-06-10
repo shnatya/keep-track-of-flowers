@@ -5,6 +5,7 @@ import SignUp from './Log/SignUp';
 import Intro from './Intro';
 import Login from './Log/Login';
 import Header from './Header';
+import YourFlowersSummary from './Summary/YourFlowersSummary';
 import ChooseLocation from './Location/ChooseLocation'
 import Operations from './Operations/Operations';
 import Catalog from './Flowers/Catalog';
@@ -12,16 +13,7 @@ import NewFlowerForm from './Flowers/NewFlowerForm';
 import UpdateFlowerForm from './Flowers/UpdateFlowerForm'
 
 function App() {
-  const [flowers, setFlowers] = useState([
-            {name: "Fabio",
-            type_species: "Tulips",
-            season: "Spring",
-            subseason: "Mid",
-            color: "Red-yellow",
-            height: "12 inches",
-            description: "",
-            image_url: "https://www.tulips.com/images/popup/fabio-fringed-tulips.jpg"}
-  ])
+  const [flowers, setFlowers] = useState([])
   const [arrayTypesOfFlowers, setArrayTypesOfFlowers] = useState([])
   const [showFlowerMessage, setShowFlowerMessage] = useState(false)
   const [flowerNeedToUpdate, setFlowerNeedToUpdate] = useState({})
@@ -40,15 +32,25 @@ function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch("/me").then(res => {
-      if(res.ok) {
-        res.json().then(user => {
-          onLogin(user)})} 
-    })
+   (async () => {
+      const response = await fetch("/me");
+      const user = await response.json();
+      setUser(user)
+   })().catch(console.error)
   }, [])
+
+  async function retrieveUser(){
+      const response = await fetch("/me");
+      const user = await response.json();
+      setUser(user)
+  }
 
   function onLogin(user) {
     setUser(user)
+  }
+  
+  function resetUser(){
+    setUser(null)
   }
 
   function updateErrors(newErrors) {
@@ -125,7 +127,7 @@ function App() {
 
   function collectTypeSpecies(flowersArray) {
     let typeSpeciesArray = []
-    console.log(flowersArray)
+    
     flowersArray.forEach(flower => {
       let result = typeSpeciesArray.find(el => el === flower.type_species)
       if (result === undefined) {
@@ -221,7 +223,6 @@ function App() {
     fetch("/locations")
     .then(res => res.json())
     .then(locations => {
-      console.log(locations)
       setArrayOfUniqueLocations(locations)
     })
   }, [])
@@ -235,7 +236,6 @@ function App() {
 })
     .then(res => res.json())
     .then(operations => {
-      console.log(operations)
       setPlantingOperations(operations)
       setOperationsToDisplay(operations)})
   }, [])
@@ -307,7 +307,7 @@ function App() {
     <div>
         <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
                    setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter} errors={errors}
-                   updateErrors={updateErrors}/>
+                   updateErrors={updateErrors} resetUser={resetUser} />
     </div>
     )
   }
@@ -332,6 +332,7 @@ function App() {
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter} updateErrors={updateErrors}
                 deletePlantingOperation={deletePlantingOperation} updateOperationsToDisplay={updateOperationsToDisplay} />} />
+          <Route path="/your_flowers_summary" element={<YourFlowersSummary user={user} updateErrors={updateErrors} retrieveUser={retrieveUser}/>} />
           <Route path="*" element={<Intro />} />
           <Route path="/" element={<Intro />} />
         </Routes>
@@ -359,3 +360,13 @@ export default App;
       }
     })
   }, [])*/
+
+  /*
+  {name: "Fabio",
+            type_species: "Tulips",
+            season: "Spring",
+            subseason: "Mid",
+            color: "Red-yellow",
+            height: "12 inches",
+            description: "",
+            image_url: "https://www.tulips.com/images/popup/fabio-fringed-tulips.jpg"} */

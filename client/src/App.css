@@ -232,7 +232,11 @@
 }
 
 .between{
-  margin: 4em 4em 4em 4em;
+  margin-bottom: 5mm;
+}
+
+.between-in-up{
+  margin-left: 5mm;
 }
 
 .btn-group {
@@ -241,7 +245,7 @@
 }
 
 .btn {
-  width: 6.5em;
+  width: 7.7em;
   height: 2em;
   right: 20px;
   bottom: 20px;
@@ -267,7 +271,15 @@
   display: inline-block;
   text-align: left;
   font-size: 17px;
-    color: palevioletred;
+  color: palevioletred;
+}
+
+.flower-summary {
+  display: inline-block;
+  text-align: left;
+  font-size: 20px;
+  
+  
 }
 
 .input-flower{

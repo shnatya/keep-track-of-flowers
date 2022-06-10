@@ -17,6 +17,7 @@ class PlantingOperationsController < ApplicationController
     rescue ActiveRecord::RecordInvalid 
         render_duplicate_response
     end
+    
 
     #DELETE "/delete-planting-operation/:id"
     def destroy
@@ -75,3 +76,28 @@ end
       
 #end
 
+=begin
+def create
+        @flower = Flower.find_by_id(params[:planting][:flower_id])
+        @location = Location.find_by_id(params[:planting][:location_id])
+        planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)    
+        render json: planting_operation, status: :created
+    rescue ActiveRecord::RecordInvalid 
+        render_duplicate_response
+    end
+
+    def create
+        session[:number_operations] ||= 0
+        if session[:number_operations] < 1
+            session[:number_operations] = session[:number_operations] + 1
+            @flower = Flower.find_by_id(params[:planting][:flower_id])
+            byebug
+            @user = @flower.user
+            @location = Location.find_by_id(params[:planting][:location_id])
+            planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)    
+            render json: planting_operation, status: :created
+        else 
+            render json: {errors: ["Hey #{@user[:username]}, you planted 10 times already. It's time to buy our membership."]}
+        end
+    end
+=end

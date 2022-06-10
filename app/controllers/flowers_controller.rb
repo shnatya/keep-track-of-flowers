@@ -7,23 +7,23 @@ class FlowersController < ApplicationController
 
      #GET "/flowers" 
      def index
-        flowers = Flower.all
+        flowers = Flower.all.order(name: :asc)
         render json: flowers, methods: [:bloom]
     end
 
-    #POST "/add-new-flower"
+    #POST "/flowers"
     def create
         flower = Flower.create!(flower_params)
         render json: flower
     end
 
-    #PATCH "/update-flower/:id"
+    #PATCH "/flowers/:id"
     def update
         @flower.update!(flower_params)
         render json: @flower
     end
 
-    #DELETE "/delete-flower"
+    #DELETE "/flowers"
     def destroy
         @flower.destroy
         render json: @flower.id
@@ -60,3 +60,17 @@ end
     #end
 
 # before_action :authorize #cant do this i need flowers to collect type at the beginnign
+
+=begin
+byebug
+        if session[:user_id]
+            user = User.find_by_id(session[:user_id])
+            byebug
+            @flowers = user.flowers
+            byebug
+        else
+            @flowers = Flower.all.order(name: :asc)
+        end
+        render json: @flowers, methods: [:bloom]
+    end
+=end

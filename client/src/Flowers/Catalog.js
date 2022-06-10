@@ -88,7 +88,6 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
                 }
                 deleteFlower(deletedFlowersIds)
                 deletePlantingOperationsByFlowers(deletedFlowersIds)
-                //setCheckedState(new Array(flowersToDisplay.length - deletedFlowersIds.length).fill(false)) ////????
                 console.log("Checked state:")
                 console.log(checkedState)
                 setCheckedFlowers([])

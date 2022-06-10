@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   get 'me', to: 'users#show'
+  get 'users/:id/flowers_summary', to: 'users#summary'
   post 'signup', to: 'users#create'
 
   get '*path', to: 'fallback#index',

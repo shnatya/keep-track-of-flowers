@@ -36,7 +36,8 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
         event.preventDefault()
         changeCurrentOperaionFilter("By default")
         let promises = [];
-        if(finalCheckedFlowers.length !== 0) {
+        
+        if(finalCheckedFlowers.length !== 0 && checkedLocations.length !== 0) {
             finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
             let objOperation = Object.assign({}, { flower_id: flower.id, location_id: location.id })
             promises.push(myFetch(objOperation))
@@ -60,10 +61,10 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
                 addPlantingOperations(newObjects, newMessages)
             })
         });
-           
         navigate("/planting-operations")
+
         }else {
-            updateErrors(["First choose flowers to plant."])}
+            updateErrors(["Both flowers and locations have to be selected for planting!"])}
       }
 
     return(

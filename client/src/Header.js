@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate} from "react-router-dom"
 import ErrorList from "./Errors/ErrorList";
 
-function Header({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFilter, errors, updateErrors}) {
+function Header({user, resetUser, changeCurrentTypeFlower, changeCurrentOperaionFilter, errors, updateErrors}) {
     const navigate = useNavigate()
    
     function handleLogout() {
@@ -10,7 +10,7 @@ function Header({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFi
         fetch(("/logout"), { method: "DELETE"})
         .then(res => {
           if(res.ok) {
-            setUser(null)
+            resetUser()
             changeCurrentTypeFlower("All")
             changeCurrentOperaionFilter("By default")
             navigate("/login")
@@ -32,6 +32,12 @@ function Header({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFi
         updateErrors([])
         navigate("/planting-operations")
     }
+
+    function showMyFlowers() {
+        updateErrors([])
+        navigate("/your_flowers_summary")
+     }
+   
     return (
         <div className="div">
             <button onClick={handleLogout} className="button-logout">Log Out</button>
@@ -40,6 +46,7 @@ function Header({user, setUser, changeCurrentTypeFlower, changeCurrentOperaionFi
                 <button onClick={showFlowers} className="btn">Flowers</button>
                 <button onClick={showLocations} className="btn">Locations</button>
                 <button onClick={showOperations} className="btn">Planting</button>
+                <button onClick={showMyFlowers} className="btn">Your summary</button>
             </div>
             <ErrorList errors={errors} className="between-text"/>
         </div>

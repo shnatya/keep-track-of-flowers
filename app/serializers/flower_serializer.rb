@@ -1,5 +1,6 @@
 class FlowerSerializer < ActiveModel::Serializer
   attributes :id, :type_species, :name, :height, :image_url, :bloom, :summary
+
   has_many :locations
 
   def summary

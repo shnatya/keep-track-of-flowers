@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 
 function FlowerCard({flower, updateCheckedState, updateErrors, addCheckedFlowers, extractFlowerObjById, checkboxId, checkedValue}) {
     const navigate = useNavigate()
-    console.log(checkedValue)
     function handleUpdateFlower(event) {
         extractFlowerObjById(event.target.id)
         updateErrors([])
@@ -35,4 +34,4 @@ export default FlowerCard;
 
 
 
-//checkBox'Id and flower's id have differenet value.
+//checkBox'Id and flower's id have differenet values.
