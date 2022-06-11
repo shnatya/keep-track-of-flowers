@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LocationCard from './LocationCard';
 import { useNavigate } from 'react-router';
 
-function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalCheckedFlowers,
+function ChooseLocation({user, arrayOfUniqueLocations, addPlantingOperations, finalCheckedFlowers,
                         changeCurrentOperaionFilter, updateErrors}) {
     const [checkedLocations, setCheckedLocations] = useState([])
 
@@ -39,7 +39,7 @@ function ChooseLocation({arrayOfUniqueLocations, addPlantingOperations, finalChe
         
         if(finalCheckedFlowers.length !== 0 && checkedLocations.length !== 0) {
             finalCheckedFlowers.forEach(flower => checkedLocations.forEach(location => {
-            let objOperation = Object.assign({}, { flower_id: flower.id, location_id: location.id })
+            let objOperation = Object.assign({}, { flower_id: flower.id, location_id: location.id, user_id: user.id})
             promises.push(myFetch(objOperation))
         })
         )

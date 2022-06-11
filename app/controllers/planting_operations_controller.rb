@@ -1,18 +1,26 @@
 class PlantingOperationsController < ApplicationController
     wrap_parameters format: []
+   # before_action
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
-    #GET "/planting-operations" 
+    #GET "/users/:id/planting-operations" 
     def index
-        planting_operations = PlantingOperation.all
-        render json: planting_operations
+        user = User.find_by(id: params[:id])
+        if user
+            planting_operations = user.planting_operations
+            render json: planting_operations
+        else 
+
+            render json: {errors: ["Not authorized!"]}, status: :unauthorized
+        end
     end
 
     #POST "/planting-operations"
     def create
+        user = User.find_by_id(params[:planting][:user_id])
         @flower = Flower.find_by_id(params[:planting][:flower_id])
         @location = Location.find_by_id(params[:planting][:location_id])
-        planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)    
+        planting_operation = user.planting_operations.create!(flower_id: @flower.id, location_id: @location.id)    
         render json: planting_operation, status: :created
     rescue ActiveRecord::RecordInvalid 
         render_duplicate_response

@@ -14,6 +14,7 @@ import UpdateFlowerForm from './Flowers/UpdateFlowerForm'
 
 function App() {
   const [flowers, setFlowers] = useState([])
+  const [usersFlowers, setUsersFlowers] = useState([])
   const [arrayTypesOfFlowers, setArrayTypesOfFlowers] = useState([])
   const [showFlowerMessage, setShowFlowerMessage] = useState(false)
   const [flowerNeedToUpdate, setFlowerNeedToUpdate] = useState({})
@@ -43,12 +44,13 @@ function App() {
       const response = await fetch("/me");
       const user = await response.json();
       setUser(user)
+      requestUsersPlanting(user)
   }
 
   function onLogin(user) {
     setUser(user)
   }
-  
+
   function resetUser(){
     setUser(null)
   }
@@ -69,6 +71,16 @@ function App() {
       })
       .catch(errors => console.log(errors))
     }, []) 
+  
+    /*function requestUsersFlowers(user) {
+      fetch(`/users/${user.id}/flowers`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setUsersFlowers(data)
+      })
+      .catch(errors => console.log(errors))
+    }*/
 
   function addNewFlower(newFlower) {
     fetch("/flowers", {
@@ -227,18 +239,18 @@ function App() {
     })
   }, [])
 //-------------------------------Planting Operations---------------------------------//
-  useEffect(() => {
-    fetch("/planting_operations", {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+  function requestUsersPlanting(user) {
+      fetch(`/users/${user.id}/planting-operations`, {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        }})
+      .then(res => res.json())
+      .then(operations => {
+        setPlantingOperations(operations)
+        setOperationsToDisplay(operations)})
+        .catch(error => console.log(error))
       }
-})
-    .then(res => res.json())
-    .then(operations => {
-      setPlantingOperations(operations)
-      setOperationsToDisplay(operations)})
-  }, [])
 
   useEffect(() => updateOperationsToDisplay(currentOperationFilter),
    [flowers])
@@ -252,11 +264,13 @@ function App() {
   function updateOperationsToDisplay(filter) {
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
+      console.log(plantingOperations)
     }else if(filter === "By flowers"){
       let arrayOfFlowersAndLocations = []
 
-      flowers.forEach(flower => {
+      usersFlowers.forEach(flower => {
         let arrayOfLocations =[]
+        debugger
         let flower_obj = {name: flower.name, image_url: flower.image_url}
         flower.locations.forEach(location => arrayOfLocations.push(location.image_url)
         )
@@ -316,7 +330,7 @@ function App() {
       {user ? loadHeader() : null}
       <div className="App">
         <Routes>
-          <Route path="/login" element={<Login onLogin={onLogin}/>} />
+          <Route path="/login" element={<Login onLogin={onLogin} requestUsersPlanting={requestUsersPlanting}/>} />
           <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
           <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} updateErrors={updateErrors} />} />
           <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate} handleUpdatedFlower={handleUpdatedFlower}
@@ -326,7 +340,7 @@ function App() {
                 arrayTypesOfFlowers={arrayTypesOfFlowers} deleteFlower={deleteFlower} deletePlantingOperationsByFlowers={deletePlantingOperationsByFlowers}
                 showFlowerMessage={showFlowerMessage} updateFlowerMessage={updateFlowerMessage} updateErrors={updateErrors}
                 extractFlowerObjById={extractFlowerObjById} />} />
-          <Route path="/choose-location" element={<ChooseLocation arrayOfUniqueLocations={arrayOfUniqueLocations}
+          <Route path="/choose-location" element={<ChooseLocation user={user} arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers}  addPlantingOperations={addPlantingOperations}
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} updateErrors={updateErrors} />} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 

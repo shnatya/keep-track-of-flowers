@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get "locations", to: "locations#index"
 
-  get "planting_operations", to: "planting_operations#index"
+  get "users/:id/planting-operations", to: "planting_operations#index"
   post "planting_operations", to: "planting_operations#create"
   delete "planting_operation/:id", to: "planting_operations#destroy"
 
@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post 'flowers', to: 'flowers#create'
   patch 'flowers/:id', to: 'flowers#update'
   delete 'flowers/:id', to: 'flowers#destroy'
+  get '/users/:id/flowers', to: 'flowers#index'
   get 'users/:id/flowers/summary', to: 'flowers#summary'
 
   post 'login', to: 'sessions#create'
