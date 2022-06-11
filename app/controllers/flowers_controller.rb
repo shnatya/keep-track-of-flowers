@@ -5,14 +5,9 @@ class FlowersController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
-     #GET "/flowers" or "/users/:id/flowers"
+     #GET "/flowers" 
      def index
-        if params[:id]
-            user = User.find_by_id(params[:id])
-            flowers = user.flowers.order(name: :asc)
-        else
-            flowers = Flower.all.order(name: :asc)
-        end
+        flowers = Flower.all.order(name: :asc)
         render json: flowers, methods: [:bloom]
     end
 

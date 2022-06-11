@@ -1,7 +1,8 @@
 class PlantingOperationsController < ApplicationController
     wrap_parameters format: []
-   # before_action
+   # before_action :find_user, only : [:index]
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
     #GET "/users/:id/planting-operations" 
     def index
@@ -10,7 +11,6 @@ class PlantingOperationsController < ApplicationController
             planting_operations = user.planting_operations
             render json: planting_operations
         else 
-
             render json: {errors: ["Not authorized!"]}, status: :unauthorized
         end
     end
@@ -36,6 +36,10 @@ class PlantingOperationsController < ApplicationController
 
     private
 
+    def not_found
+        render json: {errors: ["Please log in first"]}
+    end
+    
     def render_duplicate_response
         render json: {errors: ["NOT PLANTED!!! - {#{@flower.name} : #{@location.description}} operation already exists!"]}, status: :unprocessable_entity
     end
