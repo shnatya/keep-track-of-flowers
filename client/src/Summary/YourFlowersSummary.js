@@ -19,9 +19,9 @@ function YourFlowersSummary({user, updateErrors, retrieveUser}) {
     return (
         <div className="container">
             <h1>Summary</h1>
-            <h2>You have added next flowers in the catalog:</h2>
+            {arrayOfFlowers.length === 0 ? null :<h2>You have added next flowers in the catalog:</h2>}
             <ul className="flower-summary">
-                {arrayOfFlowers}
+                {arrayOfFlowers.length === 0 ? <h3 style={{color: "green"}}>You haven't added flowers yet. If you'd like to add, go back to Flowers and add some.</h3> : arrayOfFlowers}
             </ul>
         </div>
     );
