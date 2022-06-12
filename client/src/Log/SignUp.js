@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorList from "../Errors/ErrorList";
 
-function SignUp({onLogin}) {
+function SignUp({onLogin, requestUsersPlanting}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
@@ -26,6 +26,7 @@ function SignUp({onLogin}) {
             if(res.ok){
                 res.json().then(user => {
                     onLogin(user)
+                    requestUsersPlanting(user)
                     navigate('/catalog')
                 })
             }else{

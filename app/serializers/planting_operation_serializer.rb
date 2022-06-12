@@ -1,5 +1,5 @@
 class PlantingOperationSerializer < ActiveModel::Serializer
-  attributes :id, :user_id
+  attributes :id
   has_one :flower
   has_one :location
 end

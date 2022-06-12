@@ -52,6 +52,7 @@ function App() {
   }
 
   function updateErrors(newErrors) {
+    debugger
     setErrors(newErrors)
   }
 
@@ -150,9 +151,9 @@ function App() {
     }
   }
 
-  function deleteFlower(arrayOfDeletedFlowersIds) {
+  function deleteFlower(arrayOfDeletedFlowersIds, errors) {
     let newArrayOfFlowers = [...flowers]
-    let arrayOfErrors = []
+    let arrayOfErrors = [...errors]
     arrayOfDeletedFlowersIds.forEach(id => {
       
       newArrayOfFlowers = newArrayOfFlowers.filter(flower => {
@@ -233,7 +234,10 @@ function App() {
             setPlantingOperations(operations)
             setOperationsToDisplay(operations)
           })
-        }else{updateErrors(["Please log in or sign up first"])}})
+        }
+        //else{updateErrors(["Please log in or sign up first"])}
+      }
+        )
       .catch(error => console.log(error))
   }
 
@@ -251,20 +255,19 @@ function App() {
       setOperationsToDisplay(plantingOperations)
       console.log(plantingOperations)
     }else if(filter === "By flowers"){
-      let arrayOfFlowersAndLocations = []
 
-      flowers.forEach(flower => {
-        let arrayOfLocations =[]
-        debugger
-        let flower_obj = {name: flower.name, image_url: flower.image_url}
-        flower.locations.forEach(location => arrayOfLocations.push(location.image_url)
-        )
-        if(arrayOfLocations.length !== 0) {
-          flower_obj = {...flower_obj, arrayOfLocations}
-          arrayOfFlowersAndLocations.push(flower_obj)
-        }
-      })
-        setOperationsToDisplay(arrayOfFlowersAndLocations)
+          let filterByFlowersObject = {}
+          plantingOperations.forEach(operation => {
+            let flowerImageURLKey = operation.flower.image_url
+            if (filterByFlowersObject[flowerImageURLKey]) {
+              filterByFlowersObject[flowerImageURLKey].push(operation.location.image_url)
+            } else {
+              filterByFlowersObject[flowerImageURLKey] = [operation.location.image_url]
+            }
+          })
+          console.log(filterByFlowersObject)
+          setOperationsToDisplay(filterByFlowersObject)
+
     }
   }
 
@@ -316,7 +319,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login onLogin={onLogin} requestUsersPlanting={requestUsersPlanting} />} />
-          <Route path="/signup" element={<SignUp onLogin={onLogin}/>} />
+          <Route path="/signup" element={<SignUp onLogin={onLogin} requestUsersPlanting={requestUsersPlanting}/>} />
           <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} updateErrors={updateErrors} />} />
           <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate} handleUpdatedFlower={handleUpdatedFlower}
                   updateErrors={updateErrors}/>} />

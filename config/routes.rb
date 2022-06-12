@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   post 'flowers', to: 'flowers#create'
   patch 'flowers/:id', to: 'flowers#update'
   delete 'flowers/:id', to: 'flowers#destroy'
-  #get '/users/:id/flowers', to: 'flowers#index'
   get 'users/:id/flowers/summary', to: 'flowers#summary'
 
   post 'login', to: 'sessions#create'

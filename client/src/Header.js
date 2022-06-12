@@ -45,7 +45,7 @@ function Header({user, resetUser, changeCurrentTypeFlower, changeCurrentOperaion
             <div className="button-header">
                 <button onClick={showFlowers} className="btn">Flowers</button>
                 <button onClick={showLocations} className="btn">Locations</button>
-                <button onClick={showOperations} className="btn">Planting</button>
+                <button onClick={showOperations} className="btn">Your planting</button>
                 <button onClick={showMyFlowers} className="btn">Your summary</button>
             </div>
             <ErrorList errors={errors} className="between-text"/>

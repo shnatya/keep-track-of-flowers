@@ -65,8 +65,8 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
             fetch(`/flowers/${flowerId}`, {
                 method: "DELETE"
             }).then(response => resolve(response))
-                .catch((error) => {
-                    console.error(error);
+                .catch((errors) => {
+                    updateErrors(errors)
             })
         })}
 
@@ -82,14 +82,18 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
             })
             Promise.all(jsonPromises).then(jsonBodies => {
                 let deletedFlowersIds = []
+                let arrayOfErrors = []
                 for (let i = 0; i < jsonBodies.length; i++) {
-                    let obj = jsonBodies[i]
-                    deletedFlowersIds.push(obj)
+                   if (jsonBodies[i].errors) {
+                    console.log(jsonBodies[i].errors)
+                    arrayOfErrors.push(jsonBodies[i].errors)
+                   }
+                    else {
+                        deletedFlowersIds.push(jsonBodies[i])
+                    }
                 }
-                deleteFlower(deletedFlowersIds)
+                deleteFlower(deletedFlowersIds, arrayOfErrors)
                 deletePlantingOperationsByFlowers(deletedFlowersIds)
-                console.log("Checked state:")
-                console.log(checkedState)
                 setCheckedFlowers([])
             })
         });

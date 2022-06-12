@@ -1,14 +1,15 @@
 import React from "react";
 
-function ByFlowersCard({flower}) {
+function ByFlowersCard({flowerURL, locationsURLs}) {
+    console.log(JSON.stringify(flowerURL))
+    console.log(locationsURLs)
     return (
         <div className="operation-filter-card">
             <section>
-                <h3>{flower.name}</h3>
-                <img src={flower.image_url} alt="Flower pic" className="right flower-pic"></img>
+                <img src={flowerURL} alt="Flower pic" className="right flower-pic"></img>
             </section>
-            <h3>Planted here</h3>
-            {flower.arrayOfLocations.map((loc_img_url, index) => <img src={loc_img_url} key={index} alt="Location pic" className="location-pic"></img>)}
+            <h3>Locations</h3>
+            {locationsURLs.map((url, index) => <img src={url} key={index} alt="Location pic" className="location-pic"></img>)}
         </div>
     )
 

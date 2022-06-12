@@ -4,6 +4,7 @@ import ByFlowersCard from "./ByFlowersCard";
 
 function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOperationFilter, deletePlantingOperation}) {
 
+    //Object.entries(operationsToDisplay).map(([key, value]) => console.log(key))
     
     function handleDeleteOperationButton(operation) {
         fetch(`/planting_operation/${operation.id}`, {
@@ -15,7 +16,7 @@ function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOp
     console.log(operationsToDisplay)
     return (
         <>
-            <h1>Planting operations</h1>
+            <h1>Your planting operations</h1>
             <h3>Filter:</h3>
             <select onChange={(event) => changeCurrentOperaionFilter(event.target.value)} value={currentOperationFilter}>
                 <option value="By default">By default</option>
@@ -28,7 +29,7 @@ function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOp
                 </div>: null}
             {currentOperationFilter === "By flowers" ?
                 <div className="flex-container">
-                    {operationsToDisplay.map((flower, index) => <ByFlowersCard flower={flower} key={index}/>)}
+                    {Object.entries(operationsToDisplay).map(([key, value]) => <ByFlowersCard flowerURL={key} locationsURLs={value} key={key}/>)}
                 </div> : null}
         </>
     )

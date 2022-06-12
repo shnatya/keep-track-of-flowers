@@ -25,8 +25,12 @@ class FlowersController < ApplicationController
 
     #DELETE "/flowers"
     def destroy
-        @flower.destroy
-        render json: @flower.id
+        if @flower.planting_operations.length != 0
+            render json: {errors: ["Can NOT delete the flower! Somebody's planted it."]}
+        else 
+            @flower.destroy
+            render json: @flower.id
+        end
     end
 
     #GET "users/:id/flowers/summary"
