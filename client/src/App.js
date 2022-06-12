@@ -52,7 +52,6 @@ function App() {
   }
 
   function updateErrors(newErrors) {
-    debugger
     setErrors(newErrors)
   }
 
@@ -235,11 +234,12 @@ function App() {
             setOperationsToDisplay(operations)
           })
         }
-        //else{updateErrors(["Please log in or sign up first"])}
-      }
-        )
+        else{
+          res.json().then(() => updateErrors(["Please log in or sign up first"]))}
+      })
       .catch(error => console.log(error))
   }
+
 
   useEffect(() => updateOperationsToDisplay(currentOperationFilter),
    [flowers])
@@ -309,7 +309,7 @@ function App() {
     <div>
         <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
                    setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter} errors={errors}
-                   updateErrors={updateErrors} resetUser={resetUser} />
+                   updateErrors={updateErrors} resetUser={resetUser} requestUsersPlanting={requestUsersPlanting} />
     </div>
     )
   }

@@ -64,10 +64,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
 
             fetch(`/flowers/${flowerId}`, {
                 method: "DELETE"
-            }).then(response => resolve(response))
-                .catch((errors) => {
-                    updateErrors(errors)
-            })
+            }).then(response => resolve(response))      
         })}
 
     function handleDeleteFlowerButton() {
