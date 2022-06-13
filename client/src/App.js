@@ -102,6 +102,7 @@ function App() {
     .then(data => {
       if(data.errors) {
         updateErrors(data.errors)
+        navigate('/catalog')
       }else { 
         addUpdatedFlowerToFlowerDB(data)
         collectTypeSpecies([...flowers, data])

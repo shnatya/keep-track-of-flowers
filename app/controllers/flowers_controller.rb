@@ -19,8 +19,12 @@ class FlowersController < ApplicationController
 
     #PATCH "/flowers/:id"
     def update
-        @flower.update!(flower_params)
-        render json: @flower
+        if @flower[:user_id] == session[:user_id]
+            @flower.update!(flower_params)
+            render json: @flower
+        else
+           render json: {errors: ["Not authorized to update this flower!"]}, status: :unauthorized
+        end
     end
 
     #DELETE "/flowers"

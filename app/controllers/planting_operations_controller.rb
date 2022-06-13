@@ -1,18 +1,15 @@
 class PlantingOperationsController < ApplicationController
     wrap_parameters format: []
-   
+    before_action :authorized, only: [:index, :create]
+
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
     #GET "/users/:id/planting-operations" 
     def index
-        user = User.find_by_id(params[:id])
-        if user
-            planting_operations = user.planting_operations
-            render json: planting_operations
-        else 
-            render json: {errors: ["Not authorized!"]}, status: :unauthorized
-        end
+        user = User.find_by_id(session[:user_id])
+        planting_operations = user.planting_operations
+        render json: planting_operations
     end
 
     #POST "/planting-operations"
@@ -40,16 +37,16 @@ class PlantingOperationsController < ApplicationController
         render json: {errors: ["Please log in first"]}
     end
     
+    def authorized
+        render json: {errors: ["Not authorized"]}, status: :unauthorized unless session.include? :user_id
+    end
+
     def render_duplicate_response
         render json: {errors: ["NOT PLANTED!!! - {#{@flower.name} : #{@location.description}} operation already exists!"]}, status: :unprocessable_entity
     end
 
     def render_unprocessable_entity_response(invalid)
         render json: {errors: invalid.record.errors.full_messages}, status: :unprocessable_entity
-    end
-
-    def planting_operations_params
-        params.permit(:flower_id, :location_id)
     end
 
 end
