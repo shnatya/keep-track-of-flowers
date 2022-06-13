@@ -1,12 +1,12 @@
 class PlantingOperationsController < ApplicationController
     wrap_parameters format: []
-   # before_action :find_user, only : [:index]
+   
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
     #GET "/users/:id/planting-operations" 
     def index
-        user = User.find_by(id: params[:id])
+        user = User.find_by_id(params[:id])
         if user
             planting_operations = user.planting_operations
             render json: planting_operations
@@ -62,54 +62,3 @@ end
 
 
 
-#def create
- #   @flower = Flower.find(params[:planting][:flower_id])
-  #  @location = Location.find_by_id(params[:planting][:location_id])
-   # planting_operation = PlantingOperation.new(flower_id: @flower.id, location_id: @location.id)
-    #if planting_operation.valid?
-     #   planting_operation.save
-      #  render json: planting_operation, status: :created
-    #else
-     #   render_duplicate_response
-    #end    
-#end
-
-
-
-#def create
-  #  @flower = Flower.find(params[:planting][:flower_id])
-   # @location = Location.find_by_id(params[:planting][:location_id])
-    #if @flower.locations.include?(@location)
-     #   render_duplicate_response
-    #else
-     #   planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)
-      #  render json: planting_operation, status: :created
-    #end
-      
-#end
-
-=begin
-def create
-        @flower = Flower.find_by_id(params[:planting][:flower_id])
-        @location = Location.find_by_id(params[:planting][:location_id])
-        planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)    
-        render json: planting_operation, status: :created
-    rescue ActiveRecord::RecordInvalid 
-        render_duplicate_response
-    end
-
-    def create
-        session[:number_operations] ||= 0
-        if session[:number_operations] < 1
-            session[:number_operations] = session[:number_operations] + 1
-            @flower = Flower.find_by_id(params[:planting][:flower_id])
-            byebug
-            @user = @flower.user
-            @location = Location.find_by_id(params[:planting][:location_id])
-            planting_operation = PlantingOperation.create!(flower_id: @flower.id, location_id: @location.id)    
-            render json: planting_operation, status: :created
-        else 
-            render json: {errors: ["Hey #{@user[:username]}, you planted 10 times already. It's time to buy our membership."]}
-        end
-    end
-=end

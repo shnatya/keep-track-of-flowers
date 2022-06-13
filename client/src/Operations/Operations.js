@@ -11,7 +11,6 @@ function Operations({operationsToDisplay, changeCurrentOperaionFilter, currentOp
             .then(operationObj => {
                 deletePlantingOperation(operationObj)})
     }
-    console.log(operationsToDisplay)
     return (
         <>
             <h1>Your planting operations</h1>

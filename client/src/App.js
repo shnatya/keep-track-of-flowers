@@ -60,7 +60,6 @@ function App() {
       fetch("/flowers")
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         setFlowers(data)
         setFlowersToDisplay(data)
         collectTypeSpecies(data)
@@ -205,7 +204,6 @@ function App() {
     newArrayOfFlowers = newArrayOfFlowers.map(flower => {
                         if(flower.id === flower_id) {
                           let updatedLocations = flower.locations.filter(location => location.id !== location_id)
-                          console.log({...flower, locations: updatedLocations})
                           return {...flower, locations: updatedLocations}
                         }else{
                           return flower
@@ -213,8 +211,6 @@ function App() {
     })
     setFlowers(newArrayOfFlowers)
     setFlowersToDisplay(newArrayOfFlowers)
-    console.log(newArrayOfFlowers)
-    
   }
 //-----------------------------------Locations---------------------------------//
   useEffect(() => {
@@ -253,7 +249,6 @@ function App() {
   function updateOperationsToDisplay(filter) {
     if(filter === "By default") {
       setOperationsToDisplay(plantingOperations)
-      console.log(plantingOperations)
     }else if(filter === "By flowers"){
 
           let filterByFlowersObject = {}
@@ -265,7 +260,6 @@ function App() {
               filterByFlowersObject[flowerImageURLKey] = [operation.location.image_url]
             }
           })
-          console.log(filterByFlowersObject)
           setOperationsToDisplay(filterByFlowersObject)
 
     }
@@ -315,7 +309,7 @@ function App() {
   }
   return (
     <>
-      {user !== null ? loadHeader() : null}
+      {(user === null || user.id === undefined) ? null : loadHeader()}
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login onLogin={onLogin} requestUsersPlanting={requestUsersPlanting} />} />
@@ -346,29 +340,24 @@ function App() {
 export default App;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //when plant flowers, check flowers, and send them from Catalog/sibling component to App/parent component 
 //in order to transfer checked flowers to ChooseLocation/sibling component.
 //From Header I choose to navigate to Planting, I go to App where i keep all my routes, and there I keep my planting operations state
 //And can transfer all planting operations to the component
 
 
- /*useEffect(() => {
-    fetch("/locations")
-    .then(response => {
-      if(response.ok) {
-        response.json().then(locations => setArrayOfUniqueLocations(locations))
-      }else{
-        response.json().then(error => console.log(error))
-      }
-    })
-  }, [])*/
-
-  /*
-  {name: "Fabio",
-            type_species: "Tulips",
-            season: "Spring",
-            subseason: "Mid",
-            color: "Red-yellow",
-            height: "12 inches",
-            description: "",
-            image_url: "https://www.tulips.com/images/popup/fabio-fringed-tulips.jpg"} */

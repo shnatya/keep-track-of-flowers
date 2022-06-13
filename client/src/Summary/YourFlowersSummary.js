@@ -29,16 +29,3 @@ function YourFlowersSummary({user, updateErrors, retrieveUser}) {
 
 export default YourFlowersSummary
 
-/*
-useEffect(() => {
-        if(user === null){
-            navigate('/login')
-        }else{
-            fetch(`/users/${user.id}/flowers_summary`)
-        .then(res => {
-                if(res.ok){
-                    res.json().then(flowers => setMyFlowers(flowers))
-                }else{updateErrors(["Please log in first"])}
-        })
-        }
-        }, [])*/

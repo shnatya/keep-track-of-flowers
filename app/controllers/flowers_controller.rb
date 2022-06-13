@@ -44,6 +44,7 @@ class FlowersController < ApplicationController
         end
     end
 
+
     private 
 
     def flower_params
@@ -64,32 +65,3 @@ class FlowersController < ApplicationController
 end
 
 
-#def index
-    #user = User.find_by_id(session[:user_id])
-    #flowers = user.flowers
-    #render json: flowers, include: ['flower', 'flower.user', 'locations']
-#end
-
-#def authorize
-     #   return json: {errors: ["Not authorized"]}, status: :unauthorized unless session.include? :user_id
-    #end
-
-# before_action :authorize #cant do this i need flowers to collect type at the beginnign
-
-=begin
-byebug
-        if session[:user_id]
-            user = User.find_by_id(session[:user_id])
-            byebug
-            @flowers = user.flowers
-            byebug
-        else
-            @flowers = Flower.all.order(name: :asc)
-        end
-        render json: @flowers, methods: [:bloom]
-    end
-=end
-
-=begin
-
-=end

@@ -1,8 +1,7 @@
 import React from "react";
 
 function ByFlowersCard({flowerURL, locationsURLs}) {
-    console.log(JSON.stringify(flowerURL))
-    console.log(locationsURLs)
+   
     return (
         <div className="operation-filter-card">
             <section>
