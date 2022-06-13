@@ -1,13 +1,14 @@
 class FlowersController < ApplicationController
-    wrap_parameters format: []
+    before_action :authorized, only: [:create, :summary]
     before_action :find_flower, only: [:destroy, :update]
+    before_action :find_user, only: [:create, :summary]
 
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
      #GET "/flowers" 
      def index
-        flowers = Flower.all.order(name: :asc)
+        flowers = Flower.all
         render json: flowers, methods: [:bloom]
     end
 
@@ -39,13 +40,8 @@ class FlowersController < ApplicationController
 
     #GET "users/:id/flowers/summary"
     def summary
-        user = User.find_by_id(session[:user_id])
-        if user
-            flowers = user.flowers
-            render json: flowers, each_serializer: FlowerSummarySerializer
-        else
-            render json: {errors: ["Not authorized!"]}, status: :unauthorized
-        end
+        flowers = @user.flowers
+        render json: flowers, each_serializer: FlowerSummarySerializer
     end
 
 
@@ -57,6 +53,14 @@ class FlowersController < ApplicationController
 
     def find_flower
         @flower = Flower.find(params[:id])
+    end
+
+    def find_user
+        @user = User.find_by_id(session[:user_id])
+    end
+
+    def authorized
+        render json: {errors: ["Not authorized"]}, status: :unauthorized unless session.include? :user_id
     end
 
     def render_unprocessable_entity_response(invalid)

@@ -41,7 +41,7 @@ If you upload pictures from Google Drive, then use Google Drive Image URL Conver
 
 To **delete** a flower or flowers, check as many flowers as you want to delete and push **Delete**. If a flower has been already planted, then you recieve a message on the screen: "Can NOT delete the flower! Somebody's planted it." Otherwise, the flower will be deleted. 
 
-To **update** a flower, push **Tools** in the upper right conner of each flower card. Update the flower and submit.
+To **update** a flower, push **Tools** in the upper right conner of each flower card. Only the user who added the flower to the database has permission to update it.
 
 To **plant** flower/flowers, first check flowers on the Flowers page, push **Next Step** on the right side of the page. Then on the Locations page check as many locations as you'd like and push **Plant**. On the Planting Operations page, you see new just added planting operations and old ones. Remember, flowers are allowered to be planted at unique locations, otherwise you will get a message about the duplicate planting operation. 
 

@@ -1,6 +1,6 @@
 class PlantingOperationsController < ApplicationController
-    wrap_parameters format: []
-    before_action :authorized, only: [:index, :create]
+    #wrap_parameters format: []
+    before_action :authorized
 
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
