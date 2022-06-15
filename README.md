@@ -2,11 +2,16 @@
 
 # Description of Keep Track of Your Flowers App
 
-Keep Track of Your Flowers App allows users to store information about flowers themselve, such as: name, type, color, height, season, subseason, description, image. And also it allows users to save  information about locations whrere flowers were planted. 
+Keep Track of Your Flowers App allows users to store information about flowers themselve, such as: name, type, color, height, season, subseason, description, image. And also it allows users to store information about locations where flowers were planted. 
 
 ## Installation
 In the repository of this app, copy information about this repository in **Code** section.
 In your terminal, type *git clone* and paste what you have copied from GitHub.
+
+To get set up, run:
+### `$ bundle install`
+### `$ rails db:migrate db:seed`
+### `$ npm install --prefix client`  
 
 To start the server, type in your terminal: 
 ### `$ rails s`
@@ -17,8 +22,11 @@ This will run your server on port
 To start working with database in your terminal:
 ### `$ rails c`
 
-To run the app in the development mode, open:
-[http://localhost:3000/login](http://localhost:3000/login) to view it in your browser.
+To run the app in the development mode:
+### `$ npm start --prefix client`
+
+It will run on port 3000:
+[http://localhost:3000](http://localhost:3000) 
 
 Application is deployed on Heroku [https://keep-track-of-flowers.herokuapp.com/](https://keep-track-of-flowers.herokuapp.com/)
 
@@ -45,7 +53,7 @@ To **update** a flower, push **Tools** in the upper right conner of each flower 
 
 To **plant** flower/flowers, first check flowers on the Flowers page, push **Next Step** on the right side of the page. Then on the Locations page check as many locations as you'd like and push **Plant**. On the Planting Operations page, you see new just added planting operations and old ones. Remember, flowers are allowered to be planted at unique locations, otherwise you will get a message about the duplicate planting operation. 
 
-To see all your planting operations, push **Your planting**. 
+To see all your planted flowers, push **Your planting**. 
 To check flowers that you have added, push **Your summary**. 
 
 

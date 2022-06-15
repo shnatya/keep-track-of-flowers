@@ -19,7 +19,6 @@ function NewFlowerForm({addNewFlower, updateErrors}) {
             ...newFlower,
             [event.target.name]: event.target.value
         })
-        console.log(event.target.value)
     }
 
     function handleSubmit(event) {
