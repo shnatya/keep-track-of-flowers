@@ -11,6 +11,7 @@ import Operations from './Operations/Operations';
 import Catalog from './Flowers/Catalog';
 import NewFlowerForm from './Flowers/NewFlowerForm';
 import UpdateFlowerForm from './Flowers/UpdateFlowerForm'
+import MostFlowers from './MostFlowers';
 
 function App() {
   const [flowers, setFlowers] = useState([])
@@ -29,6 +30,7 @@ function App() {
 
   const [user, setUser] = useState(null)
   const [errors, setErrors] = useState([])
+  const [userWithMostFlowers, setUserWithMostFlowers] = useState({})
   const navigate = useNavigate()
 
   useEffect(() => retrieveUser()
@@ -54,6 +56,15 @@ function App() {
   function updateErrors(newErrors) {
     setErrors(newErrors)
   }
+
+  useEffect(() => {
+    fetch("/user-with-most-flowers")
+    .then(res => res.json())
+    .then(user => {
+      setUserWithMostFlowers(user)
+    })
+    .catch(errors => console.log(errors))
+  }, []) 
 
 //----------------------------Flowers----------------------------------//
   useEffect(() => {
@@ -315,6 +326,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login onLogin={onLogin} requestUsersPlanting={requestUsersPlanting} />} />
           <Route path="/signup" element={<SignUp onLogin={onLogin} requestUsersPlanting={requestUsersPlanting}/>} />
+          <Route path="/most-flowers" element={<MostFlowers user={userWithMostFlowers} />}/>
           <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} updateErrors={updateErrors} />} />
           <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate} handleUpdatedFlower={handleUpdatedFlower}
                   updateErrors={updateErrors}/>} />

@@ -20,6 +20,12 @@ class UsersController < ApplicationController
         end
     end
 
+    def user_with_most_flowers
+        user = User.user_most_flowers
+        render json: user[0]
+    end
+
+
     private
 
     def user_params

@@ -30,11 +30,15 @@ class FlowersController < ApplicationController
 
     #DELETE "/flowers"
     def destroy
-        if @flower.planting_operations.length != 0
-            render json: {errors: ["Can NOT delete the flower! Somebody's planted it."]}
+        if @flower[:user_id] == session[:user_id]
+            if @flower.planting_operations.length != 0
+                render json: {errors: ["Can NOT delete the flower! Somebody's planted it."]}
+            else
+                @flower.destroy
+                render json: @flower.id
+            end
         else 
-            @flower.destroy
-            render json: @flower.id
+            render json: {errors: ["Not authorized to delete this flower!"]}, status: :unauthorized
         end
     end
 
@@ -73,3 +77,17 @@ class FlowersController < ApplicationController
 end
 
 
+=begin
+def destroy
+        if @flower.planting_operations.length != 0
+            render json: {errors: ["Can NOT delete the flower! Somebody's planted it."]}
+        else 
+            if @flower[:user_id] == session[:user_id]
+                @flower.destroy
+                render json: @flower.id
+            else
+                render json: {errors: ["Not authorized to delete this flower!"]}, status: :unauthorized
+            end
+        end
+    end
+=end
