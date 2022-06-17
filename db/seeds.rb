@@ -15,8 +15,9 @@ f5 = Flower.create(name: "Joan of Arc", type_species: "Crocuses", season: "Sprin
 f6 = Flower.create(name: "Ivanetti", type_species: "Dahlias", season: "Summer", subseason: "Mid", color: "Pink", height: "3 feet", description: "Cute small balls", user_id: u2.id, image_url: "https://drive.google.com/uc?export=view&id=1F_GKblrC2W1tMnZjjnXQKR_Xy1EdFDf9")
 f7 = Flower.create(name: "Orange Princess", type_species: "Tulips", season: "Spring", subseason: "Mid", color: "Orange", height: "16 to 18 inches", description: "A normal tulip has six petals while a Double tulip has at least twice that amount!", user_id: u1.id, image_url: "https://s3.amazonaws.com/cdn.tulips.com/images/large/Orange-Princess-2017.jpg")
 f8 = Flower.create(name: "Fruit Punch", type_species: "Oriental Poppies", season: "Spring", subseason: "Late", color: "Orange", height: "2 feet", description: "Huge flowers, long lasting", user_id: u1.id, image_url: "https://drive.google.com/uc?export=view&id=1tKf0AfUSuL57MjKD1CFOzK7XMJ8U4nlt")
-f9 = Flower.create(name: "Dwarf Yellow Lilium", type_species: "Asiatic Lily", season: "Summer", subseason: "Early", color: "Yellow", height: "12 to 18 inches", description: "Bright flowers", user_id: u1.id, image_url: "https://drive.google.com/uc?export=view&id=10FT6e_2XlI0IFUwX-cb9upxzQVxFLNCR")
-
+f9 = Flower.create(name: "Dwarf Yellow Lilium", type_species: "Asiatic Lilies", season: "Summer", subseason: "Early", color: "Yellow", height: "12 to 18 inches", description: "Bright flowers", user_id: u1.id, image_url: "https://drive.google.com/uc?export=view&id=10FT6e_2XlI0IFUwX-cb9upxzQVxFLNCR")
+f10 = Flower.create(name: "Giant Sunrise", type_species: "Tulips", season: "Spring", subseason: "Early", color: "Orange sunrise", height: "16 inches", description: "Giant flowers and patterned leaves", user_id: u1.id, image_url: "https://www.tulips.com/images/popup/Giant_Orange_Sunset.jpg")
+f11 = Flower.create(name: "Pink Sensation", type_species: "Hyacinths", season: "Spring", subseason: "Early", color: "Pink", height: "6 to 8 inches", description: "Beautiful colored flowers complimented by a sweetly smelling scent.", user_id: u1.id, image_url: "https://www.tulips.com/images/popup/Ana-Lisa.jpg")
 
 puts "✅ Done seeding flowers!"
 
@@ -43,8 +44,6 @@ l19 = Location.create(name: "Pot", description: "Brownish pot", image_url: "http
 l20 = Location.create(name: "Pot", description: "Wooden triangle pot", image_url: "https://drive.google.com/uc?export=view&id=17RUYvSAHmMhKaHXXM2rVKXBI5HevITAM")
 l21 = Location.create(name: "Pot", description: "Black pot", image_url: "https://drive.google.com/uc?export=view&id=10brDv2ClksKcUCCtXsU-6P44rsXBByZ8")
 
-
-
 puts "✅ Done seeding locations!"
 
 
@@ -67,6 +66,8 @@ PlantingOperation.create(flower_id: f6.id, location_id: l20.id, user_id: u1.id)
 PlantingOperation.create(flower_id: f6.id, location_id: l21.id, user_id: u1.id)
 PlantingOperation.create(flower_id: f7.id, location_id: l18.id, user_id: u1.id)
 PlantingOperation.create(flower_id: f7.id, location_id: l14.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f10.id, location_id: l21.id, user_id: u1.id)
+PlantingOperation.create(flower_id: f11.id, location_id: l21.id, user_id: u1.id)
 
 puts "✅ Done seeding planting operations!"
 

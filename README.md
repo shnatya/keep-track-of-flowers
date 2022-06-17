@@ -10,7 +10,7 @@ In your terminal, type *git clone* and paste what you have copied from GitHub.
 
 To get set up, run:
 ### `$ bundle install`
-### `$ rails db:migrate db:seed`
+### `$ rails db:create db:migrate db:seed`
 ### `$ npm install --prefix client`  
 
 To start the server, type in your terminal: 
