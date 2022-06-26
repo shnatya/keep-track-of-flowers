@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 import ErrorList from "../Errors/ErrorList";
 
-function Login({onLogin, requestUsersPlanting}) {
+function Login({onLogin, requestUsersPlanting, requestUsersLocations}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errors, setErrors] = useState([])
@@ -25,6 +25,7 @@ function Login({onLogin, requestUsersPlanting}) {
                 res.json().then(user => {
                     onLogin(user)
                     requestUsersPlanting(user)
+                    requestUsersLocations()
                     navigate('/catalog')
                 })
             }else{

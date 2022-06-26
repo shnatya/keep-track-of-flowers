@@ -43,8 +43,8 @@ function Header({user, resetUser, changeCurrentTypeFlower, changeCurrentOperaion
             <button onClick={handleLogout} className="button-logout">Log Out</button>
             <h2>Hello {user}!</h2>
             <div className="button-header">
-                <button onClick={showFlowers} className="btn">Flowers</button>
-                <button onClick={showLocations} className="btn">Locations</button>
+                <button onClick={showFlowers} className="btn">All flowers</button>
+                <button onClick={showLocations} className="btn">Your locations</button>
                 <button onClick={showOperations} className="btn">Your planting</button>
                 <button onClick={showMyFlowers} className="btn">Your summary</button>
             </div>

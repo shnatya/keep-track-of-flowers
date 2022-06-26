@@ -33,8 +33,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_023604) do
     t.string "name"
     t.string "description"
     t.string "image_url"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_locations_on_user_id"
   end
 
   create_table "planting_operations", force: :cascade do |t|
@@ -56,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_023604) do
   end
 
   add_foreign_key "flowers", "users"
+  add_foreign_key "locations", "users"
   add_foreign_key "planting_operations", "flowers"
   add_foreign_key "planting_operations", "locations"
   add_foreign_key "planting_operations", "users"

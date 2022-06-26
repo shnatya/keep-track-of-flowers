@@ -3,11 +3,11 @@ import LocationCard from './LocationCard';
 import { useNavigate } from 'react-router';
 
 function ChooseLocation({user, arrayOfUniqueLocations, addPlantingOperations, finalCheckedFlowers,
-                        changeCurrentOperaionFilter, updateErrors}) {
+                        changeCurrentOperaionFilter, updateErrors, deleteLocation}) {
     const [checkedLocations, setCheckedLocations] = useState([])
-
+    
     const navigate = useNavigate()
-    let arrayOfLocations = arrayOfUniqueLocations.map(location => <LocationCard key={location.id} location={location} addLocation={addLocation}/> )
+    let arrayOfLocations = arrayOfUniqueLocations.map(location => <LocationCard key={location.id}location={location} addLocation={addLocation} handleDeleteLocationButton={handleDeleteLocationButton}/> )
 
     function addLocation(location) {
         updateErrors([])
@@ -66,10 +66,30 @@ function ChooseLocation({user, arrayOfUniqueLocations, addPlantingOperations, fi
         }else {
             updateErrors(["Both flowers and locations have to be selected for planting!"])}
       }
+    
+    function handleDeleteLocationButton(location) {
+    fetch(`/locations/${location.id}`, {
+        method: "DELETE"})
+        .then(res => res.json())
+        .then(locationObj => {
+            if(locationObj.errors) {
+                updateErrors(locationObj.errors)}
+            else{
+                deleteLocation(locationObj)}
+            })
+    }
+    function handleAddLocationButton() {
+    //updateFlowerMessage(false)
+    updateErrors([])
+    navigate('/add-new-location')
+    }
 
     return(
         <div className='div'>
+             <h1>Catalog of your locations</h1>
+            <button onClick={handleAddLocationButton} className="btn-flower">Add</button>
             <h3>Choose location(-s): </h3>
+            {arrayOfUniqueLocations.length === 0 ? <h3 style={{color: "green"}}>You haven't added locations yet.</h3> : null}
             <form onSubmit={handlePlantFlowers}>
                 {arrayOfLocations}
                 <button type="submit" className="button-plant">Plant</button>

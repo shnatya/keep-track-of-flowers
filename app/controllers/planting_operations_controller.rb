@@ -20,16 +20,12 @@ class PlantingOperationsController < ApplicationController
 
     #DELETE "/delete-planting-operation/:id"
     def destroy
-        planting_operation = PlantingOperation.find_by(id: params[:id])
+        planting_operation = PlantingOperation.find_by_id(params[:id])
         planting_operation.destroy
         render json: planting_operation
     end
 
     private
-
-    def not_found
-        render json: {errors: ["Please log in first"]}
-    end
     
     def authorized
         render json: {errors: ["Not authorized"]}, status: :unauthorized unless session.include? :user_id

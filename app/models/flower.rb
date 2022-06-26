@@ -11,6 +11,7 @@ class Flower < ApplicationRecord
   def bloom
     "#{self.season} - #{self.subseason}"
   end
+
 end
 
 

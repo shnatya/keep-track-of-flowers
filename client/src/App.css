@@ -168,19 +168,21 @@
   border-radius: 5px;
   border-width: 0.05mm;
 }
-.button-operation-delete {
-  width: 1.5rem;
-  height: 1.5rem;
-  float: left;
 
-  border-radius: 5px;
-  border-width: 0.05mm;
-}
 .button-operation-delete {
   width: 1.5rem;
   height: 1.5rem;
   float: right;
 
+  border-radius: 5px;
+  border-width: 0.05mm;
+}
+
+.button-location-delete {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 190px;
+  margin-bottom: 1px;
   border-radius: 5px;
   border-width: 0.05mm;
 }
@@ -321,12 +323,24 @@
   border-radius: 10px;
 }
 
+.new-location-form {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 650px;
+  height: 175px;
+  display: inline-grid;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px #bae99b;
+  border-radius: 10px;
+}
+
 .label {
   font-size: 20px;
   font-weight: 600;
 }
 
-.div-flower-input-order {
+.div-input-order {
   float: right;
   margin-right: 20px;
 }

@@ -98,7 +98,7 @@ function Catalog({flowersToDisplay, sendCheckedFlowers, currentTypeFlower, delet
     
     return (
         <div className="div">
-            <h1>Catalog</h1>
+            <h1>Catalog of all flowers</h1>
             <select onChange={(event) => handleFilter(event)} value={currentTypeFlower} >
                 <option value="All">All</option>  
                 {typeOptions}

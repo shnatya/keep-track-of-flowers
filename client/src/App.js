@@ -11,7 +11,7 @@ import Operations from './Operations/Operations';
 import Catalog from './Flowers/Catalog';
 import NewFlowerForm from './Flowers/NewFlowerForm';
 import UpdateFlowerForm from './Flowers/UpdateFlowerForm'
-import MostFlowers from './MostFlowers';
+import NewLocationForm from './Location/NewLocationForm';
 
 function App() {
   const [flowers, setFlowers] = useState([])
@@ -30,11 +30,12 @@ function App() {
 
   const [user, setUser] = useState(null)
   const [errors, setErrors] = useState([])
-  const [userWithMostFlowers, setUserWithMostFlowers] = useState({})
   const navigate = useNavigate()
 
   useEffect(() => retrieveUser()
   , [])
+
+  
 
   function retrieveUser(){
       fetch("/me")
@@ -56,16 +57,7 @@ function App() {
   function updateErrors(newErrors) {
     setErrors(newErrors)
   }
-
-  useEffect(() => {
-    fetch("/user-with-most-flowers")
-    .then(res => res.json())
-    .then(user => {
-      setUserWithMostFlowers(user)
-    })
-    .catch(errors => console.log(errors))
-  }, []) 
-
+  
 //----------------------------Flowers----------------------------------//
   useEffect(() => {
       fetch("/flowers")
@@ -230,8 +222,52 @@ function App() {
     .then(res => res.json())
     .then(locations => {
       setArrayOfUniqueLocations(locations)
+      console.log(locations)
     })
   }, [])
+
+  function requestUsersLocations() {
+    fetch(`/locations`)
+    .then(res => {
+      if(res.ok) {
+        res.json().then(locations => {
+          setArrayOfUniqueLocations(locations)
+        })
+      }
+      else{
+        res.json().then(() => updateErrors(["Please log in or sign up first"]))}
+    })
+    .catch(error => console.log(error))
+}
+
+  function addNewLocation(newLocation) {
+    fetch("/locations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newLocation)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.errors) {
+        updateErrors(data.errors)
+      }else {     
+        setArrayOfUniqueLocations([...arrayOfUniqueLocations, data])
+        updateErrors([`${data.description} has been added.`])
+        navigate('/choose-location')
+      }
+    })
+  }
+
+  function deleteLocation(locationObj) {
+    let newArrayOfLocations = [...arrayOfUniqueLocations]
+    newArrayOfLocations = newArrayOfLocations.filter(location => location.id !== locationObj.id)
+    setArrayOfUniqueLocations(newArrayOfLocations)
+    updateErrors(["This location has been deleted."])
+    
+   // deleteLocationOutOfFlowerObj(locationObj.flower.id, locationObj.location.id)
+  }
 //-------------------------------Planting Operations---------------------------------//
   function requestUsersPlanting(user) {
       fetch(`/users/${user.id}/planting-operations`)
@@ -315,7 +351,7 @@ function App() {
     <div>
         <Header user={user.username} changeCurrentTypeFlower={changeCurrentTypeFlower}
                    setUser={setUser} changeCurrentOperaionFilter={changeCurrentOperaionFilter} errors={errors}
-                   updateErrors={updateErrors} resetUser={resetUser} requestUsersPlanting={requestUsersPlanting} />
+                   updateErrors={updateErrors} resetUser={resetUser}  />
     </div>
     )
   }
@@ -324,9 +360,8 @@ function App() {
       {(user === null || user.id === undefined) ? null : loadHeader()}
       <div className="App">
         <Routes>
-          <Route path="/login" element={<Login onLogin={onLogin} requestUsersPlanting={requestUsersPlanting} />} />
-          <Route path="/signup" element={<SignUp onLogin={onLogin} requestUsersPlanting={requestUsersPlanting}/>} />
-          <Route path="/most-flowers" element={<MostFlowers user={userWithMostFlowers} />}/>
+          <Route path="/login" element={<Login onLogin={onLogin} requestUsersPlanting={requestUsersPlanting} requestUsersLocations={requestUsersLocations}/>} />
+          <Route path="/signup" element={<SignUp onLogin={onLogin} requestUsersPlanting={requestUsersPlanting} requestUsersLocations={requestUsersLocations}/>} />
           <Route path="/add-new-flower" element={<NewFlowerForm addNewFlower={addNewFlower} updateErrors={updateErrors} />} />
           <Route path="/update-flower" element={<UpdateFlowerForm flowerNeedToUpdate={flowerNeedToUpdate} handleUpdatedFlower={handleUpdatedFlower}
                   updateErrors={updateErrors}/>} />
@@ -337,7 +372,9 @@ function App() {
                 extractFlowerObjById={extractFlowerObjById} />} />
           <Route path="/choose-location" element={<ChooseLocation user={user} arrayOfUniqueLocations={arrayOfUniqueLocations}
                 finalCheckedFlowers={finalCheckedFlowers}  addPlantingOperations={addPlantingOperations}
-                changeCurrentOperaionFilter={changeCurrentOperaionFilter} updateErrors={updateErrors} />} />
+                changeCurrentOperaionFilter={changeCurrentOperaionFilter} updateErrors={updateErrors}
+                deleteLocation={deleteLocation} />} />
+          <Route path="/add-new-location" element={<NewLocationForm addNewLocation={addNewLocation} updateErrors={updateErrors} />} />
           <Route path="/planting-operations" element={<Operations operationsToDisplay={operationsToDisplay} 
                 changeCurrentOperaionFilter={changeCurrentOperaionFilter} currentOperationFilter={currentOperationFilter} updateErrors={updateErrors}
                 deletePlantingOperation={deletePlantingOperation} updateOperationsToDisplay={updateOperationsToDisplay} />} />
